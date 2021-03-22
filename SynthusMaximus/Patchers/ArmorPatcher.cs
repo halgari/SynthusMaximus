@@ -10,6 +10,7 @@ using Wabbajack.Common;
 
 using Mutagen.Bethesda.FormKeys.SkyrimSE;
 using Noggog;
+using SynthusMaximus.Data.Enums;
 using SynthusMaximus.Data.LowLevel;
 
 namespace SynthusMaximus.Patchers
@@ -89,6 +90,7 @@ namespace SynthusMaximus.Patchers
 
                         if (!_storage.IsArmorExcludedReforged(a))
                         {
+                            AddMeltdownRecipe(a, am);
                             
                         }
 
@@ -101,6 +103,38 @@ namespace SynthusMaximus.Patchers
                 }
             }
             
+        }
+
+        private void AddMeltdownRecipe(IArmorGetter a, ArmorMaterial am)
+        {
+            var meltdownDefintion = am.MaterialMeltdown.GetDefinition();
+            var requiredPerk = meltdownDefintion.SmithingPerk;
+            var output = meltdownDefintion.MeltdownProduct;
+            var benchKW = meltdownDefintion.MeltdownCraftingStation;
+
+            var inputNum = 1;
+            var outputNum = _storage.GetArmorMeltdownOutput(a);
+
+
+            if (output == default || outputNum <= 0 || benchKW == default)
+            {
+                _logger.LogInformation("{EditorID}: no meltdown recipe generated", a.EditorID);
+                return;
+            }
+            
+            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            cobj.EditorID =
+                $"{Statics.SPrefixPatcher}{Statics.SPrefixArmor}{Statics.SPrefixMeltdown}{a.EditorID}{a.FormKey.ToString()}";
+            cobj.AddCraftingRequirement(new FormLink<IItemGetter>(a), inputNum);
+            cobj.CreatedObject.SetTo(output);
+            cobj.CreatedObjectCount = outputNum;
+            cobj.WorkbenchKeyword.SetTo(benchKW);
+            
+            if (requiredPerk != default)
+                cobj.AddCraftingPerkCondition(requiredPerk);
+            
+            cobj.AddCraftingInventoryCondition(new FormLink<IItemGetter>(a));
+            cobj.AddCraftingPerkCondition(Statics.PerkSmithingMeltdown);
         }
 
         private bool SetArmorValue(IArmorGetter a, ArmorMaterial am)

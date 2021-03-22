@@ -3,6 +3,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using Newtonsoft.Json;
+using SynthusMaximus.Data.Enums;
 
 #endregion
 
@@ -96,7 +97,8 @@ namespace SynthusMaximus.Data.LowLevel
 
         [JsonProperty("type")] public ArmorType? Type { get; set; } = ArmorType.UNDEFINED;
 
-        [JsonProperty("materialMeltdown")] public string MaterialMeltdown { get; set; } = "";
+        [JsonProperty("materialMeltdown")] 
+        public BaseMaterialArmor MaterialMeltdown { get; set; } = BaseMaterialArmor.None;
 
         [JsonProperty("materialTemper")]
         public string MaterialTemper { get; set; } = "";

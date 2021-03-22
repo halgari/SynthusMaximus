@@ -11,6 +11,7 @@
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
       <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
       <PackageReference Include="Mutagen.Bethesda.FormKeys.SkyrimSE" Version="2.0.0" />
+      <PackageReference Include="Mutagen.Bethesda.Skyrim" Version="0.27.2" />
       <PackageReference Include="Mutagen.Bethesda.Synthesis" Version="0.17.3" />
       <PackageReference Include="Wabbajack.Common" Version="2.4.1.2" />
     </ItemGroup>
