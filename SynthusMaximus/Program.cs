@@ -54,7 +54,7 @@ namespace SynthusMaximus
             patcher!.RunChanges();
         }
 
-        private static async Task ConfigureServices(IServiceCollection collection, IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
+        private static void ConfigureServices(IServiceCollection collection, IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
             collection.AddLogging(logging =>
             {

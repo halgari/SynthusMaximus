@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using Newtonsoft.Json;
 
 #endregion
@@ -88,7 +89,7 @@ namespace SynthusMaximus.Data.LowLevel
     
     public class ArmorMaterial : IBindable
     {
-        [JsonProperty("armorBase")] public string ArmorBase { get; set; } = "";
+        [JsonProperty("armorBase")] public float ArmorBase { get; set; }
 
         [JsonProperty("identifier")]
         public string Identifier { get; set; } = "";
@@ -133,8 +134,30 @@ namespace SynthusMaximus.Data.LowLevel
     public class Exclusion
     {
         [JsonProperty("text")] public string Text { get; set; } = "";
-        [JsonProperty("target")] public string Target { get; set; } = "";
-        [JsonProperty("type")] public string Type { get; set; } = "";
+        [JsonProperty("target")] public TargetType Target { get; set; } = TargetType.Name;
+        [JsonProperty("type")] public ExclusionType Type { get; set; } = ExclusionType.Contains;
+
+        public enum TargetType
+        {
+            [EnumMember(Value = "NAME")]
+            Name,
+            [EnumMember(Value = "EDID")]
+            EDID,
+            [EnumMember(Value = "FORMID")]
+            FormID,
+        }
+        
+        public enum ExclusionType
+        {
+            [EnumMember(Value = "CONTAINS")]
+            Contains,
+            [EnumMember(Value = "EQUALS")]
+            Equals,
+            [EnumMember(Value = "EQUALS_IGNORECASE")]
+            EqualsIgnoreCase,
+            [EnumMember(Value = "STARTSWITH")]
+            StartsWith,
+        }
     }
     
     public class ReforgeExclusions

@@ -78,7 +78,22 @@ namespace SynthusMaximus.Patchers
                     }
                     
                     _logger.LogInformation("{EditorID} - material Found", a.EditorID);
+                    
+                    // General changes
                     addRecord |= AddSpecificKeyword(a, am);
+
+                    // changes only used when running the warrior module
+                    if (_storage.UseWarrior)
+                    {
+                        addRecord |= addRecord | SetArmorValue(a, am);
+
+                        if (!_storage.IsArmorExcludedReforged(a))
+                        {
+                            
+                        }
+
+                    }
+                        
                 }
                 catch (Exception ex)
                 {
@@ -86,6 +101,23 @@ namespace SynthusMaximus.Patchers
                 }
             }
             
+        }
+
+        private bool SetArmorValue(IArmorGetter a, ArmorMaterial am)
+        {
+            var original = a.ArmorRating;
+            var newArmorValue = (am.ArmorBase * _storage.GetArmorSlotMultiplier(a));
+            if (original != newArmorValue && newArmorValue > 0)
+            {
+                var newRecord = _state.PatchMod.Armors.GetOrAddAsOverride(a);
+                newRecord.ArmorRating = newArmorValue;
+            }
+            else if (newArmorValue < 0)
+            {
+                _logger.LogWarning("{EditorID}: Failed ot patch armor rating", a.EditorID);
+            }
+
+            return false;
         }
 
         private bool AddSpecificKeyword(IArmorGetter a, ArmorMaterial am)

@@ -78,11 +78,9 @@ namespace SynthusMaximus.Data
         where T : IBindable
         {
             var bestHit = GetBestBindingMatch(toMatch, bindings);
-            _logger.LogInformation("{ToMatch} best Hit {BestHit}", toMatch, bestHit);
             if (bestHit == null)
                 return default;
-
-            _logger.LogInformation("{BestHit} - {Options}", bestHit, string.Join(", ", bindables.Select(b => b.Identifier)));
+            
             return GetBindableFromIdentifier(bestHit, bindables);
         }
 
@@ -109,6 +107,79 @@ namespace SynthusMaximus.Data
             }
 
             return bestHit;
+        }
+
+        public float GetArmorSlotMultiplier(IArmorGetter a)
+        {
+            if (a.HasKeyword(ArmorBoots))
+                return _armor.ArmorSettings.ArmorFactorFeet;
+            
+            if (a.HasKeyword(ArmorCuirass))
+                return _armor.ArmorSettings.ArmorFactorBody;
+            
+            if (a.HasKeyword(ArmorHelmet))
+                return _armor.ArmorSettings.ArmorFactorHead;
+            
+            if (a.HasKeyword(ArmorGauntlets))
+                return _armor.ArmorSettings.ArmorFactorHands;
+            
+            if (a.HasKeyword(ArmorShield))
+                return _armor.ArmorSettings.ArmorFactorShield;
+
+            _logger.LogWarning("{EditorID}: no armor slot keyword", a.EditorID);
+
+            return -1;
+        }
+
+        public bool IsArmorExcludedReforged(IArmorGetter a)
+        {
+            return _armor.ReforgeExclusions.Exclusion.Any(ex => CheckExclusionARMO(ex, a));
+        }
+
+        private bool CheckExclusionARMO(Exclusion ex, IArmorGetter a)
+        {
+            if (ex.Target == Exclusion.TargetType.Name)
+            {
+                if (!a.Name.TryLookup(Language.English, out var name))
+                    return false;
+                return CheckExclusionName(ex, name);
+            }
+
+            return CheckExclusionMajorRecord(ex, a);
+        }
+
+        private bool CheckExclusionMajorRecord(Exclusion e, ISkyrimMajorRecordGetter m)
+        {
+            string toCheck = e.Target switch
+            {
+                Exclusion.TargetType.EDID => m.EditorID ?? "",
+                Exclusion.TargetType.FormID => m.FormKey.ToString(),
+                _ => throw new ArgumentException($"Exclusion has an invalid target: {e.Target}")
+            };
+
+            return e.Type switch
+            {
+                Exclusion.ExclusionType.Contains => toCheck.Contains(e.Text),
+                Exclusion.ExclusionType.Equals => string.Equals(toCheck, e.Text),
+                Exclusion.ExclusionType.EqualsIgnoreCase => string.Equals(toCheck, e.Text,
+                    StringComparison.InvariantCultureIgnoreCase),
+                Exclusion.ExclusionType.StartsWith => toCheck.StartsWith(e.Text),
+                _ => throw new ArgumentOutOfRangeException($"Exclusion has invalid type {e.Type}")
+            };
+
+        }
+
+        private bool CheckExclusionName(Exclusion e, string name)
+        {
+            return e.Type switch
+            {
+                Exclusion.ExclusionType.Contains => name.Contains(e.Text),
+                Exclusion.ExclusionType.Equals => string.Equals(name, e.Text),
+                Exclusion.ExclusionType.EqualsIgnoreCase => string.Equals(name, e.Text,
+                    StringComparison.InvariantCultureIgnoreCase),
+                Exclusion.ExclusionType.StartsWith => name.StartsWith(e.Text),
+                _ => throw new ArgumentOutOfRangeException($"Exclusion has invalid type {e.Type}")
+            };
         }
     }
 }
