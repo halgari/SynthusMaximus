@@ -1,7 +1,8 @@
 ﻿namespace SynthusMaximus.Data.LowLevel
 {
-    public interface IBindable
+    public interface IBinding
     {
         public string Identifier { get; }
+        public string SubString { get; }
     }
 }

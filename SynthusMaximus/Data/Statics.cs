@@ -118,8 +118,69 @@ namespace SynthusMaximus.Data
         public const string SEnchantmentDelimiter = "of";
         public const int ExpensiveClothingThreshold = 50;
 
+        // PERKS
         public const string SMaster = "PerkusMaximus_Master.esp";
         public static FormLink<IPerkGetter> PerkSmithingMeltdown = new(FormKey.Factory($"0a82a5:{SMaster}"));
+        
+        // PERKUS MAXIMUS MASTER
+	public static FormLink<IPerkGetter> LIASecureGrip= new (FormKey.Factory($"3960f9:{SMaster}"));
+
+	public static FormLink<IPerkGetter> SmithingMasteryWarforged= new (FormKey.Factory($"619535:{SMaster}"));
+	public static FormLink<IPerkGetter> SmithingLeather= new (FormKey.Factory($"1d8be6:{SMaster}"));
+	public static FormLink<IPerkGetter> SmithingSilver= new (FormKey.Factory($"0a82a6:{SMaster}"));
+	public static FormLink<IPerkGetter> SmithingMeltdown= new (FormKey.Factory($"0a82a5:{SMaster}"));
+	public static FormLink<IPerkGetter> SmithingSilverRefined= new (FormKey.Factory($"054ff5:{SMaster}"));
+
+	public static FormLink<IPerkGetter> SmithingArmorer= new (FormKey.Factory($"36d874:{SMaster}"));
+	public static FormLink<IPerkGetter> SmithingWeaponsmith= new (FormKey.Factory($"36d873:{SMaster}"));
+	public static FormLink<IPerkGetter> SmithingCopycat= new (FormKey.Factory($"36d875:{SMaster}"));
+
+	public static FormLink<IPerkGetter> EnchantingStafffaire= new (FormKey.Factory($"1bef1e:{SMaster}"));
+	public static FormLink<IPerkGetter> EnchantingBasicScripture= new (FormKey.Factory($"2888a7:{SMaster}"));
+	public static FormLink<IPerkGetter> EnchantingAdvancedScripture= new (FormKey.Factory($"28b045:{SMaster}"));
+	public static FormLink<IPerkGetter> EnchantingElaborateScripture = new (FormKey.Factory($"28b046:{SMaster}"));
+	public static FormLink<IPerkGetter> EnchantingSagesScripture= new (FormKey.Factory($"28d80f:{SMaster}"));
+
+	public static FormLink<IPerkGetter> WeaponSilverRefined= new (FormKey.Factory($"289911:{SMaster}"));
+
+	public static FormLink<IPerkGetter> RangedWeaponryAspiringEngineer0 = new (FormKey.Factory($"3aa555:{SMaster}"));
+	public static FormLink<IPerkGetter> RangedWeaponryAspiringEngineer1 = new (FormKey.Factory($"3aa556:{SMaster}"));
+	public static FormLink<IPerkGetter> RangedWeaponryProficientEngineer0 = new (FormKey.Factory($"3aa557:{SMaster}"));
+	public static FormLink<IPerkGetter> RangedWeaponryProficientEngineer1 = new (FormKey.Factory($"3aa558:{SMaster}"));
+	public static FormLink<IPerkGetter> RangedWeaponryCrossbowTechnician = new (FormKey.Factory($"3aa559:{SMaster}"));
+	public static FormLink<IPerkGetter> RangedWeaponryAdvancedMissilecraft0 = new (FormKey.Factory($"28ea45:{SMaster}"));
+	public static FormLink<IPerkGetter> RangedWeaponryAdvancedMissilecraft1 = new (FormKey.Factory($"28ea48:{SMaster}"));
+
+	public static FormLink<IPerkGetter> AlchemyAdvancedExplosives= new (FormKey.Factory($"00fed9:{SMaster}"));
+	public static FormLink<IPerkGetter> AlchemyFuse= new (FormKey.Factory($"1088fd:{SMaster}"));
+	public static FormLink<IPerkGetter> AlchemyElementalBombard= new (FormKey.Factory($"1088fa:{SMaster}"));
+	public static FormLink<IPerkGetter> AlchemySkilledEnhancer0= new (FormKey.Factory($"1088ef:{SMaster}"));
+	public static FormLink<IPerkGetter> AlchemySkilledEnhancer1= new (FormKey.Factory($"1088f0:{SMaster}"));
+	public static FormLink<IPerkGetter> AlchemyPoisonBurst= new (FormKey.Factory($"1a2404:{SMaster}"));
+
+	public static FormLink<IPerkGetter> SneakThiefsToolbox0= new (FormKey.Factory($"289914:{SMaster}"));
+	public static FormLink<IPerkGetter> SneakThiefsToolbox1= new (FormKey.Factory($"289915:{SMaster}"));
+
+	public static FormLink<IKeywordGetter> BoundWeapon= new (FormKey.Factory($"5e19c2:{SMaster}"));
+
+	// module specific perks
+
+	public static FormLink<IPerkGetter> WarriorModuleScalingCritDamage = new (FormKey.Factory($"05c161:{SMaster}"));
+	public static FormLink<IPerkGetter> WarriorModuleTrapAwareness= new (FormKey.Factory($"0fe6d2:{SMaster}"));
+	public static FormLink<IPerkGetter> MageModuleScalingSpells= new (FormKey.Factory($"05c15f:{SMaster}"));
+	public static FormLink<IPerkGetter> WarriorModuleDualWieldMalus= new (FormKey.Factory($"386dc1:{SMaster}"));
+	public static FormLink<IPerkGetter> WarriorModuleScarredPassive= new (FormKey.Factory($"36876d:{SMaster}"));
+	public static FormLink<IPerkGetter> WarriorModuleFistScaling= new (FormKey.Factory($"386dd1:{SMaster}"));
+	public static FormLink<IPerkGetter> WarriorModulePassiveCrossbow = new (FormKey.Factory($"405888:{SMaster}"));
+
+	public static FormLink<IPerkGetter> MageModuleScalingScrolls= new (FormKey.Factory($"117c28:{SMaster}"));
+	public static FormLink<IPerkGetter> MageModulePassives= new (FormKey.Factory($"641d7c:{SMaster}"));
+
+	public static FormLink<IPerkGetter> ThiefModuleFingersmithXP= new (FormKey.Factory($"112b24:{SMaster}"));
+	public static FormLink<IPerkGetter> ThiefModuleSpellSneak= new (FormKey.Factory($"037d38:{SMaster}"));
+	public static FormLink<IPerkGetter> ThiefModulePassiveArmorSneakPenalty = new (FormKey.Factory($"29ddd7:{SMaster}"));
+	public static FormLink<IPerkGetter> ThiefModulePassiveShoutScaling = new (FormKey.Factory($"2a8006:{SMaster}"));
+	public static FormLink<IPerkGetter> ThiefModuleWeaponSneakScaling = new (FormKey.Factory($"29ddd5:{SMaster}"));
         
         
 	    public static FormLink<IKeywordGetter> CraftingScroll = new(FormKey.Factory($"10da22:{SMaster}"));
@@ -228,6 +289,16 @@ namespace SynthusMaximus.Data
 	public static FormLink<IKeywordGetter> ShoutSummoning = new(FormKey.Factory($"2a800b:{SMaster}"));
 
 	public static FormLink<IKeywordGetter> MagicDisarm = new(FormKey.Factory($"3960f8:{SMaster}"));
+	
+	public static FormLink<IKeywordGetter> SmithingWarforgedArmor = new(FormKey.Factory($"619547:{SMaster}"));
+	public static FormLink<IKeywordGetter> SmithingWarforgedWeapon = new(FormKey.Factory($"619546:{SMaster}"));
+	
+	// /////////////
+	// ENCHANTMENTS
+	// /////////////
 
+	public static FormLink<IEffectRecordGetter> EnchStaffEmpty = new(FormKey.Factory($"27f702:{SMaster}"));
+	public static FormLink<IEffectRecordGetter> EnchSmithingWarforgedWeapon = new(FormKey.Factory($"61e64b:{SMaster}"));
+	public static FormLink<IEffectRecordGetter> EnchSmithingWarforgedArmor = new(FormKey.Factory($"61e64c:{SMaster}"));
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using Mutagen.Bethesda.Skyrim;
 using Newtonsoft.Json;
@@ -74,8 +75,9 @@ namespace SynthusMaximus.Data
                 _armor.ArmorMaterials.ArmorMaterial);
         }
 
-        private T? QuerySingleBindingInBindables<T>(string toMatch, List<ArmorBinding> bindings, List<T> bindables)
-        where T : IBindable
+        private T2? QuerySingleBindingInBindables<T1, T2>(string toMatch, List<T1> bindings, List<T2> bindables)
+        where T1 : IBinding
+        where T2 : IBindable
         {
             var bestHit = GetBestBindingMatch(toMatch, bindings);
             if (bestHit == null)
@@ -84,18 +86,19 @@ namespace SynthusMaximus.Data
             return GetBindableFromIdentifier(bestHit, bindables);
         }
 
-        private T? GetBindableFromIdentifier<T>(string identifier, List<T> list)
+        private T? GetBindableFromIdentifier<T>(string identifier, IEnumerable<T> list)
         where T : IBindable
         {
             return list.FirstOrDefault(b => b.Identifier == identifier);
         }
 
-        private string? GetBestBindingMatch(string toMatch, IEnumerable<ArmorBinding> bindings)
+        private string? GetBestBindingMatch<T>(string toMatch, IEnumerable<T> bindings)
+        where T: IBinding
         {
             var maxHitSize = 0;
             string? bestHit = null;
             
-            foreach (var b in bindings.Where(b => toMatch.Contains(b.Substring)))
+            foreach (var b in bindings.Where(b => toMatch.Contains(b.SubString)))
             {
                 string currHit = b.Identifier;
                 var currHitSize = b.Identifier.Length;
@@ -180,6 +183,39 @@ namespace SynthusMaximus.Data
                 Exclusion.ExclusionType.StartsWith => name.StartsWith(e.Text),
                 _ => throw new ArgumentOutOfRangeException($"Exclusion has invalid type {e.Type}")
             };
+        }
+
+        public string GetOutputString(string sReforged)
+        {
+            return sReforged;
+        }
+
+        public IEnumerable<ArmorModifier> GetArmorModifiers(IArmorGetter a)
+        {
+            if (!a.Name!.TryLookup(Language.English, out var name))
+                throw new InvalidDataException("Couldn't load name");
+
+            return QueryAllBindingsInBindables(name, _armor.ArmorModifierBindings.Binding,
+                _armor.ArmorModifiers.ArmorModifier);
+        }
+
+        private IEnumerable<T2> QueryAllBindingsInBindables<T1, T2>(string toMatch, IEnumerable<T1> bindings, IEnumerable<T2> bindables)
+        where T1 : IBinding
+        where T2 : IBindable
+        {
+            var hits = GetAllBindingMatches(toMatch, bindings);
+
+            foreach (var hit in hits)
+            {
+                var bindable = GetBindableFromIdentifier(hit, bindables);
+                if (bindable != null)
+                    yield return bindable;
+            }
+        }
+
+        private IEnumerable<string> GetAllBindingMatches<T1>(string toMatch, IEnumerable<T1> bindings) where T1 : IBinding
+        {
+            return bindings.Where(b => toMatch.Contains(b.SubString)).Select(b => b.Identifier);
         }
     }
 }

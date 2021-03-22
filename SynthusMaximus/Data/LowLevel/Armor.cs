@@ -55,9 +55,9 @@ namespace SynthusMaximus.Data.LowLevel
         public float ArmorRatingMax { get; set; }
     }
     
-    public class ArmorBinding : IBindable
+    public class ArmorBinding : IBinding
     {
-        [JsonProperty("substring")] public string Substring { get; set; } = "";
+        [JsonProperty("substring")] public string SubString { get; set; } = "";
 
         [JsonProperty("identifier")] public string Identifier { get; set; } = "";
     }
@@ -67,15 +67,15 @@ namespace SynthusMaximus.Data.LowLevel
         [JsonProperty("binding")] public List<ArmorBinding> Binding { get; set; } = new();
     }
     
-    public class ArmorModifier
+    public class ArmorModifier : IBindable
     {
         [JsonProperty("identifier")] public string Identifier { get; set; } = "";
 
-        [JsonProperty("factorArmor")] public string FactorArmor { get; set; } = "";
+        [JsonProperty("factorArmor")] public float FactorArmor { get; set; }
 
-        [JsonProperty("factorValue")] public string FactorValue { get; set; } = "";
+        [JsonProperty("factorValue")] public float FactorValue { get; set; }
 
-        [JsonProperty("factorWeight")] public string FactorWeight { get; set; } = "";
+        [JsonProperty("factorWeight")] public float FactorWeight { get; set; }
     }
     
     public class ArmorModifiers
@@ -101,7 +101,7 @@ namespace SynthusMaximus.Data.LowLevel
         public BaseMaterialArmor MaterialMeltdown { get; set; } = BaseMaterialArmor.None;
 
         [JsonProperty("materialTemper")]
-        public string MaterialTemper { get; set; } = "";
+        public BaseMaterialArmor MaterialTemper { get; set; } = BaseMaterialArmor.None;
 
         public enum ArmorType
         {
