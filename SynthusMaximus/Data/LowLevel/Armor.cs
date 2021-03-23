@@ -124,7 +124,7 @@ namespace SynthusMaximus.Data.LowLevel
         public string SubstringArmor { get; set; } = "";
 
         [JsonProperty("masqueradeFaction")]
-        public string MasqueradeFaction { get; set; } = "";
+        public MasqueradeFaction MasqueradeFaction { get; set; } = MasqueradeFaction.None;
     }
     
     public class ArmorMasqueradeBindings

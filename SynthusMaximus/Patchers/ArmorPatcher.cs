@@ -13,7 +13,14 @@ using Mutagen.Bethesda.FormKeys.SkyrimSE;
 using Noggog;
 using SynthusMaximus.Data.Enums;
 using SynthusMaximus.Data.LowLevel;
+using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Keyword;
 using static SynthusMaximus.Data.Statics;
+using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.Keyword;
+using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.Perk;
+using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.MiscItem;
+using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.MiscItem;
+using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Perk;
+using Mutagen.Bethesda.FormKeys.SkyrimSE;
 using Armor = Mutagen.Bethesda.Skyrim.Armor;
 
 namespace SynthusMaximus.Patchers
@@ -101,10 +108,33 @@ namespace SynthusMaximus.Patchers
                         {
                             var patched = _state.PatchMod.Armors.GetOrAddAsOverride(a);
                             var reforged = CreateReforgedArmor(patched, am);
-                            CreateWarforgedArmor(patched, reforged, am);
+                            ApplyArmorModifiers(reforged);
+                            AddTemperingRecipe(reforged, am);
+                            CreateReforgedCraftingRecipe(reforged, a, am);
+                            AddMeltdownRecipe(reforged, am);
+                            
+                            var warforged = CreateWarforgedArmor(reforged, am);
+                            ApplyArmorModifiers(warforged);
+                            AddTemperingRecipe(warforged, am);
+                            CreateWarforgedCraftingRecipe(warforged, reforged, am);
+                            AddMeltdownRecipe(warforged, am);
+
 
                         }
 
+                        DoCopycat(a, am);
+
+                    }
+
+                    if (_storage.UseThief)
+                    {
+                        addRecord |= AddMasqueradeKeyword(a);
+                        DoQualityLeather(a, am);
+                    }
+
+                    if (_storage.UseWarrior)
+                    {
+                        ApplyArmorModifiers(a);
                     }
                         
                 }
@@ -114,6 +144,182 @@ namespace SynthusMaximus.Patchers
                 }
             }
             
+        }
+
+        private bool DoQualityLeather(IArmorGetter a, ArmorMaterial am)
+        {
+            if (!a.HasKeyword(ArmorMaterialLeather))
+                return false;
+
+            var craftingRecipies = GetCraftingRecipes(a);
+            if (!craftingRecipies.Any())
+            {
+                _logger.LogInformation("{EditorID} : Leather material, but no crafting recipe. No quality leather variant created", a.EditorID);
+                return false;
+            }
+
+            var temperingRecipes = GetTempreingRecipes(a);
+
+            var qa = CreateQualityArmorVariant(a);
+            CreateQualityArmorRecipe(craftingRecipies, qa);
+            CreateQualityArmorRecipe(temperingRecipes, qa);
+            
+            AddTemperingRecipe(qa, am);
+            AddMeltdownRecipe(qa, am);
+
+            if (_storage.UseWarrior)
+            {
+                DoCopycat(qa, am);
+
+                var qr = CreateReforgedArmor(qa, am);
+                CreateReforgedCraftingRecipe(qr, a, am);
+                AddTemperingRecipe(qr, am);
+                AddMeltdownRecipe(qr, am);
+
+                var qw = CreateWarforgedArmor(qa, am);
+                CreateWarforgedCraftingRecipe(qw, qr, am);
+                AddTemperingRecipe(qr, am);
+                AddMeltdownRecipe(qw, am);
+            }
+
+            return true;
+        }
+
+        private void CreateQualityArmorRecipe(IEnumerable<IConstructibleObjectGetter> recipes, IArmorGetter a)
+        {
+            foreach (var c in recipes)
+            {
+                var newRecipe = _state.PatchMod.ConstructibleObjects.DuplicateInAsNewRecord(c);
+                newRecipe.EditorID = SPrefixPatcher + a.EditorID + a.FormKey;
+                newRecipe.CreatedObject.SetTo(a);
+                
+                var needsLeatherStrips = false;
+                var neesdLeather = false;
+
+                foreach (var i in newRecipe.Items ?? new ExtendedList<ContainerEntry>())
+                {
+                    if (i.Item.Item.FormKey == Leather01.FormKey)
+                    {
+                        i.Item.Item.SetTo(xMAWAYQualityLeather);
+                        neesdLeather = true;
+                    }
+                    else if (i.Item.Item.FormKey == LeatherStrips.FormKey)
+                    {
+                        i.Item.Item.SetTo(xMAWAYQualityLeatherStrips);
+                        needsLeatherStrips = true;
+                    }
+                }
+                
+                newRecipe.Conditions.Clear();
+                newRecipe.AddCraftingPerkCondition(xMASMIMaterialLeather);
+                
+                if (neesdLeather)
+                    newRecipe.AddCraftingInventoryCondition(xMAWAYQualityLeather);
+                
+                if (needsLeatherStrips)
+                    newRecipe.AddCraftingInventoryCondition(xMAWAYQualityLeatherStrips);
+
+            }
+        }
+
+        private IArmor CreateQualityArmorVariant(IArmorGetter a)
+        {
+            if (!a.Name!.TryLookup(Language.English, out var name))
+                throw new InvalidDataException("Could not get English name");
+
+            var newName = name + " [" + _storage.GetOutputString(SQuality) + "]";
+
+            var newArmor = _state.PatchMod.Armors.DuplicateInAsNewRecord(a);
+            newArmor.Name = newName;
+            ApplyArmorModifiers(newArmor);
+            return newArmor;
+        }
+
+        private IEnumerable<IConstructibleObjectGetter> GetCraftingRecipes(IArmorGetter armorGetter)
+        {
+            return _state.LoadOrder.PriorityOrder
+                .ConstructibleObject()
+                .WinningOverrides()
+                .Where(c => c.CreatedObject.FormKey == armorGetter.FormKey)
+                .Where(c => c.WorkbenchKeyword.FormKey == CraftingSmithingForge.FormKey);
+        }
+        
+        private IEnumerable<IConstructibleObjectGetter> GetTempreingRecipes(IArmorGetter armorGetter)
+        {
+            return _state.LoadOrder.PriorityOrder
+                .ConstructibleObject()
+                .WinningOverrides()
+                .Where(c => c.CreatedObject.FormKey == armorGetter.FormKey)
+                .Where(c => c.WorkbenchKeyword.FormKey == CraftingSmithingArmorTable.FormKey);
+        }
+
+        private bool AddMasqueradeKeyword(IArmorGetter a)
+        {
+            var ar = _state.PatchMod.Armors.GetOrAddAsOverride(a);
+            ar.Keywords ??= new ExtendedList<IFormLinkGetter<IKeywordGetter>>();
+            ar.Keywords.AddRange(_storage.GetArmorMasqueradeKeywords(a));
+            return true;
+        }
+
+        private bool DoCopycat(IArmorGetter a, ArmorMaterial am)
+        {
+            if (!a.HasKeyword(DaedricArtifact))
+                return false;
+
+            var newArmor = CreateCopycatArmor(a);
+            CreateCopycatCraftingRecipe(newArmor, a, am);
+            
+            if (_storage.UseWarrior && !DataStorage.IsJewelry(a) && !DataStorage.IsClothing(a))
+            {
+                AddMeltdownRecipe(newArmor, am);
+                var ar = CreateReforgedArmor(newArmor, am);
+                CreateReforgedCraftingRecipe(ar, a, am);
+                AddMeltdownRecipe(ar, am);
+
+                var aw = CreateWarforgedArmor(ar, am);
+                CreateWarforgedCraftingRecipe(aw, ar, am);
+                AddMeltdownRecipe(aw, am);
+            }
+
+            return true;
+        }
+
+        private IConstructibleObjectGetter CreateCopycatCraftingRecipe(IArmorGetter newArmor, IArmorGetter oldArmor, ArmorMaterial am)
+        {
+            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            cobj.EditorID = SPrefixPatcher + SPrefixArmor + newArmor.EditorID + oldArmor.FormKey;
+
+            var matdesc = am.MaterialTemper.GetDefinition();
+            var materialPerk = matdesc.SmithingPerk;
+            var input = matdesc.TemperingInput;
+            
+            cobj.WorkbenchKeyword.SetTo(CraftingSmithingForge);
+            cobj.CreatedObject.SetTo(newArmor);
+            cobj.AddCraftingRequirement(xMASMICopycatArtifactEssence, 1);
+            
+            if (input != null)
+                cobj.AddCraftingRequirement(input, 3);
+            
+            cobj.AddCraftingInventoryCondition(new FormLink<IItemGetter>(oldArmor.FormKey), 1);
+            cobj.AddCraftingPerkCondition(xMASMICopycat);
+            
+            if (materialPerk != null)
+                cobj.AddCraftingPerkCondition(materialPerk);
+            return cobj;
+        }
+
+        private IArmor CreateCopycatArmor(IArmorGetter a)
+        {
+            if (!a.Name!.TryLookup(Language.English, out var name))
+                throw new InvalidDataException("Could not get English name");
+
+            var newName = name + "[" + _storage.GetOutputString(SReplica) + "]";
+            var newArmor = _state.PatchMod.Armors.DuplicateInAsNewRecord(a);
+            newArmor.EditorID = SPrefixPatcher + SPrefixArmor + newName + a.FormKey;
+            newArmor.Name = newName;
+            newArmor.ObjectEffect.SetToNull();
+            ApplyArmorModifiers(newArmor);
+            return newArmor;
         }
 
         private Armor CreateReforgedArmor(IArmorGetter a, ArmorMaterial am)
@@ -127,16 +333,11 @@ namespace SynthusMaximus.Patchers
             newArmor.Name = newname;
             newArmor.EditorID = SPrefixPatcher + SPrefixArmor + newname + a.FormKey;
 
-            ApplyArmorModifiers(newArmor);
-            AddTemperingRecipe(newArmor, am);
-            CreateReforgedCraftingRecipe(newArmor, a, am);
-            AddMeltdownRecipe(newArmor, am);
-
             return newArmor;
 
         }
         
-        private Armor CreateWarforgedArmor(IArmorGetter a, IArmorGetter reforgedArmor, ArmorMaterial am)
+        private Armor CreateWarforgedArmor(IArmorGetter a, ArmorMaterial am)
         {
             if (!a.Name!.TryLookup(Language.English, out var name))
                 throw new InvalidDataException("Can't get english name");
@@ -148,14 +349,10 @@ namespace SynthusMaximus.Patchers
             newArmor.EditorID = SPrefixPatcher + SPrefixArmor + newname + a.FormKey;
 
             newArmor.Keywords ??= new ExtendedList<IFormLinkGetter<IKeywordGetter>>();
-            newArmor.Keywords.Add(Skyrim.Keyword.MagicDisallowEnchanting);
-            newArmor.Keywords.Add(SmithingWarforgedArmor);
-            newArmor.ObjectEffect.SetTo(EnchSmithingWarforgedArmor);
-
-            ApplyArmorModifiers(newArmor);
-            AddTemperingRecipe(newArmor, am);
-            CreateWarforgedCraftingRecipe(newArmor, reforgedArmor, am);
-            AddMeltdownRecipe(newArmor, am);
+            newArmor.Keywords.Add(MagicDisallowEnchanting);
+            newArmor.Keywords.Add(xMASMIWarforgedArmorKW);
+            
+            newArmor.ObjectEffect.SetTo(PerkusMaximus_Master.ObjectEffect.xMASMIMasteryWarforgedEnchArmor);
 
             return newArmor;
 
@@ -170,7 +367,7 @@ namespace SynthusMaximus.Patchers
             var materialPerk = matdesc.SmithingPerk;
             var input = matdesc.TemperingInput;
             
-            cobj.WorkbenchKeyword.SetTo(Skyrim.Keyword.CraftingSmithingForge);
+            cobj.WorkbenchKeyword.SetTo(CraftingSmithingForge);
             cobj.CreatedObject.SetTo(newArmor);
             
             if (input != null)
@@ -179,7 +376,7 @@ namespace SynthusMaximus.Patchers
             cobj.AddCraftingRequirement(new FormLink<IItemGetter>(oldArmor.FormKey), 1);
             
 
-            cobj.AddCraftingPerkCondition(SmithingMasteryWarforged);
+            cobj.AddCraftingPerkCondition(xMASMIMasteryWarforged);
             
             if (materialPerk != null)
                 cobj.AddCraftingPerkCondition(materialPerk);
@@ -195,14 +392,14 @@ namespace SynthusMaximus.Patchers
             var matdesc = am.MaterialTemper.GetDefinition();
             var materialPerk = matdesc.SmithingPerk;
             var input = matdesc.TemperingInput;
-            cobj.WorkbenchKeyword.SetTo(Skyrim.Keyword.CraftingSmithingForge);
+            cobj.WorkbenchKeyword.SetTo(CraftingSmithingForge);
             cobj.CreatedObject.SetTo(newArmor);
             
             if (input != null)
                 cobj.AddCraftingRequirement(input, 2);
             
 
-            cobj.AddCraftingPerkCondition(SmithingArmorer);
+            cobj.AddCraftingPerkCondition(xMASMIArmorer);
             
             if (materialPerk != null)
                 cobj.AddCraftingPerkCondition(materialPerk);
@@ -220,7 +417,7 @@ namespace SynthusMaximus.Patchers
             var temperInput = materialDefinition.TemperingInput;
             var perk = materialDefinition.SmithingPerk;
 
-            cobj.WorkbenchKeyword.SetTo(Skyrim.Keyword.CraftingSmithingArmorTable);
+            cobj.WorkbenchKeyword.SetTo(CraftingSmithingArmorTable);
             cobj.CreatedObject.SetTo(a);
             cobj.CreatedObjectCount = 1;
             
@@ -231,13 +428,15 @@ namespace SynthusMaximus.Patchers
                 cobj.AddCraftingPerkCondition(perk);
         }
 
-        private void ApplyArmorModifiers(Armor a)
+        private void ApplyArmorModifiers(IArmorGetter a)
         {
+            var ar = _state.PatchMod.Armors.GetOrAddAsOverride(a);
+            
             foreach (var m in _storage.GetArmorModifiers(a))
             {
-                a.Weight *= m.FactorWeight;
-                a.Value = (uint)(a.Value * m.FactorValue);
-                a.ArmorRating *= m.FactorArmor;
+                ar.Weight *= m.FactorWeight;
+                ar.Value = (uint)(ar.Value * m.FactorValue);
+                ar.ArmorRating *= m.FactorArmor;
             }
         }
 
@@ -270,7 +469,7 @@ namespace SynthusMaximus.Patchers
                 cobj.AddCraftingPerkCondition(requiredPerk);
             
             cobj.AddCraftingInventoryCondition(new FormLink<IItemGetter>(a));
-            cobj.AddCraftingPerkCondition(PerkSmithingMeltdown);
+            cobj.AddCraftingPerkCondition(xMASMIMeltdown);
         }
 
         private bool SetArmorValue(IArmorGetter a, ArmorMaterial am)
@@ -294,26 +493,26 @@ namespace SynthusMaximus.Patchers
         {
             var mod = _state.PatchMod.Armors.GetOrAddAsOverride(a);
             
-            if (mod.HasKeyword(Skyrim.Keyword.ArmorHeavy))
-                mod.Keywords!.Remove(Skyrim.Keyword.ArmorHeavy);
-            if (mod.HasKeyword(Skyrim.Keyword.ArmorLight))
-                mod.Keywords!.Remove(Skyrim.Keyword.ArmorLight);
+            if (mod.HasKeyword(ArmorHeavy))
+                mod.Keywords!.Remove(ArmorHeavy);
+            if (mod.HasKeyword(ArmorLight))
+                mod.Keywords!.Remove(ArmorLight);
 
             mod.Keywords ??= new ExtendedList<IFormLinkGetter<IKeywordGetter>>();
 
             switch (am.Type)
             {
                 case ArmorMaterial.ArmorType.LIGHT:
-                    mod.Keywords!.Add(Skyrim.Keyword.ArmorLight);
+                    mod.Keywords!.Add(ArmorLight);
                     mod.BodyTemplate!.ArmorType = ArmorType.LightArmor;
                     break;
                 case ArmorMaterial.ArmorType.HEAVY:
-                    mod.Keywords!.Add(Skyrim.Keyword.ArmorHeavy);
+                    mod.Keywords!.Add(ArmorHeavy);
                     mod.BodyTemplate!.ArmorType = ArmorType.HeavyArmor;
                     break;
                 case ArmorMaterial.ArmorType.BOTH:
-                    mod.Keywords!.Add(Skyrim.Keyword.ArmorLight);
-                    mod.Keywords!.Add(Skyrim.Keyword.ArmorHeavy);
+                    mod.Keywords!.Add(ArmorLight);
+                    mod.Keywords!.Add(ArmorHeavy);
                     break;
                 case ArmorMaterial.ArmorType.UNDEFINED:
                     return true;
@@ -321,40 +520,40 @@ namespace SynthusMaximus.Patchers
                     return true;
             }
 
-            if (mod.HasKeyword(Skyrim.Keyword.ArmorBoots))
+            if (mod.HasKeyword(ArmorBoots))
             {
-                if (mod.HasKeyword(Skyrim.Keyword.ArmorHeavy))
-                    mod.Keywords.Add(ArmorHeavyLegs);
-                if (mod.HasKeyword(Skyrim.Keyword.ArmorLight))
-                    mod.Keywords.Add(ArmorLightLegs);
+                if (mod.HasKeyword(ArmorHeavy))
+                    mod.Keywords.Add(xMAArmorHeavyLegs);
+                if (mod.HasKeyword(ArmorLight))
+                    mod.Keywords.Add(xMAArmorLightLegs);
             }
-            else if (mod.HasKeyword(Skyrim.Keyword.ArmorCuirass))
+            else if (mod.HasKeyword(ArmorCuirass))
             {
-                if (mod.HasKeyword(Skyrim.Keyword.ArmorHeavy))
-                    mod.Keywords.Add(ArmorHeavyChest);
-                if (mod.HasKeyword(Skyrim.Keyword.ArmorLight))
-                    mod.Keywords.Add(ArmorLightChest);
+                if (mod.HasKeyword(ArmorHeavy))
+                    mod.Keywords.Add(xMAArmorHeavyChest);
+                if (mod.HasKeyword(ArmorLight))
+                    mod.Keywords.Add(xMAArmorLightChest);
             }
-            else if (mod.HasKeyword(Skyrim.Keyword.ArmorGauntlets))
+            else if (mod.HasKeyword(ArmorGauntlets))
             {
-                if (mod.HasKeyword(Skyrim.Keyword.ArmorHeavy))
-                    mod.Keywords.Add(ArmorHeavyArms);
-                if (mod.HasKeyword(Skyrim.Keyword.ArmorLight))
-                    mod.Keywords.Add(ArmorLightArms);
+                if (mod.HasKeyword(ArmorHeavy))
+                    mod.Keywords.Add(xMAArmorHeavyArms);
+                if (mod.HasKeyword(ArmorLight))
+                    mod.Keywords.Add(xMAArmorLightArms);
             }
-            else if (mod.HasKeyword(Skyrim.Keyword.ArmorBoots))
+            else if (mod.HasKeyword(ArmorBoots))
             {
-                if (mod.HasKeyword(Skyrim.Keyword.ArmorHelmet))
-                    mod.Keywords.Add(ArmorLightHead);
-                if (mod.HasKeyword(Skyrim.Keyword.ArmorLight))
-                    mod.Keywords.Add(ArmorLightHead);
+                if (mod.HasKeyword(ArmorHelmet))
+                    mod.Keywords.Add(xMAArmorHeavyHead);
+                if (mod.HasKeyword(ArmorLight))
+                    mod.Keywords.Add(xMAArmorLightHead);
             }
-            else if (mod.HasKeyword(Skyrim.Keyword.ArmorShield))
+            else if (mod.HasKeyword(ArmorShield))
             {
-                if (mod.HasKeyword(Skyrim.Keyword.ArmorHeavy))
-                    mod.Keywords.Add(ArmorHeavyShield);
-                if (mod.HasKeyword(Skyrim.Keyword.ArmorLight))
-                    mod.Keywords.Add(ArmorLightShield);
+                if (mod.HasKeyword(ArmorHeavy))
+                    mod.Keywords.Add(xMAArmorHeavyShield);
+                if (mod.HasKeyword(ArmorLight))
+                    mod.Keywords.Add(xMAArmorLightShield);
             }
 
             return true;
@@ -364,11 +563,11 @@ namespace SynthusMaximus.Patchers
         private bool MakeClothingMoreExpensive(IArmorGetter a)
         {
             if (a.Value >= ExpensiveClothingThreshold
-                && a.HasKeyword(Skyrim.Keyword.ClothingBody)
-                && !a.HasKeyword(Skyrim.Keyword.ClothingRich))
+                && a.HasKeyword(ClothingBody)
+                && !a.HasKeyword(ClothingRich))
             {
                 var armor = _state.PatchMod.Armors.GetOrAddAsOverride(a);
-                armor.Keywords!.Add(Skyrim.Keyword.ClothingRich);
+                armor.Keywords!.Add(ClothingRich);
                 return true;
             }
 
@@ -378,7 +577,7 @@ namespace SynthusMaximus.Patchers
         private void AddClothingMeltdownRecipe(IArmorGetter a)
         {
             var output = Skyrim.MiscItem.LeatherStrips;
-            var benchKW = Skyrim.Keyword.CraftingTanningRack;
+            var benchKW = CraftingTanningRack;
 
             var inputNum = 1;
             var outputNum = _storage.GetArmorMeltdownOutput(a);
@@ -389,7 +588,7 @@ namespace SynthusMaximus.Patchers
             
             cobj.AddCraftingRequirement(new FormLink<IItemGetter>(a), inputNum);
             cobj.AddCraftingInventoryCondition(new FormLink<IItemGetter>(a));
-            cobj.AddCraftingPerkCondition(PerkSmithingMeltdown);
+            cobj.AddCraftingPerkCondition(xMASMIMeltdown);
             cobj.CreatedObject.SetTo(output);
             cobj.CreatedObjectCount = outputNum;
             cobj.WorkbenchKeyword.SetTo(benchKW);

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using Mutagen.Bethesda;
 using SynthusMaximus.Data.LowLevel;
 using Mutagen.Bethesda.FormKeys.SkyrimSE;
+using SynthusMaximus.Data.Enums;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Keyword;
 
 namespace SynthusMaximus.Data
@@ -216,6 +217,18 @@ namespace SynthusMaximus.Data
         private IEnumerable<string> GetAllBindingMatches<T1>(string toMatch, IEnumerable<T1> bindings) where T1 : IBinding
         {
             return bindings.Where(b => toMatch.Contains(b.SubString)).Select(b => b.Identifier);
+        }
+
+        public IEnumerable<IFormLink<IKeywordGetter>> GetArmorMasqueradeKeywords(IArmorGetter a)
+        {
+            if (!a.Name!.TryLookup(Language.English, out var name))
+                return Array.Empty<IFormLink<IKeywordGetter>>();
+
+            return _armor.ArmorMasqueradeBindings.ArmorMasqueradeBinding
+                .Where(m => name.Contains(m.SubstringArmor))
+                .Select(m => m.MasqueradeFaction.GetDefinition().Keyword)
+                .Where(m => m != null)
+                .Select(m => m!);
         }
     }
 }

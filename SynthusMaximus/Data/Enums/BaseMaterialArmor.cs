@@ -10,6 +10,7 @@ using static Mutagen.Bethesda.FormKeys.SkyrimSE.Dragonborn.MiscItem;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Keyword;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.MiscItem;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Perk;
+using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.Perk;
 
 namespace SynthusMaximus.Data.Enums
 {
@@ -65,7 +66,7 @@ namespace SynthusMaximus.Data.Enums
             new BaseMaterialArmorDefinition(BaseMaterialArmor.Daedric, DaedricSmithing, IngotEbony),
             new BaseMaterialArmorDefinition(BaseMaterialArmor.Fur, default, LeatherStrips, CraftingTanningRack, LeatherStrips),
             new BaseMaterialArmorDefinition(BaseMaterialArmor.Hide, default, LeatherStrips, CraftingTanningRack, LeatherStrips),
-            new BaseMaterialArmorDefinition(BaseMaterialArmor.Leather, Statics.SmithingLeather, LeatherStrips, CraftingTanningRack, LeatherStrips),
+            new BaseMaterialArmorDefinition(BaseMaterialArmor.Leather, xMASMIMaterialLeather, LeatherStrips, CraftingTanningRack, LeatherStrips),
             new BaseMaterialArmorDefinition(BaseMaterialArmor.Elven, ElvenSmithing, IngotIMoonstone),
             new BaseMaterialArmorDefinition(BaseMaterialArmor.Scaled, AdvancedArmors, IngotCorundum),
             new BaseMaterialArmorDefinition(BaseMaterialArmor.Glass, GlassSmithing, IngotMalachite),
@@ -75,8 +76,8 @@ namespace SynthusMaximus.Data.Enums
             new BaseMaterialArmorDefinition(BaseMaterialArmor.NordicHeavy, AdvancedArmors, IngotCorundum, CraftingSmelter, IngotSteel),
             new BaseMaterialArmorDefinition(BaseMaterialArmor.BoneMoldHeavy, AdvancedArmors, IngotIron),
             new BaseMaterialArmorDefinition(BaseMaterialArmor.Chitin, AdvancedArmors, IngotCorundum),
-            new BaseMaterialArmorDefinition(BaseMaterialArmor.Silver, Statics.SmithingSilver, ingotSilver),
-            new BaseMaterialArmorDefinition(BaseMaterialArmor.Gold, Statics.SmithingSilver, IngotGold),
+            new BaseMaterialArmorDefinition(BaseMaterialArmor.Silver, xMASMIMaterialGoldAndSilver, ingotSilver),
+            new BaseMaterialArmorDefinition(BaseMaterialArmor.Gold, xMASMIMaterialGoldAndSilver, IngotGold),
             new BaseMaterialArmorDefinition(BaseMaterialArmor.Wood, default, Charcoal, CraftingSmelter, Firewood01)
         };
         
