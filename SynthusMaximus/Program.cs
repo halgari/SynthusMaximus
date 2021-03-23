@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using LoggingAdvanced.Console;
 using Microsoft.Extensions.Configuration;
@@ -12,9 +13,9 @@ using Synthesis.Bethesda;
 using SynthusMaximus.Data;
 using SynthusMaximus.Patchers;
 using Wabbajack.Common.StatusFeed.Errors;
-using Armor = SynthusMaximus.Data.LowLevel.Armor;
 using Microsoft.Extensions.Hosting;
 using Wabbajack.Common;
+using IPatcher = SynthusMaximus.Patchers.IPatcher;
 
 namespace SynthusMaximus
 {
@@ -44,14 +45,10 @@ namespace SynthusMaximus
                 })
                 .ConfigureServices(c => ConfigureServices(c, state))
                 .Build();
-            var patcher = host.Services.GetService<ArmorPatcher>();
-            if (patcher == null)
-            {
-                Console.WriteLine("Could not create service!");
-                throw new InvalidOperationException("Could not create patcher");
-            }
 
-            patcher!.RunChanges();
+            var runner = host.Services.GetService<PatcherRunner>();
+            runner!.RunPatchers();
+
         }
 
         private static void ConfigureServices(IServiceCollection collection, IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
@@ -63,8 +60,10 @@ namespace SynthusMaximus
                 logging.AddConsole();
             });
             collection.AddSingleton<DataStorage>();
-            collection.AddTransient<ArmorPatcher>();
+            collection.AddTransient<PatcherRunner>();
             collection.AddSingleton(state);
+
+            collection.AddPatchers();
         }
     }
 }

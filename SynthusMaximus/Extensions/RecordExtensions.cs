@@ -1,4 +1,5 @@
-﻿using Mutagen.Bethesda;
+﻿using System.IO;
+using Mutagen.Bethesda;
 using Mutagen.Bethesda.Skyrim;
 using System.Linq;
 using Noggog;
@@ -69,6 +70,13 @@ namespace SynthusMaximus
                 CompareOperator = CompareOperator.EqualTo,
                 ComparisonValue = 1,
             });
+        }
+
+        public static string NameOrThrow(this ITranslatedNamedGetter getter)
+        {
+            if (!getter.Name!.TryLookup(Language.English, out var name) || name == null)
+                throw new InvalidDataException($"Cannot get English name from {getter}");
+            return name!;
         }
     }
 }

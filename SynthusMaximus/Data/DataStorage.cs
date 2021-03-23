@@ -6,7 +6,6 @@ using Mutagen.Bethesda.Skyrim;
 using Newtonsoft.Json;
 using Noggog;
 using Wabbajack.Common;
-using Armor = SynthusMaximus.Data.LowLevel.Armor;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Mutagen.Bethesda;
@@ -19,14 +18,17 @@ namespace SynthusMaximus.Data
 {
     public class DataStorage
     {
-        private Armor _armor = new();
+        private Armors _armor = new();
+        private Weapons _weapons = new();
+        
         private GeneralSettings _generalSettings = new();
         private ILogger<DataStorage> _logger;
 
         public DataStorage(ILogger<DataStorage> logger)
         {
             _logger = logger;
-            _armor = AbsolutePath.EntryPoint.Combine(@"Resources\Armor.json").FromJson<Armor>();
+            _armor = AbsolutePath.EntryPoint.Combine(@"Resources\Armors.json").FromJson<Armors>();
+            _weapons = AbsolutePath.EntryPoint.Combine(@"Resources\Weapons.json").FromJson<Weapons>();
             _generalSettings = AbsolutePath.EntryPoint.Combine(@"Resources\GeneralSettings.json")
                 .FromJson<GeneralSettings>();
         }
@@ -229,6 +231,12 @@ namespace SynthusMaximus.Data
                 .Select(m => m.MasqueradeFaction.GetDefinition().Keyword)
                 .Where(m => m != null)
                 .Select(m => m!);
+        }
+
+        public WeaponOverride? GetWeaponOverride(IWeaponGetter w)
+        {
+            var name = w.NameOrThrow();
+            return _weapons.WeaponOverrides.FirstOrDefault(o => o.FullName == name);
         }
     }
 }

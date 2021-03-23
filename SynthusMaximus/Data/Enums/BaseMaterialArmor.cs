@@ -123,7 +123,7 @@ namespace SynthusMaximus.Data.Enums
         }
     }
     
-    public static class BaseMaterialExtensions
+    public static class BaseMaterialArmorExtensions
     {
         public static BaseMaterialArmorDefinition GetDefinition(this BaseMaterialArmor armor)
         {

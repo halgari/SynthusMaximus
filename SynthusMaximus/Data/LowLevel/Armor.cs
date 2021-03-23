@@ -168,7 +168,7 @@ namespace SynthusMaximus.Data.LowLevel
         public List<Exclusion> Exclusion { get; set; } = new();
     }
     
-    public class Armor
+    public class Armors
     {
         [JsonProperty("armor_settings")]
         public ArmorSettings ArmorSettings { get; set; } = new();
