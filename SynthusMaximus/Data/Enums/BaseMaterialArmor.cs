@@ -41,7 +41,7 @@ namespace SynthusMaximus.Data.Enums
         [EnumMember(Value = "CHITIN")] Chitin,
         [EnumMember(Value = "SILVER")] Silver,
         [EnumMember(Value = "GOLD")] Gold,
-        [EnumMember(Value = "Wood")] Wood,
+        [EnumMember(Value = "WOOD")] Wood,
 
 
     };

@@ -10,7 +10,7 @@ namespace SynthusMaximus.Test
         [Fact]
         public async Task CanLoadData()
         {
-            var storage = new DataStorage(null);
+
 
         }
     }

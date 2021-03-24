@@ -1,0 +1,198 @@
+{
+  "Tier1": {
+    "multiplierMagnitude": "4.25",
+    "multiplierDuration": "1.0",
+    "nameSubstrings": [
+      "Minor",
+      "Weak",
+      "Lingering Magicka Poison",
+      "Lingering Stamina Poison"
+    ]
+  },
+  "Tier2": {
+    "multiplierMagnitude": "6.0",
+    "multiplierDuration": "1.0",
+    "nameSubstrings": [
+      "Potion of Alteration",
+      "Potion of Haggling",
+      "Potion of the Defender",
+      "Potion of the Guardian",
+      "Potion of Strength",
+      "Conjurer's Potion",
+      "Potion of Destruction",
+      "Brawler's Potion",
+      "Potion of the Knight",
+      "Potion of Illusion",
+      "Skirmisher's Potion",
+      "Potion of the Defender",
+      "Potion of True Shot",
+      "Potion of the Warrior",
+      "Potion of Glibness",
+      "Potion of Dexterity",
+      "Potion of the Healer",
+      "Weaponmaster's Potion",
+      "Potion of Light Feet",
+      "Potion of the Berserker",
+      "Potion of Regeneration",
+      "Potion of Lasting Potency",
+      "Potion of Vigor",
+      "Enduring",
+      "Potion of Resist Fire",
+      "Potion of Resist Cold",
+      "Potion of Resist Magic",
+      "Potion of Resist Shock",
+      "Potion of Healing",
+      "Potion of Stamina",
+      "Potion of Magicka",
+      "Potion of Plunder",
+      "Potion of Conflict",
+      "Potion of Larceny",
+      "Potion of Keenshot",
+      "Potion of Escape",
+      "Potion of Health",
+      "Potion of Extra Magicka",
+      "Potion of Enhanced Stamina",
+      "Enduring",
+      "Enduring",
+      "Poi",
+      "ver"
+    ]
+  },
+  "Tier3": {
+    "multiplierMagnitude": "7.8",
+    "multiplierDuration": "1.0",
+    "nameSubstrings": [
+      "Extended",
+      "Draught",
+      "Plentiful",
+      "Potent",
+      "Lasting",
+      "Draught of Lasting Potency"
+    ]
+  },
+  "Tier3.5": {
+    "multiplierMagnitude": "8.2",
+    "multiplierDuration": "1.0",
+    "nameSubstrings": [
+      "Solution",
+      "Solution of Lasting Potency"
+    ]
+  },
+  "Tier4": {
+    "multiplierMagnitude": "9.6",
+    "multiplierDuration": "1.0",
+    "nameSubstrings": [
+      "Philter",
+      "Philter of Lasting Potency",
+      "Potion of Vigorous",
+      "Virulent",
+      "Malign",
+      "Persisting"
+    ]
+  },
+  "Tier5": {
+    "multiplierMagnitude": "11.4",
+    "multiplierDuration": "1.0",
+    "nameSubstrings": [
+      "Prolonged",
+      "Elixir",
+      "Elixir of Lasting Potency",
+      "Extreme",
+      "Deadly",
+      "Unceasing"
+    ]
+  },
+  "Tier6": {
+    "multiplierMagnitude": "15.96",
+    "multiplierDuration": "1.2",
+    "nameSubstrings": [
+      "Grand Elixir"
+    ]
+  },
+  "Tier7": {
+    "multiplierMagnitude": "17.00",
+    "multiplierDuration": "1.25",
+    "nameSubstrings": [
+      "Prime Elixir"
+    ]
+  },
+  "DamRegen1": {
+    "multiplierMagnitude": "1.0",
+    "multiplierDuration": "3.0",
+    "nameSubstrings": [
+      "Weak Recovery Poison",
+      "Weak Vigor Poison"
+    ]
+  },
+  "DamRegen2": {
+    "multiplierMagnitude": "1.0",
+    "multiplierDuration": "5.0",
+    "nameSubstrings": [
+      "Magicka Recovery Poison",
+      "Vigor Poison"
+    ]
+  },
+  "DamRegen3": {
+    "multiplierMagnitude": "1.0",
+    "multiplierDuration": "7.0",
+    "nameSubstrings": [
+      "Potent Recovery Poison",
+      "Potent Vigor Poison"
+    ]
+  },
+  "DamRegen4": {
+    "multiplierMagnitude": "1.0",
+    "multiplierDuration": "9.0",
+    "nameSubstrings": [
+      "Malign Recovery Poison",
+      "Malign Vigor Poison"
+    ]
+  },
+  "DamRegen5": {
+    "multiplierMagnitude": "1.0",
+    "multiplierDuration": "10.0",
+    "nameSubstrings": [
+      "Deadly Recovery Poison"
+    ]
+  },
+  "MindAffecting1": {
+    "multiplierMagnitude": "8.0",
+    "multiplierDuration": "0.7",
+    "nameSubstrings": [
+      "Weak Fear Poison",
+      "Weak Frenzy Poison"
+    ]
+  },
+  "MindAffecting2": {
+    "multiplierMagnitude": "12.2",
+    "multiplierDuration": "1.0",
+    "nameSubstrings": [
+      "Fear Poison",
+      "Frenzy Poison"
+    ]
+  },
+  "MindAffecting3": {
+    "multiplierMagnitude": "18.3",
+    "multiplierDuration": "1.0",
+    "nameSubstrings": [
+      "Potent Fear Poison",
+      "Potent Frenzy Poison"
+    ]
+  },
+  "MindAffecting4": {
+    "multiplierMagnitude": "24.4",
+    "multiplierDuration": "1.0",
+    "nameSubstrings": [
+      "Virulent Fear Poison",
+      "Virulent Frenzy Poison"
+    ]
+  },
+  "MindAffecting5": {
+    "multiplierMagnitude": "30.5",
+    "multiplierDuration": "1.0",
+    "nameSubstrings": [
+      "Deadly Fear Poison",
+      "Deadly Frenzy Poison"
+    ]
+  }
+}

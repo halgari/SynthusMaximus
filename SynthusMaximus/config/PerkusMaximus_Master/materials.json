@@ -1,0 +1,344 @@
+{
+  "Iron": {
+    "smithingPerk": null,
+    "breakdownProduct": "IngotIron",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotIron"
+  },
+  "Studded": {
+    "smithingPerk": null,
+    "breakdownProduct": "IngotIron",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotIron"
+  },
+  "IronBanded": {
+    "smithingPerk": null,
+    "breakdownProduct": "IngotIron",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotIron"
+  },
+  "Steel": {
+    "smithingPerk": "SteelSmithing",
+    "breakdownProduct": "IngotSteel",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotSteel"
+  },
+  "Dawnguard": {
+    "smithingPerk": "SteelSmithing",
+    "breakdownProduct": "IngotSteel",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotSteel"
+  },
+  "Hunter": {
+    "smithingPerk": "SteelSmithing",
+    "breakdownProduct": "IngotSteel",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotSteel"
+  },
+  "Imperial": {
+    "smithingPerk": "SteelSmithing",
+    "breakdownProduct": "IngotSteel",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotSteel"
+  },
+  "ImperialHeavy": {
+    "smithingPerk": "SteelSmithing",
+    "breakdownProduct": "IngotSteel",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotSteel"
+  },
+  "Blades": {
+    "smithingPerk": "SteelSmithing",
+    "breakdownProduct": "IngotSteel",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotSteel"
+  },
+  "Penitus": {
+    "smithingPerk": "SteelSmithing",
+    "breakdownProduct": "IngotSteel",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotSteel"
+  },
+  "Dwarven": {
+    "smithingPerk": "DwarvenSmithing",
+    "breakdownProduct": "IngotDwarven",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotDwarven"
+  },
+  "Falmer": {
+    "smithingPerk": "AdvancedArmors",
+    "breakdownProduct": "ChaurusChitin",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "ChaurusChitin"
+  },
+  "FalmerHardened": {
+    "smithingPerk": "AdvancedArmors",
+    "breakdownProduct": "ChaurusChitin",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "ChaurusChitin"
+  },
+  "FalmerHeavy": {
+    "smithingPerk": "AdvancedArmors",
+    "breakdownProduct": "ChaurusChitin",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "ChaurusChitin"
+  },
+  "FalmerHeavyOriginal": {
+    "smithingPerk": "AdvancedArmors",
+    "breakdownProduct": "ChaurusChitin",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "ChaurusChitin"
+  },
+  "Orcish": {
+    "smithingPerk": "OrcishSmithing",
+    "breakdownProduct": "IngotOrichalcum",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotOrichalcum"
+  },
+  "Ebony": {
+    "smithingPerk": "EbonySmithing",
+    "breakdownProduct": "IngotEbony",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotEbony"
+  },
+  "Dragonplate": {
+    "smithingPerk": "DragonArmor",
+    "breakdownProduct": "DragonBone",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "DragonBone"
+  },
+  "Daedric": {
+    "smithingPerk": "DaedricSmithing",
+    "breakdownProduct": "IngotEbony",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotEbony"
+  },
+  "Elven": {
+    "smithingPerk": "ElvenSmithing",
+    "breakdownProduct": "IngotIMoonstone",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotIMoonstone"
+  },
+  "ElvenGilded": {
+    "smithingPerk": "ElvenSmithing",
+    "breakdownProduct": "IngotQuicksilver",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotQuicksilver"
+  },
+  "Glass": {
+    "smithingPerk": "GlassSmithing",
+    "breakdownProduct": "IngotMalachite",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotMalachite"
+  },
+  "Dragonscale": {
+    "smithingPerk": "DragonArmor",
+    "breakdownProduct": "DragonScales",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "DragonScales"
+  },
+  "Dragonbone": {
+    "smithingPerk": "DragonArmor",
+    "breakdownProduct": "DragonBone",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "DragonBone"
+  },
+  "Wood": {
+    "smithingPerk": null,
+    "breakdownProduct": "Charcoal",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "Firewood01"
+  },
+  "Advanced": {
+    "smithingPerk": "AdvancedArmors",
+    "breakdownProduct": "IngotCorundum",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotCorundum"
+  },
+  "Silver": {
+    "smithingPerk": "xMASMIMaterialGoldAndSilver",
+    "breakdownProduct": "ingotSilver",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "ingotSilver"
+  },
+  "RefinedSilver": {
+    "smithingPerk": "xMASMIMaterialRefinedSilver",
+    "breakdownProduct": "ingotSilver",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "ingotSilver"
+  },
+  "Draugr": {
+    "smithingPerk": "SteelSmithing",
+    "breakdownProduct": "IngotSteel",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotSteel"
+  },
+  "DraugrHoned": {
+    "smithingPerk": "SteelSmithing",
+    "breakdownProduct": "IngotSteel",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotSteel"
+  },
+  "Chitin": {
+    "smithingPerk": "AdvancedArmors",
+    "breakdownProduct": "IngotCorundum",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotCorundum"
+  },
+  "ChitinLight": {
+    "smithingPerk": "AdvancedArmors",
+    "breakdownProduct": "IngotCorundum",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotCorundum"
+  },
+  "ChitinHeavy": {
+    "smithingPerk": "AdvancedArmors",
+    "breakdownProduct": "IngotCorundum",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotCorundum"
+  },
+  "Gold": {
+    "smithingPerk": "xMASMIMaterialGoldAndSilver",
+    "breakdownProduct": "IngotGold",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotGold"
+  },
+  "Bonemold": {
+    "smithingPerk": "AdvancedArmors",
+    "breakdownProduct": "IngotIron",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotIron"
+  },
+  "BonemoldHeavy": {
+    "smithingPerk": "AdvancedArmors",
+    "breakdownProduct": "IngotIron",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotIron"
+  },
+  "SteelPlate": {
+    "smithingPerk": "AdvancedArmors",
+    "breakdownProduct": "IngotSteel",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotSteel"
+  },
+  "Fur": {
+    "smithingPerk": null,
+    "breakdownProduct": "LeatherStrips",
+    "breakdownStation": "CraftingTanningRack",
+    "temperingInput": "LeatherStrips"
+  },
+  "Hide": {
+    "smithingPerk": null,
+    "breakdownProduct": "LeatherStrips",
+    "breakdownStation": "CraftingTanningRack",
+    "temperingInput": "LeatherStrips"
+  },
+  "Leather": {
+    "smithingPerk": "xMASMIMaterialLeather",
+    "breakdownProduct": "LeatherStrips",
+    "breakdownStation": "CraftingTanningRack",
+    "temperingInput": "LeatherStrips"
+  },
+  "MoragTong": {
+    "smithingPerk": "AdvancedArmors",
+    "breakdownProduct": "LeatherStrips",
+    "breakdownStation": "CraftingTanningRack",
+    "temperingInput": "LeatherStrips"
+  },
+  "Linwe": {
+    "smithingPerk": "xMASMIMaterialLeather",
+    "breakdownProduct": "LeatherStrips",
+    "breakdownStation": "CraftingTanningRack",
+    "temperingInput": "LeatherStrips"
+  },
+  "Blackguard": {
+    "smithingPerk": "xMASMIMaterialLeather",
+    "breakdownProduct": "LeatherStrips",
+    "breakdownStation": "CraftingTanningRack",
+    "temperingInput": "LeatherStrips"
+  },
+  "Forsworn": {
+    "smithingPerk": "xMASMIMaterialLeather",
+    "breakdownProduct": "LeatherStrips",
+    "breakdownStation": "CraftingTanningRack",
+    "temperingInput": "LeatherStrips"
+  },
+  "MS02Forsworn": {
+    "smithingPerk": "xMASMIMaterialLeather",
+    "breakdownProduct": "LeatherStrips",
+    "breakdownStation": "CraftingTanningRack",
+    "temperingInput": "LeatherStrips"
+  },
+  "Stormcloak": {
+    "smithingPerk": "xMASMIMaterialLeather",
+    "breakdownProduct": "LeatherStrips",
+    "breakdownStation": "CraftingTanningRack",
+    "temperingInput": "LeatherStrips"
+  },
+  "BearStormcloak": {
+    "smithingPerk": "xMASMIMaterialLeather",
+    "breakdownProduct": "LeatherStrips",
+    "breakdownStation": "CraftingTanningRack",
+    "temperingInput": "LeatherStrips"
+  },
+  "ImperialLight": {
+    "smithingPerk": "xMASMIMaterialLeather",
+    "breakdownProduct": "LeatherStrips",
+    "breakdownStation": "CraftingTanningRack",
+    "temperingInput": "LeatherStrips"
+  },
+  "ImperialStudded": {
+    "smithingPerk": "xMASMIMaterialLeather",
+    "breakdownProduct": "LeatherStrips",
+    "breakdownStation": "CraftingTanningRack",
+    "temperingInput": "LeatherStrips"
+  },
+  "ThievesGuild": {
+    "smithingPerk": "xMASMIMaterialLeather",
+    "breakdownProduct": "LeatherStrips",
+    "breakdownStation": "CraftingTanningRack",
+    "temperingInput": "LeatherStrips"
+  },
+  "ThievesGuildLeader": {
+    "smithingPerk": "xMASMIMaterialLeather",
+    "breakdownProduct": "LeatherStrips",
+    "breakdownStation": "CraftingTanningRack",
+    "temperingInput": "LeatherStrips"
+  },
+  "Scaled": {
+    "smithingPerk": "AdvancedArmors",
+    "breakdownProduct": "IngotCorundum",
+    "breakdownStation": "CraftingTanningRack",
+    "temperingInput": "IngotCorundum"
+  },
+  "Stalhrim": {
+    "smithingPerk": "EbonySmithing",
+    "breakdownProduct": "DLC2OreStalhrim",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "DLC2OreStalhrim"
+  },
+  "StalhrimLight": {
+    "smithingPerk": "EbonySmithing",
+    "breakdownProduct": "DLC2OreStalhrim",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "DLC2OreStalhrim"
+  },
+  "StalhrimHeavy": {
+    "smithingPerk": "EbonySmithing",
+    "breakdownProduct": "DLC2OreStalhrim",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "DLC2OreStalhrim"
+  },
+  "Nordic": {
+    "smithingPerk": "AdvancedArmors",
+    "breakdownProduct": "IngotCorundum",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotCorundum"
+  },
+  "NordicHeavy": {
+    "smithingPerk": "AdvancedArmors",
+    "breakdownProduct": "IngotQuicksilver",
+    "breakdownStation": "CraftingSmelter",
+    "temperingInput": "IngotQuicksilver"
+  }
+}

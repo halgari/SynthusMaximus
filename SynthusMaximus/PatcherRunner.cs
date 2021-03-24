@@ -24,7 +24,7 @@ namespace SynthusMaximus
             {
                 _logger.LogInformation("Running {Patcher}", patcher.GetType().Name);
                 Stopwatch sw = Stopwatch.StartNew();
-                patcher.RunPatcher();
+                //patcher.RunPatcher();
                 _logger.LogInformation("Finished running {Patcher} in {MS}ms", patcher.GetType().Name,
                     sw.ElapsedMilliseconds);
 

@@ -14,7 +14,7 @@ using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.Perk;
 
 namespace SynthusMaximus.Data.Enums
 {
-    public enum BaseMaterialWeapon
+    public enum BaseMaterialWeapon : int
     {
         [EnumMember(Value = "NONE")] None,
         [EnumMember(Value = "IRON")] Iron,

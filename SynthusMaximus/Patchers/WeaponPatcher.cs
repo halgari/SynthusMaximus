@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Mutagen.Bethesda;
@@ -45,6 +46,14 @@ namespace SynthusMaximus.Patchers
                             ApplyWeaponOverride(w, wo);
                         }
 
+                        if (!ShouldPatch(w))
+                        {
+                            _logger.LogTrace("{EditorID} : Ignored", w.EditorID);
+                            continue;
+                        }
+
+                        var wt = _storage.GetWeaponType(w);
+
                     }
 
                 }
@@ -54,6 +63,22 @@ namespace SynthusMaximus.Patchers
                 }
             }
         }
+
+        private bool ShouldPatch(IWeaponGetter w)
+        {
+            if (!w.Template.IsNull)
+                return false;
+            if (w.HasKeyword(WeapTypeStaff))
+                return false;
+            if (w.Name == null || !w.Name!.TryLookup(Language.English, out var name) || string.IsNullOrEmpty(name))
+                return false;
+            if (WeaponsWithoutMaterialOrType.Contains(w.FormKey))
+                return false;
+            return true;
+
+        }
+
+        public HashSet<FormKey> WeaponsWithoutMaterialOrType { get; set; } = new();
 
         private void ApplyWeaponOverride(IWeaponGetter wg, WeaponOverride wo)
         {

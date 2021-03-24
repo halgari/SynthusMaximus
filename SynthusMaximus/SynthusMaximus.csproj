@@ -8,6 +8,7 @@
 
     <ItemGroup>
       <PackageReference Include="LoggingAdvanced.Console" Version="0.4.1" />
+      <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="3.9.0" />
       <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
       <PackageReference Include="Microsoft.Extensions.Logging" Version="5.0.0" />
       <PackageReference Include="Mutagen.Bethesda.FormKeys.SkyrimSE" Version="2.0.0" />
@@ -17,20 +18,23 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Resources\Armor.xml">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
-      <None Update="Resources\Armors.json">
-        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      </None>
       <None Update="appsettings.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Resources\GeneralSettings.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <None Update="Resources\PerkusMaximus_Master\materials.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="Resources\Weapons.json">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <None Update="config\PerkusMaximus_Master\materials.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\armor\armorModifiers.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\armor\armorMasqueradeBindings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\armor\armorMaterials.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
     </ItemGroup>
 

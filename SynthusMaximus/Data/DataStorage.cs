@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using Mutagen.Bethesda.Skyrim;
@@ -7,10 +8,14 @@ using Newtonsoft.Json;
 using Noggog;
 using Wabbajack.Common;
 using System.Linq;
+using System.Threading;
 using Microsoft.Extensions.Logging;
 using Mutagen.Bethesda;
 using SynthusMaximus.Data.LowLevel;
 using Mutagen.Bethesda.FormKeys.SkyrimSE;
+using Mutagen.Bethesda.Synthesis;
+using SynthusMaximus.Data.Converters;
+using SynthusMaximus.Data.DTOs;
 using SynthusMaximus.Data.Enums;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Keyword;
 
@@ -23,14 +28,110 @@ namespace SynthusMaximus.Data
         
         private GeneralSettings _generalSettings = new();
         private ILogger<DataStorage> _logger;
+        private IPatcherState<ISkyrimMod, ISkyrimModGetter> _state;
+        private JsonSerializerSettings _serializerSettings;
+        private IList<ArmorModifier> _armorModifiers;
+        private IDictionary<string, Material> _materials;
+        private IList<ArmorMasqueradeBinding> _armorMasqueradeBindings;
+        private IDictionary<string, DTOs.Armor.ArmorMaterial> _armorMaterials;
 
-        public DataStorage(ILogger<DataStorage> logger)
+        public DataStorage(ILogger<DataStorage> logger, IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
+            _state = state;
             _logger = logger;
-            _armor = AbsolutePath.EntryPoint.Combine(@"Resources\Armors.json").FromJson<Armors>();
-            _weapons = AbsolutePath.EntryPoint.Combine(@"Resources\Weapons.json").FromJson<Weapons>();
-            _generalSettings = AbsolutePath.EntryPoint.Combine(@"Resources\GeneralSettings.json")
-                .FromJson<GeneralSettings>();
+
+
+            //_armor = AbsolutePath.EntryPoint.Combine(@"Resources\Armors.json").FromJson<Armors>();
+            //_weapons = AbsolutePath.EntryPoint.Combine(@"Resources\Weapons.json").FromJson<Weapons>();
+            //_generalSettings = AbsolutePath.EntryPoint.Combine(@"Resources\GeneralSettings.json")
+           //     .FromJson<GeneralSettings>();
+            _serializerSettings = new JsonSerializerSettings();
+
+            var sw = Stopwatch.StartNew();
+            var converters = new List<Task<JsonConverter>>()
+            {
+                Task.Run(() => (JsonConverter) new PerkConverter(state)),
+                Task.Run(() => (JsonConverter) new ItemConverter(state)),
+                Task.Run(() => (JsonConverter) new KeywordConverter(state)),
+            };
+
+            _serializerSettings.Converters = converters.Select(c => c.Result)
+                .Concat(new JsonConverter[]
+                {
+                    new BaseMaterialArmorConverter(),
+                    new BaseMaterialArmorConverter(),
+                    new MasqueradeFactionConverter(),
+                    new ArmorClassConverter()
+                })
+                .ToList();
+            _logger.LogInformation("Loaded converters in {MS}ms", sw.ElapsedMilliseconds);
+            
+            sw.Restart();
+            _materials = LoadDictionary<string, Material>("materials.json");
+            _armorModifiers = LoadList<ArmorModifier>(@"armor\armorModifiers.json");
+            _armorMasqueradeBindings = LoadList<ArmorMasqueradeBinding>(@"armor\armorMasqueradeBindings.json");
+            _armorMaterials = LoadDictionary<string, DTOs.Armor.ArmorMaterial>(@"armor\armorMaterials.json");
+            _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
+
+            
+        }
+        
+        private IDictionary<TK, TV> LoadDictionary<TK, TV>(string name)
+            where TK : notnull
+        {
+            Dictionary<TK, TV> acc = new();
+            foreach (var (modKey, _) in _state.LoadOrder)
+            {
+                var pathA = ((AbsolutePath) _state.DataFolderPath).Combine("config", modKey.Name, name);
+                var pathB = AbsolutePath.EntryPoint.Combine("config", modKey.Name, name);
+                Dictionary<TK, TV> data;
+                if (pathA.Exists)
+                {
+                    _logger.LogInformation("Loading {Path}", pathA);
+                    data = JsonConvert.DeserializeObject<Dictionary<TK, TV>>(pathA.ReadAllText(), _serializerSettings)!;
+                }
+                else if (pathB.Exists)
+                {
+                    _logger.LogInformation("Loading {Path}", pathB);
+                    data = JsonConvert.DeserializeObject<Dictionary<TK, TV>>(pathB.ReadAllText(), _serializerSettings)!;
+                }
+                else
+                    continue;
+                
+                foreach (var (key, value) in data)
+                    acc[key] = value;
+                
+            }
+
+            return acc;
+        }
+        
+        private IList<TV> LoadList<TV>(string name)
+            where TV : notnull
+        {
+            List<TV> acc = new();
+            foreach (var (modKey, _) in _state.LoadOrder)
+            {
+                var pathA = ((AbsolutePath) _state.DataFolderPath).Combine("config", modKey.Name, name);
+                var pathB = AbsolutePath.EntryPoint.Combine("config", modKey.Name, name);
+                List<TV> data;
+                if (pathA.Exists)
+                {
+                    _logger.LogInformation("Loading {Path}", pathA);
+                    data = JsonConvert.DeserializeObject<List<TV>>(pathA.ReadAllText(), _serializerSettings)!;
+                }
+                else if (pathB.Exists)
+                {
+                    _logger.LogInformation("Loading {Path}", pathB);
+                    data = JsonConvert.DeserializeObject<List<TV>>(pathB.ReadAllText(), _serializerSettings)!;
+                }
+                else
+                    continue;
+                
+                acc.AddRange(data);
+            }
+
+            return acc;
         }
 
         public bool UseWarrior => _generalSettings.UseWarrior;
@@ -237,6 +338,18 @@ namespace SynthusMaximus.Data
         {
             var name = w.NameOrThrow();
             return _weapons.WeaponOverrides.FirstOrDefault(o => o.FullName == name);
+        }
+
+        public object GetWeaponType(IWeaponGetter weaponGetter)
+        {
+            throw new NotImplementedException();
+        }
+        
+        public WeaponMaterial? GetWeaponMaterial(IWeaponGetter w)
+        {
+            //return QuerySingleBindingInBindables(w.NameOrThrow(), _weapons.WeaponMaterialBindings.Binding,
+            //    _weapons.WeaponMaterials.WeaponMaterial);
+            return null;
         }
     }
 }

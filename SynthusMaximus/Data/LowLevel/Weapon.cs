@@ -110,8 +110,6 @@ namespace SynthusMaximus.Data.LowLevel
     public class WeaponTypeBindings
     {
         [JsonProperty("binding")] public List<Binding> Binding { get; set; }
-
-        [JsonProperty("bindin")] public Bindin Bindin { get; set; }
     }
 
     public class WeaponType
