@@ -20,19 +20,19 @@ namespace SynthusMaximus.Data.DTOs.Armor
         public float ArmorFactorShield { get; set; }
 
         [JsonProperty("meltdownOutputBody")]
-        public int MeltdownOutputBody { get; set; }
+        public ushort MeltdownOutputBody { get; set; }
 
         [JsonProperty("meltdownOutputFeet")]
-        public int MeltdownOutputFeet { get; set; }
+        public ushort MeltdownOutputFeet { get; set; }
 
         [JsonProperty("meltdownOutputHands")]
-        public int MeltdownOutputHands { get; set; }
+        public ushort MeltdownOutputHands { get; set; }
 
         [JsonProperty("meltdownOutputHead")]
-        public int MeltdownOutputHead { get; set; }
+        public ushort MeltdownOutputHead { get; set; }
 
         [JsonProperty("meltdownOutputShield")]
-        public int MeltdownOutputShield { get; set; }
+        public ushort MeltdownOutputShield { get; set; }
 
         [JsonProperty("maxProtection")]
         public float MaxProtection { get; set; }

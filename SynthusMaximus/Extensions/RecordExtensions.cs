@@ -74,8 +74,15 @@ namespace SynthusMaximus
 
         public static string NameOrThrow(this ITranslatedNamedGetter getter)
         {
-            if (!getter.Name!.TryLookup(Language.English, out var name) || name == null)
+            if (getter.Name == null || !getter.Name!.TryLookup(Language.English, out var name) || name == null)
                 throw new InvalidDataException($"Cannot get English name from {getter}");
+            return name!;
+        }
+        
+        public static string NameOrEmpty(this ITranslatedNamedGetter getter)
+        {
+            if (getter.Name == null || !getter.Name!.TryLookup(Language.English, out var name) || name == null)
+                return "";
             return name!;
         }
     }

@@ -11,21 +11,19 @@ using Wabbajack.Common;
 
 using Mutagen.Bethesda.FormKeys.SkyrimSE;
 using Noggog;
+using SynthusMaximus.Data.DTOs.Armor;
 using SynthusMaximus.Data.Enums;
-using SynthusMaximus.Data.LowLevel;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Keyword;
 using static SynthusMaximus.Data.Statics;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.Keyword;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.Perk;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.MiscItem;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.MiscItem;
-using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Perk;
-using Mutagen.Bethesda.FormKeys.SkyrimSE;
 using Armor = Mutagen.Bethesda.Skyrim.Armor;
 
 namespace SynthusMaximus.Patchers
 {
-    public class ArmorPatcher
+    public class ArmorPatcher : IPatcher
     {
         private ILogger<ArmorPatcher> _logger;
         private DataStorage _storage;
@@ -37,9 +35,10 @@ namespace SynthusMaximus.Patchers
             _logger = logger;
             _storage = storage;
             _state = state;
+            _logger.LogInformation("ArmorPatcher initialized");
         }
-
-        public void RunChanges()
+        
+        public void RunPatcher()
         {
             var addRecord = false;
 
@@ -289,7 +288,7 @@ namespace SynthusMaximus.Patchers
             var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixArmor + newArmor.EditorID + oldArmor.FormKey;
 
-            var matdesc = am.MaterialTemper.GetDefinition();
+            var matdesc = am.Type.GetDefinition();
             var materialPerk = matdesc.SmithingPerk;
             var input = matdesc.TemperingInput;
             
@@ -363,7 +362,7 @@ namespace SynthusMaximus.Patchers
             var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixArmor + newArmor.EditorID + oldArmor.FormKey;
 
-            var matdesc = am.MaterialTemper.GetDefinition();
+            var matdesc = am.Type.GetDefinition();
             var materialPerk = matdesc.SmithingPerk;
             var input = matdesc.TemperingInput;
             
@@ -389,7 +388,7 @@ namespace SynthusMaximus.Patchers
             var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixArmor + newArmor.EditorID + oldArmor.FormKey;
 
-            var matdesc = am.MaterialTemper.GetDefinition();
+            var matdesc = am.Type.GetDefinition();
             var materialPerk = matdesc.SmithingPerk;
             var input = matdesc.TemperingInput;
             cobj.WorkbenchKeyword.SetTo(CraftingSmithingForge);
@@ -413,7 +412,7 @@ namespace SynthusMaximus.Patchers
             cobj.EditorID = SPrefixPatcher + SPrefixArmor + SPrefixTemper + a.EditorID +
                             a.FormKey;
 
-            var materialDefinition = am.MaterialTemper.GetDefinition();
+            var materialDefinition = am.Type.GetDefinition();
             var temperInput = materialDefinition.TemperingInput;
             var perk = materialDefinition.SmithingPerk;
 
@@ -442,7 +441,7 @@ namespace SynthusMaximus.Patchers
 
         private void AddMeltdownRecipe(IArmorGetter a, ArmorMaterial am)
         {
-            var meltdownDefintion = am.MaterialMeltdown.GetDefinition();
+            var meltdownDefintion = am.Type.GetDefinition();
             var requiredPerk = meltdownDefintion.SmithingPerk;
             var output = meltdownDefintion.MeltdownProduct;
             var benchKW = meltdownDefintion.MeltdownCraftingStation;
@@ -500,21 +499,21 @@ namespace SynthusMaximus.Patchers
 
             mod.Keywords ??= new ExtendedList<IFormLinkGetter<IKeywordGetter>>();
 
-            switch (am.Type)
+            switch (am.Class)
             {
-                case ArmorMaterial.ArmorType.LIGHT:
+                case ArmorClass.Light :
                     mod.Keywords!.Add(ArmorLight);
                     mod.BodyTemplate!.ArmorType = ArmorType.LightArmor;
                     break;
-                case ArmorMaterial.ArmorType.HEAVY:
+                case ArmorClass.Heavy:
                     mod.Keywords!.Add(ArmorHeavy);
                     mod.BodyTemplate!.ArmorType = ArmorType.HeavyArmor;
                     break;
-                case ArmorMaterial.ArmorType.BOTH:
+                case ArmorClass.Both:
                     mod.Keywords!.Add(ArmorLight);
                     mod.Keywords!.Add(ArmorHeavy);
                     break;
-                case ArmorMaterial.ArmorType.UNDEFINED:
+                case ArmorClass.Undefined:
                     return true;
                 default:
                     return true;

@@ -36,6 +36,11 @@
       <None Update="config\PerkusMaximus_Master\armor\armorMaterials.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="config\PerkusMaximus_Master\armor\armorSettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <Compile Remove="Patchers\WeaponPatcher.cs" />
+      <None Include="Patchers\WeaponPatcher.cs" />
     </ItemGroup>
 
     <ItemGroup>

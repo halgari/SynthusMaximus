@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Noggog;
 using Wabbajack.Common;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading;
 using Microsoft.Extensions.Logging;
 using Mutagen.Bethesda;
@@ -16,6 +17,7 @@ using Mutagen.Bethesda.FormKeys.SkyrimSE;
 using Mutagen.Bethesda.Synthesis;
 using SynthusMaximus.Data.Converters;
 using SynthusMaximus.Data.DTOs;
+using SynthusMaximus.Data.DTOs.Armor;
 using SynthusMaximus.Data.Enums;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Keyword;
 
@@ -23,9 +25,6 @@ namespace SynthusMaximus.Data
 {
     public class DataStorage
     {
-        private Armors _armor = new();
-        private Weapons _weapons = new();
-        
         private GeneralSettings _generalSettings = new();
         private ILogger<DataStorage> _logger;
         private IPatcherState<ISkyrimMod, ISkyrimModGetter> _state;
@@ -34,6 +33,8 @@ namespace SynthusMaximus.Data
         private IDictionary<string, Material> _materials;
         private IList<ArmorMasqueradeBinding> _armorMasqueradeBindings;
         private IDictionary<string, DTOs.Armor.ArmorMaterial> _armorMaterials;
+        private IDictionary<ExclusionType, List<Regex>> _armorReforgeExclusions;
+        private ArmorSettings _armorSettings;
 
         public DataStorage(ILogger<DataStorage> logger, IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
@@ -61,21 +62,92 @@ namespace SynthusMaximus.Data
                     new BaseMaterialArmorConverter(),
                     new BaseMaterialArmorConverter(),
                     new MasqueradeFactionConverter(),
-                    new ArmorClassConverter()
+                    new ArmorClassConverter(),
+                    new ExclusionTypeConverter()
                 })
                 .ToList();
             _logger.LogInformation("Loaded converters in {MS}ms", sw.ElapsedMilliseconds);
             
             sw.Restart();
             _materials = LoadDictionary<string, Material>("materials.json");
+            _armorSettings = LoadObject<ArmorSettings>(@"armor\armorSettings.json");
             _armorModifiers = LoadList<ArmorModifier>(@"armor\armorModifiers.json");
             _armorMasqueradeBindings = LoadList<ArmorMasqueradeBinding>(@"armor\armorMasqueradeBindings.json");
             _armorMaterials = LoadDictionary<string, DTOs.Armor.ArmorMaterial>(@"armor\armorMaterials.json");
+            _armorReforgeExclusions = LoadValueConcatDictionary<ExclusionType, Regex>(@"exclusions\armor");
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
             
         }
+
+        private T LoadObject<T>(string name)
+        {
+            T acc = default;
+            foreach (var (modKey, _) in _state.LoadOrder)
+            {
+                var pathA = ((AbsolutePath) _state.DataFolderPath).Combine("config", modKey.Name, name);
+                var pathB = AbsolutePath.EntryPoint.Combine("config", modKey.Name, name);
+                T data;
+                if (pathA.Exists)
+                {
+                    _logger.LogInformation("Loading {Path}", pathA);
+                    data = JsonConvert.DeserializeObject<T>(pathA.ReadAllText(), _serializerSettings)!;
+                }
+                else if (pathB.Exists)
+                {
+                    _logger.LogInformation("Loading {Path}", pathB);
+                    data = JsonConvert.DeserializeObject<T>(pathB.ReadAllText(), _serializerSettings)!;
+                }
+                else
+                    continue;
+
+                acc = data;
+
+            }
+
+            return acc;
+        }
+
+        private IDictionary<TK, List<TV>> LoadValueConcatDictionary<TK, TV>(string name)
+            where TK : notnull
+        {
+            Dictionary<TK, List<TV>> acc = new();
+            foreach (var (modKey, _) in _state.LoadOrder)
+            {
+                var pathA = ((AbsolutePath) _state.DataFolderPath).Combine("config", modKey.Name, name);
+                var pathB = AbsolutePath.EntryPoint.Combine("config", modKey.Name, name);
+                Dictionary<TK, List<TV>> data;
+                if (pathA.Exists)
+                {
+                    _logger.LogInformation("Loading {Path}", pathA);
+                    data = JsonConvert.DeserializeObject<Dictionary<TK, List<TV>>>(pathA.ReadAllText(), _serializerSettings)!;
+                }
+                else if (pathB.Exists)
+                {
+                    _logger.LogInformation("Loading {Path}", pathB);
+                    data = JsonConvert.DeserializeObject<Dictionary<TK, List<TV>>>(pathB.ReadAllText(), _serializerSettings)!;
+                }
+                else
+                    continue;
+
+                foreach (var (key, value) in data)
+                {
+                    if (acc.TryGetValue(key, out var old))
+                    {
+                    }
+                    else
+                    {
+                        old = new List<TV>();
+                        acc[key] = old;
+                    }
+                    old.AddRange(value);
+                }
+
+            }
+            return acc;
+        }
         
+
         private IDictionary<TK, TV> LoadDictionary<TK, TV>(string name)
             where TK : notnull
         {
@@ -157,26 +229,41 @@ namespace SynthusMaximus.Data
         public ushort GetArmorMeltdownOutput(IArmorGetter a)
         {
             if (a.HasAnyKeyword(ArmorBoots, ClothingFeet))
-                return (ushort)_armor.ArmorSettings.MeltdownOutputFeet;
+                return _armorSettings.MeltdownOutputFeet;
             if (a.HasAnyKeyword(ArmorHelmet, ClothingHead))
-                return (ushort)_armor.ArmorSettings.MeltdownOutputHead;
+                return _armorSettings.MeltdownOutputHead;
             if (a.HasAnyKeyword(ArmorGauntlets, ClothingHands))
-                return (ushort)_armor.ArmorSettings.MeltdownOutputHands;
+                return _armorSettings.MeltdownOutputHands;
             if (a.HasAnyKeyword(ArmorCuirass, ClothingBody))
-                return (ushort)_armor.ArmorSettings.MeltdownOutputBody;
+                return _armorSettings.MeltdownOutputBody;
             if (a.HasKeyword(ArmorShield))
-                return (ushort)_armor.ArmorSettings.MeltdownOutputShield;
+                return _armorSettings.MeltdownOutputShield;
             return 0;
         }
 
         public ArmorMaterial? GetArmorMaterial(IArmorGetter a)
         {
-            if (a.Name == null) return null;
-            if (!a.Name.TryLookup(Language.English, out var toMatch))
-                return null;
-            return QuerySingleBindingInBindables(toMatch, 
-                _armor.ArmorMaterialBindings.Binding,
-                _armor.ArmorMaterials.ArmorMaterial);
+            return FindSingleBiggestSubstringMatch(_armorMaterials.Values, a.NameOrEmpty(), m => m.SubStrings);
+        }
+
+        private static T? FindSingleBiggestSubstringMatch<T>(IEnumerable<T> coll, string toMatch, Func<T, IEnumerable<string>> substringSelector)
+        {
+            T? bestMatch = default;
+            var maxHitSize = 0;
+
+            foreach (var item in coll)
+            {
+                foreach (var substring in substringSelector(item))
+                {
+                    if (!toMatch.Contains(substring)) continue;
+                    if (substring.Length <= maxHitSize) continue;
+                    
+                    maxHitSize = substring.Length;
+                    bestMatch = item;
+                }
+            }
+            return bestMatch;
+
         }
 
         private T2? QuerySingleBindingInBindables<T1, T2>(string toMatch, List<T1> bindings, List<T2> bindables)
@@ -219,19 +306,19 @@ namespace SynthusMaximus.Data
         public float GetArmorSlotMultiplier(IArmorGetter a)
         {
             if (a.HasKeyword(ArmorBoots))
-                return _armor.ArmorSettings.ArmorFactorFeet;
+                return _armorSettings.ArmorFactorFeet;
             
             if (a.HasKeyword(ArmorCuirass))
-                return _armor.ArmorSettings.ArmorFactorBody;
+                return _armorSettings.ArmorFactorBody;
             
             if (a.HasKeyword(ArmorHelmet))
-                return _armor.ArmorSettings.ArmorFactorHead;
+                return _armorSettings.ArmorFactorHead;
             
             if (a.HasKeyword(ArmorGauntlets))
-                return _armor.ArmorSettings.ArmorFactorHands;
+                return _armorSettings.ArmorFactorHands;
             
             if (a.HasKeyword(ArmorShield))
-                return _armor.ArmorSettings.ArmorFactorShield;
+                return _armorSettings.ArmorFactorShield;
 
             _logger.LogWarning("{EditorID}: no armor slot keyword", a.EditorID);
 
@@ -240,53 +327,35 @@ namespace SynthusMaximus.Data
 
         public bool IsArmorExcludedReforged(IArmorGetter a)
         {
-            return _armor.ReforgeExclusions.Exclusion.Any(ex => CheckExclusionARMO(ex, a));
+            return _armorReforgeExclusions.Any(ex => CheckExclusionARMO(ex.Key, ex.Value, a));
         }
 
-        private bool CheckExclusionARMO(Exclusion ex, IArmorGetter a)
+        private bool CheckExclusionARMO(ExclusionType ex, IEnumerable<Regex> patterns, IArmorGetter a)
         {
-            if (ex.Target == Exclusion.TargetType.Name)
+            if (ex == ExclusionType.Name || ex == ExclusionType.Full)
             {
-                if (!a.Name.TryLookup(Language.English, out var name))
+                if (a.Name == null || !a.Name!.TryLookup(Language.English, out var name))
                     return false;
-                return CheckExclusionName(ex, name);
+                return CheckExclusionName(patterns, name);
             }
 
-            return CheckExclusionMajorRecord(ex, a);
+            return CheckExclusionMajorRecord(ex, patterns, a);
         }
 
-        private bool CheckExclusionMajorRecord(Exclusion e, ISkyrimMajorRecordGetter m)
+        private bool CheckExclusionMajorRecord(ExclusionType e, IEnumerable<Regex> patterns, IMajorRecordGetter m)
         {
-            string toCheck = e.Target switch
+            return e switch
             {
-                Exclusion.TargetType.EDID => m.EditorID ?? "",
-                Exclusion.TargetType.FormID => m.FormKey.ToString(),
-                _ => throw new ArgumentException($"Exclusion has an invalid target: {e.Target}")
+                ExclusionType.Name => throw new NotImplementedException("Should have been handled elsewhere"),
+                ExclusionType.EDID => m.EditorID != null && patterns.Any(p => p.IsMatch(m.EditorID!)),
+                ExclusionType.Full => throw new NotImplementedException("Should have been handled elsewhere"),
+                _ => throw new ArgumentOutOfRangeException(nameof(e), e, null)
             };
-
-            return e.Type switch
-            {
-                Exclusion.ExclusionType.Contains => toCheck.Contains(e.Text),
-                Exclusion.ExclusionType.Equals => string.Equals(toCheck, e.Text),
-                Exclusion.ExclusionType.EqualsIgnoreCase => string.Equals(toCheck, e.Text,
-                    StringComparison.InvariantCultureIgnoreCase),
-                Exclusion.ExclusionType.StartsWith => toCheck.StartsWith(e.Text),
-                _ => throw new ArgumentOutOfRangeException($"Exclusion has invalid type {e.Type}")
-            };
-
         }
 
-        private bool CheckExclusionName(Exclusion e, string name)
+        private bool CheckExclusionName(IEnumerable<Regex> patterns, string name)
         {
-            return e.Type switch
-            {
-                Exclusion.ExclusionType.Contains => name.Contains(e.Text),
-                Exclusion.ExclusionType.Equals => string.Equals(name, e.Text),
-                Exclusion.ExclusionType.EqualsIgnoreCase => string.Equals(name, e.Text,
-                    StringComparison.InvariantCultureIgnoreCase),
-                Exclusion.ExclusionType.StartsWith => name.StartsWith(e.Text),
-                _ => throw new ArgumentOutOfRangeException($"Exclusion has invalid type {e.Type}")
-            };
+            return patterns.Any(p => p.IsMatch(name));
         }
 
         public string GetOutputString(string sReforged)
@@ -296,25 +365,12 @@ namespace SynthusMaximus.Data
 
         public IEnumerable<ArmorModifier> GetArmorModifiers(IArmorGetter a)
         {
-            if (!a.Name!.TryLookup(Language.English, out var name))
-                throw new InvalidDataException("Couldn't load name");
-
-            return QueryAllBindingsInBindables(name, _armor.ArmorModifierBindings.Binding,
-                _armor.ArmorModifiers.ArmorModifier);
+            return AllMatchingBindings(_armorModifiers, a.NameOrThrow(), m => m.SubStrings);
         }
 
-        private IEnumerable<T2> QueryAllBindingsInBindables<T1, T2>(string toMatch, IEnumerable<T1> bindings, IEnumerable<T2> bindables)
-        where T1 : IBinding
-        where T2 : IBindable
+        private IEnumerable<T> AllMatchingBindings<T>(IEnumerable<T> bindings, string toMatch, Func<T, IEnumerable<string>> selector)
         {
-            var hits = GetAllBindingMatches(toMatch, bindings);
-
-            foreach (var hit in hits)
-            {
-                var bindable = GetBindableFromIdentifier(hit, bindables);
-                if (bindable != null)
-                    yield return bindable;
-            }
+            return bindings.Where(b => selector(b).Any(toMatch.Contains));
         }
 
         private IEnumerable<string> GetAllBindingMatches<T1>(string toMatch, IEnumerable<T1> bindings) where T1 : IBinding
@@ -324,16 +380,14 @@ namespace SynthusMaximus.Data
 
         public IEnumerable<IFormLink<IKeywordGetter>> GetArmorMasqueradeKeywords(IArmorGetter a)
         {
-            if (!a.Name!.TryLookup(Language.English, out var name))
-                return Array.Empty<IFormLink<IKeywordGetter>>();
-
-            return _armor.ArmorMasqueradeBindings.ArmorMasqueradeBinding
-                .Where(m => name.Contains(m.SubstringArmor))
-                .Select(m => m.MasqueradeFaction.GetDefinition().Keyword)
+            var name = a.NameOrThrow();
+            return _armorMasqueradeBindings.Where(mb => mb.SubstringArmors.Any(s => name.Contains(s)))
+                .Select(m => m.Faction.GetDefinition().Keyword)
                 .Where(m => m != null)
                 .Select(m => m!);
         }
 
+        /*
         public WeaponOverride? GetWeaponOverride(IWeaponGetter w)
         {
             var name = w.NameOrThrow();
@@ -350,6 +404,6 @@ namespace SynthusMaximus.Data
             //return QuerySingleBindingInBindables(w.NameOrThrow(), _weapons.WeaponMaterialBindings.Binding,
             //    _weapons.WeaponMaterials.WeaponMaterial);
             return null;
-        }
+        } */
     }
 }
