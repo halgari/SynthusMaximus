@@ -112,12 +112,13 @@ namespace SynthusMaximus.Patchers
                             CreateReforgedCraftingRecipe(reforged, a, am);
                             AddMeltdownRecipe(reforged, am);
                             
-                            var warforged = CreateWarforgedArmor(reforged, am);
+                            var warforged = CreateWarforgedArmor(patched, am);
                             ApplyArmorModifiers(warforged);
                             AddTemperingRecipe(warforged, am);
                             CreateWarforgedCraftingRecipe(warforged, reforged, am);
                             AddMeltdownRecipe(warforged, am);
 
+                            
 
                         }
 

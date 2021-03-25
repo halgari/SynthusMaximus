@@ -1,0 +1,114 @@
+﻿{
+  "DAGGER": {
+    "weapon": "xMAWeapTypeDagger",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "CROSSBOW": {
+    "weapon": "xMAWeapTypeCrossbow",
+    "school": "xMAWeapSchoolRangedWeaponry"
+  },
+  "LONGBOW": {
+    "weapon": "xMAWeapTypeLongbow",
+    "school": "xMAWeapSchoolRangedWeaponry"
+  },
+  "SHORTBOW": {
+    "weapon": "xMAWeapTypeShortbow",
+    "school": "xMAWeapSchoolRangedWeaponry"
+  },
+  "KATANA": {
+    "weapon": "xMAWeapTypeKatana",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "NODACHI": {
+    "weapon": "xMAWeapTypeNodachi",
+    "school": "xMAWeapSchoolHeavyWeaponry"
+  },
+  "TANTO": {
+    "weapon": "xMAWeapTypeTanto",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "WAKIZASHI": {
+    "weapon": "xMAWeapTypeWakizashi",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "SHORTSWORD": {
+    "weapon": "xMAWeapTypeShortsword",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "SCIMITAR": {
+    "weapon": "xMAWeapTypeScimitar",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "SABRE": {
+    "weapon": "xMAWeapTypeSaber",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "BATTLESTAFF": {
+    "weapon": "xMAWeapTypeBattlestaff",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "SHORTSPEAR": {
+    "weapon": "xMAWeapTypeShortspear",
+    "school": "xMAWeapSchoolHeavyWeaponry"
+  },
+  "BASTARDSWORD": {
+    "weapon": "xMAWeapTypeBastardSword",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "CLUB": {
+    "weapon": "xMAWeapTypeClub",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "LONGMACE": {
+    "weapon": "xMAWeapTypeLongmace",
+    "school": "xMAWeapSchoolHeavyWeaponry"
+  },
+  "LONGSWORD": {
+    "weapon": "xMAWeapTypeLongsword",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "HALBERD": {
+    "weapon": "xMAWeapTypeHalberd",
+    "school": "xMAWeapSchoolHeavyWeaponry"
+  },
+  "PARTISAN": {
+    "weapon": "xMAWeapTypePartisan",
+    "school": "xMAWeapSchoolHeavyWeaponry"
+  },
+  "ARMINGSWORD": {
+    "weapon": "xMAWeapTypeArmingSword",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "HATCHET": {
+    "weapon": "xMAWeapTypeHatchet",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "MAUL": {
+    "weapon": "xMAWeapTypeMaul",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "MACE": {
+    "weapon": "xMAWeapTypeMace",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "WARAXE": {
+    "weapon": "xMAWeapTypeWaraxe",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "WARHAMMER": {
+    "weapon": "xMAWeapTypeWarhammer",
+    "school": "xMAWeapSchoolHeavyWeaponry"
+  },
+  "GREATSWORD": {
+    "weapon": "xMAWeapTypeGreatsword",
+    "school": "xMAWeapSchoolHeavyWeaponry"
+  },
+  "FIST": {
+    "weapon": "xMAWeapTypeFist",
+    "school": "xMAWeapSchoolLightWeaponry"
+  },
+  "BATTLEAXE": {
+    "weapon": "xMAWeapTypeBattleaxe",
+    "school": "xMAWeapSchoolHeavyWeaponry"
+  }
+}

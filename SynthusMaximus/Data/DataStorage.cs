@@ -18,6 +18,7 @@ using Mutagen.Bethesda.Synthesis;
 using SynthusMaximus.Data.Converters;
 using SynthusMaximus.Data.DTOs;
 using SynthusMaximus.Data.DTOs.Armor;
+using SynthusMaximus.Data.DTOs.Weapon;
 using SynthusMaximus.Data.Enums;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Keyword;
 
@@ -30,12 +31,14 @@ namespace SynthusMaximus.Data
         private readonly IPatcherState<ISkyrimMod, ISkyrimModGetter> _state;
         private readonly JsonSerializerSettings _serializerSettings;
         private readonly IList<ArmorModifier> _armorModifiers;
-        private IDictionary<string, Material> _materials;
         private readonly IList<ArmorMasqueradeBinding> _armorMasqueradeBindings;
         private readonly IDictionary<string, ArmorMaterial> _armorMaterials;
         private readonly IDictionary<ExclusionType, List<Regex>> _armorReforgeExclusions;
         private readonly ArmorSettings _armorSettings;
         private readonly OverlayLoader _loader;
+        private IDictionary<string, WeaponOverride> _weaponOverrides;
+        private IList<WeaponType> _weaponTypes;
+        private IDictionary<string,WeaponMaterial> _weaponMaterials;
 
         public DataStorage(ILogger<DataStorage> logger, 
             IPatcherState<ISkyrimMod, ISkyrimModGetter> state,
@@ -49,12 +52,17 @@ namespace SynthusMaximus.Data
             _loader.Converters = converters.Cast<JsonConverter>().ToArray();
             
             var sw = Stopwatch.StartNew();
-            _materials = _loader.LoadDictionary<string, Material>((RelativePath)"materials.json");
-            _armorSettings = _loader.LoadObject<ArmorSettings>((RelativePath)@"armor\armorSettings.json");
+            //_armorSettings = _loader.LoadObject<ArmorSettings>((RelativePath)@"armor\armorSettings.json");
             _armorModifiers = _loader.LoadList<ArmorModifier>((RelativePath)@"armor\armorModifiers.json");
             _armorMasqueradeBindings = _loader.LoadList<ArmorMasqueradeBinding>((RelativePath)@"armor\armorMasqueradeBindings.json");
             _armorMaterials = _loader.LoadDictionary<string, ArmorMaterial>((RelativePath)@"armor\armorMaterials.json");
             _armorReforgeExclusions = _loader.LoadValueConcatDictionary<ExclusionType, Regex>((RelativePath)@"exclusions\armor");
+
+            _weaponOverrides =
+                _loader.LoadDictionary<string, WeaponOverride>((RelativePath) @"weapons\weaponOverrides.json");
+            _weaponTypes = _loader.LoadList<WeaponType>((RelativePath) @"weapons\weaponTypes.json");
+            _weaponMaterials =
+                _loader.LoadDictionary<string, WeaponMaterial>((RelativePath) @"weapons\weaponMaterials.json");
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
             
@@ -201,23 +209,22 @@ namespace SynthusMaximus.Data
                 .Select(m => m!);
         }
 
-        /*
+        
         public WeaponOverride? GetWeaponOverride(IWeaponGetter w)
         {
-            var name = w.NameOrThrow();
-            return _weapons.WeaponOverrides.FirstOrDefault(o => o.FullName == name);
+            return _weaponOverrides.TryGetValue(w.NameOrThrow(), out var o) ? o : default;
         }
 
-        public object GetWeaponType(IWeaponGetter weaponGetter)
+        public WeaponType? GetWeaponType(IWeaponGetter weaponGetter)
         {
-            throw new NotImplementedException();
+            var name = weaponGetter.NameOrEmpty();
+            return FindSingleBiggestSubstringMatch(_weaponTypes, name, wt => wt.NameSubStrings);
         }
-        
-        public WeaponMaterial? GetWeaponMaterial(IWeaponGetter w)
+
+        public WeaponMaterial? GetWeaponMaterial(IWeaponGetter weaponGetter)
         {
-            //return QuerySingleBindingInBindables(w.NameOrThrow(), _weapons.WeaponMaterialBindings.Binding,
-            //    _weapons.WeaponMaterials.WeaponMaterial);
-            return null;
-        } */
+            var name = weaponGetter.NameOrEmpty();
+            return FindSingleBiggestSubstringMatch(_weaponMaterials.Values, name, wt => wt.NameSubstrings);
+        }
     }
 }

@@ -39,8 +39,30 @@
       <None Update="config\PerkusMaximus_Master\armor\armorSettings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <Compile Remove="Patchers\WeaponPatcher.cs" />
-      <None Include="Patchers\WeaponPatcher.cs" />
+      <None Update="config\PerkusMaximus_Master\weapons\baseWeaponTypes.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\weapons\weaponTypes.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\weapons\weaponSettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\weapons\weaponOverrides.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\weapons\weaponModifiers.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\weapons\weaponMaterials.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\weapons\weaponClasses.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\generalSettings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

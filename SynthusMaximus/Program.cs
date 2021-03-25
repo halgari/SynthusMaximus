@@ -67,6 +67,9 @@ namespace SynthusMaximus
             collection.AddTransient<PatcherRunner>();
             collection.AddSingleton(state);
             collection.AddSingleton<MaterialEnum>();
+            collection.AddSingleton<BaseWeaponTypeEnum>();
+            collection.AddSingleton<WeaponClassEnum>();
+            collection.AddSingleton<WeaponTypeEnum>();
 
             collection.AddAllOfInterface<IPatcher>();
             collection.AddAllOfInterface<IInjectedConverter>();

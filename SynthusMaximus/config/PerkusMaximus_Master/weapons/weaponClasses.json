@@ -1,0 +1,10 @@
+﻿{
+  "BLUNT": {"keywords": ["xMAWeapClassBlunt"]},
+  "BLADE": {"keywords": ["xMAWeapClassBlade"]},
+  "PIERCING": {"keywords": ["xMAWeapClassPiercing"]},
+  "NONE": {"keywords": []},
+  "BLUNT_BLADE": {"keywords": ["xMAWeapClassBlunt", "xMAWeapClassBlade"]},
+  "BLUNT_PIERCING": {"keywords": ["xMAWeapClassBlunt", "xMAWeapClassPiercing"]},
+  "BLADE_PIERCING": {"keywords": ["xMAWeapClassBlade", "xMAWeapClassPiercing"]},
+  "ALL": {"keywords": ["xMAWeapClassBlunt", "xMAWeapClassBlade", "xMAWeapClassPiercing"]}
+}

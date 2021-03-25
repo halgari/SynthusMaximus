@@ -1,6 +1,5 @@
 {
-    "weapon_override": {
-        "fullName": "Overriden Swordmace of D",
+    "Overriden Swordmace of D": {
         "baseWeaponType": "LONGMACE",
         "damage": 100,
         "critDamage": 200,

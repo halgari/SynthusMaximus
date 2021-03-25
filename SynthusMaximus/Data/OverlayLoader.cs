@@ -41,10 +41,14 @@ namespace SynthusMaximus.Data
         /// <returns></returns>
         public IEnumerable<AbsolutePath> OverlayFiles(RelativePath name)
         {
-            return from modKey in _state.LoadOrder 
-                   from root in Roots 
-                   select root.Combine(modKey.Key.Name, name.ToString()) into path 
-                   where path.Exists select path;
+            return _state.LoadOrder
+                .SelectMany(modKey => Roots, (modKey, root) => root.Combine(modKey.Key.Name, name.ToString()))
+                .Where(path => path.Exists)
+                .Select(p =>
+                {
+                    _logger.LogInformation("Found : {Path} for {Name}", p, name);
+                    return p;
+                });
         }
 
         /// <summary>

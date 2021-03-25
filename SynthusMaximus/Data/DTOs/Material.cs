@@ -10,7 +10,7 @@ namespace SynthusMaximus.Data.DTOs
         public IFormLink<IPerkGetter>? SmithingPerk { get; set; } = new FormLink<IPerkGetter>();
 
         [JsonProperty("breakdownProduct")]
-        public IFormLink<IItemGetter>? BreakdownProduct { get; set; } = new FormLink<IItemGetter>();
+        public IFormLink<IConstructibleGetter>? BreakdownProduct { get; set; } = new FormLink<IConstructibleGetter>();
 
         [JsonProperty("breakdownStation")]
         public IFormLink<IKeywordGetter>? BreakdownStation { get; set; } = new FormLink<IKeywordGetter>();

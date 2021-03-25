@@ -15,6 +15,8 @@ using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.MiscItem;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.MiscItem;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Perk;
 using Mutagen.Bethesda.FormKeys.SkyrimSE;
+using SynthusMaximus.Data.DTOs;
+using SynthusMaximus.Data.DTOs.Weapon;
 using SynthusMaximus.Data.Enums;
 
 namespace SynthusMaximus.Patchers
@@ -33,7 +35,9 @@ namespace SynthusMaximus.Patchers
         }
         public void RunPatcher()
         {
-            foreach (var w in _state.LoadOrder.PriorityOrder.Weapon().WinningOverrides())
+            var weapons = _state.LoadOrder.PriorityOrder.Weapon().WinningOverrides().ToArray();
+            _logger.LogInformation("Patching {Count} weapons", weapons.Length);
+            foreach (var w in weapons)
             {
                 try
                 {
@@ -49,6 +53,13 @@ namespace SynthusMaximus.Patchers
                         if (!ShouldPatch(w))
                         {
                             _logger.LogTrace("{EditorID} : Ignored", w.EditorID);
+                            continue;
+                        }
+
+                        var wm = _storage.GetWeaponMaterial(w);
+                        if (wm == default)
+                        {
+                            WeaponsWithoutMaterialOrType.Add(w.FormKey);
                             continue;
                         }
 
@@ -88,16 +99,15 @@ namespace SynthusMaximus.Patchers
             w.Data!.Speed = wo.Speed;
             w.Critical!.Damage = wo.CritDamage;
             w.Name = w.NameOrThrow() + wo.StringToAppend;
-            AlterTemperingRecipe(w, wo.MaterialTempering);
-            AddMeltdownRecipe(w, wo.MaterialMeltdown, wo.MeltdownInput, wo.MeltdownOutput);
+            AlterTemperingRecipe(w, wo.MaterialTempering.Data);
+            AddMeltdownRecipe(w, wo.MaterialMeltdown.Data, wo.MeltdownInput, wo.MeltdownOutput);
         }
 
-        private void AddMeltdownRecipe(Weapon w, BaseMaterialWeapon bmw, ushort meltdownIn, ushort meltdownOut)
+        private void AddMeltdownRecipe(Weapon w, Material bmw, ushort meltdownIn, ushort meltdownOut)
         {
-            var definition = bmw.GetDefinition();
-            var perk = definition.SmithingPerk;
-            var output = definition.MeltdownProduct;
-            var benchKW = definition.MeltdownCraftingStation;
+            var perk = bmw.SmithingPerk;
+            var output = bmw.BreakdownProduct;
+            var benchKW = bmw.BreakdownStation;
 
             if (output == null || meltdownIn <= 0 || meltdownOut <= 0)
             {
@@ -109,7 +119,7 @@ namespace SynthusMaximus.Patchers
             cobj.EditorID = SPrefixPatcher + SPrefixWeapon + SPrefixMeltdown + w.EditorID + w.FormKey;
             
             cobj.AddCraftingRequirement(new FormLink<IItemGetter>(w), meltdownIn);
-            cobj.CreatedObject.SetTo(definition.MeltdownProduct!);
+            cobj.CreatedObject.SetTo(bmw.BreakdownProduct!);
             cobj.CreatedObjectCount = meltdownOut;
             cobj.WorkbenchKeyword.SetTo(benchKW);
             
@@ -121,7 +131,7 @@ namespace SynthusMaximus.Patchers
 
         }
 
-        private void AlterTemperingRecipe(Weapon w, BaseMaterialWeapon bmw)
+        private void AlterTemperingRecipe(Weapon w, Material bmw)
         {
             foreach (var c in _state.LoadOrder.PriorityOrder.ConstructibleObject().WinningOverrides()
                 .Where(c => c.CreatedObject.FormKey == w.FormKey &&
@@ -129,7 +139,7 @@ namespace SynthusMaximus.Patchers
                 .Select(c => _state.PatchMod.ConstructibleObjects.GetOrAddAsOverride(c)))
             {
                 c.Conditions.Clear();
-                var perk = bmw.GetDefinition().SmithingPerk;
+                var perk = bmw.SmithingPerk;
                 if (perk != null)
                 {
                     c.AddCraftingPerkCondition(perk);
