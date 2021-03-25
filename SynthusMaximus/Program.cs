@@ -69,7 +69,6 @@ namespace SynthusMaximus
             collection.AddSingleton<MaterialEnum>();
             collection.AddSingleton<BaseWeaponTypeEnum>();
             collection.AddSingleton<WeaponClassEnum>();
-            collection.AddSingleton<WeaponTypeEnum>();
 
             collection.AddAllOfInterface<IPatcher>();
             collection.AddAllOfInterface<IInjectedConverter>();
