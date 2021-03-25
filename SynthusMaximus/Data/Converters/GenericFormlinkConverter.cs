@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace SynthusMaximus.Data.Converters
 {
-    public abstract class GenericFormLinkConverter<T> : JsonConverter<IFormLink<T>>
+    public abstract class GenericFormLinkConverter<T> : JsonConverter<IFormLink<T>>, IInjectedConverter, IFormLinkJsonConverter
         where T : class, IMajorRecordCommonGetter
     {
         private Dictionary<string, FormLink<T>> _links;

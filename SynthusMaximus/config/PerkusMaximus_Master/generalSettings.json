@@ -1,0 +1,7 @@
+﻿{
+  "outputLanguage": "ENGLISH",
+  "useThief": true,
+  "useWarrior": true,
+  "useMage": true,
+  "removeUnspecificStartingSpells": true
+}

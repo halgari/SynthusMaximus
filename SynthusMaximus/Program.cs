@@ -14,6 +14,8 @@ using SynthusMaximus.Data;
 using SynthusMaximus.Patchers;
 using Wabbajack.Common.StatusFeed.Errors;
 using Microsoft.Extensions.Hosting;
+using SynthusMaximus.Data.Converters;
+using SynthusMaximus.Data.Enums;
 using Wabbajack.Common;
 using IPatcher = SynthusMaximus.Patchers.IPatcher;
 
@@ -23,7 +25,8 @@ namespace SynthusMaximus
     {
         public static async Task<int> Main(string[] args)
         {
-            return await SynthesisPipeline.Instance.AddPatch<ISkyrimMod, ISkyrimModGetter>(RunPatch).Run(args, new RunPreferences()
+            return await SynthesisPipeline.Instance.AddPatch<ISkyrimMod, ISkyrimModGetter>(RunPatch)
+                .Run(args, new RunPreferences()
             {
                 ActionsForEmptyArgs = new RunDefaultPatcher()
                 {
@@ -59,11 +62,15 @@ namespace SynthusMaximus
                 logging.ClearProviders();
                 logging.AddConsole();
             });
+            collection.AddTransient<OverlayLoader>();
             collection.AddSingleton<DataStorage>();
             collection.AddTransient<PatcherRunner>();
             collection.AddSingleton(state);
+            collection.AddSingleton<MaterialEnum>();
 
-            collection.AddPatchers();
+            collection.AddAllOfInterface<IPatcher>();
+            collection.AddAllOfInterface<IInjectedConverter>();
+            collection.AddAllOfInterface<IFormLinkJsonConverter>();
         }
     }
 }

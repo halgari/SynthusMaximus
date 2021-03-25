@@ -7,23 +7,14 @@ using Newtonsoft.Json;
 
 namespace SynthusMaximus.Data.Converters
 {
-    public class EnumValueBinding<T> : JsonConverter<T>
-    where T : struct, Enum
+    public abstract class UppercaseEnumConverter<T> : JsonConverter<T>, IInjectedConverter
+    where T: struct, Enum
     {
-        private Dictionary<string, T> _dict;
+        private readonly Dictionary<string, T> _dict;
 
-        public EnumValueBinding()
+        protected UppercaseEnumConverter()
         {
-            Dictionary<string, T> acc = new();
-
-            foreach (var val in Enum.GetNames<T>())
-            {
-                var memInfo = typeof(T).GetMember(val.ToString());
-                var attr = memInfo[0].GetCustomAttributes(false).OfType<EnumMemberAttribute>().FirstOrDefault();
-                acc.Add(attr!.Value!, Enum.Parse<T>(val));
-            }
-
-            _dict = acc;
+            _dict = Enum.GetNames<T>().ToDictionary(val => val.ToUpper(), val => Enum.Parse<T>(val));
         }
         public override void WriteJson(JsonWriter writer, T value, JsonSerializer serializer)
         {

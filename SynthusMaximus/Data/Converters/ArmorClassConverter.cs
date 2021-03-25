@@ -2,7 +2,7 @@
 
 namespace SynthusMaximus.Data.Converters
 {
-    public class ArmorClassConverter : EnumValueBinding<ArmorClass>
+    public class ArmorClassConverter : EnumValueConverter<ArmorClass>
     {
         
     }

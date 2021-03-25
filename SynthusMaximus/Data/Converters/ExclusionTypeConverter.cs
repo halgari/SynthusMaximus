@@ -2,7 +2,7 @@
 
 namespace SynthusMaximus.Data.Converters
 {
-    public class ExclusionTypeConverter : EnumValueBinding<ExclusionType>
+    public class ExclusionTypeConverter : EnumValueConverter<ExclusionType>
     {
         
     }

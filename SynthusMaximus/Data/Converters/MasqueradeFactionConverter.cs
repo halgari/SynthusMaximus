@@ -2,7 +2,7 @@
 
 namespace SynthusMaximus.Data.Converters
 {
-    public class MasqueradeFactionConverter : EnumValueBinding<MasqueradeFaction>
+    public class MasqueradeFactionConverter : EnumValueConverter<MasqueradeFaction>
     {
         
     }

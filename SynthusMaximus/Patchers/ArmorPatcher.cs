@@ -288,7 +288,7 @@ namespace SynthusMaximus.Patchers
             var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixArmor + newArmor.EditorID + oldArmor.FormKey;
 
-            var matdesc = am.Type.GetDefinition();
+            var matdesc = am.Type.Data;
             var materialPerk = matdesc.SmithingPerk;
             var input = matdesc.TemperingInput;
             
@@ -362,7 +362,7 @@ namespace SynthusMaximus.Patchers
             var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixArmor + newArmor.EditorID + oldArmor.FormKey;
 
-            var matdesc = am.Type.GetDefinition();
+            var matdesc = am.Type.Data;
             var materialPerk = matdesc.SmithingPerk;
             var input = matdesc.TemperingInput;
             
@@ -388,7 +388,7 @@ namespace SynthusMaximus.Patchers
             var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixArmor + newArmor.EditorID + oldArmor.FormKey;
 
-            var matdesc = am.Type.GetDefinition();
+            var matdesc = am.Type.Data;
             var materialPerk = matdesc.SmithingPerk;
             var input = matdesc.TemperingInput;
             cobj.WorkbenchKeyword.SetTo(CraftingSmithingForge);
@@ -412,7 +412,7 @@ namespace SynthusMaximus.Patchers
             cobj.EditorID = SPrefixPatcher + SPrefixArmor + SPrefixTemper + a.EditorID +
                             a.FormKey;
 
-            var materialDefinition = am.Type.GetDefinition();
+            var materialDefinition = am.Type.Data;
             var temperInput = materialDefinition.TemperingInput;
             var perk = materialDefinition.SmithingPerk;
 
@@ -441,10 +441,10 @@ namespace SynthusMaximus.Patchers
 
         private void AddMeltdownRecipe(IArmorGetter a, ArmorMaterial am)
         {
-            var meltdownDefintion = am.Type.GetDefinition();
+            var meltdownDefintion = am.Type.Data;
             var requiredPerk = meltdownDefintion.SmithingPerk;
-            var output = meltdownDefintion.MeltdownProduct;
-            var benchKW = meltdownDefintion.MeltdownCraftingStation;
+            var output = meltdownDefintion.BreakdownProduct;
+            var benchKW = meltdownDefintion.BreakdownStation;
 
             var inputNum = 1;
             var outputNum = _storage.GetArmorMeltdownOutput(a);
@@ -460,7 +460,7 @@ namespace SynthusMaximus.Patchers
             cobj.EditorID =
                 $"{SPrefixPatcher}{SPrefixArmor}{SPrefixMeltdown}{a.EditorID}{a.FormKey.ToString()}";
             cobj.AddCraftingRequirement(new FormLink<IItemGetter>(a), inputNum);
-            cobj.CreatedObject.SetTo(output);
+            cobj.CreatedObject.SetTo(output.FormKey);
             cobj.CreatedObjectCount = outputNum;
             cobj.WorkbenchKeyword.SetTo(benchKW);
             

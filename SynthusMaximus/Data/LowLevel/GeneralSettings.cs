@@ -1,23 +1,21 @@
-﻿using Newtonsoft.Json;
+﻿using Mutagen.Bethesda;
+using Newtonsoft.Json;
 
 namespace SynthusMaximus.Data.LowLevel
 {
     public class GeneralSettings
     {
 
-        [JsonProperty("outputLanguage")] public string OutputLanguage { get; set; } = "ENGLISH";
+        [JsonProperty("outputLanguage")] public Language OutputLanguage { get; set; } = Language.English;
 
-        [JsonProperty("useMage")] 
-        public bool UseMage { get; set; } 
+        [JsonProperty("useMage")] public bool UseMage { get; set; } = true;
 
-        [JsonProperty("useThief")] 
-        public bool UseThief { get; set; } 
+        [JsonProperty("useThief")] public bool UseThief { get; set; } = true;
 
-        [JsonProperty("useWarrior")] 
-        public bool UseWarrior { get; set; } 
+        [JsonProperty("useWarrior")] public bool UseWarrior { get; set; } = true;
 
-        [JsonProperty("removeUnspecificStartingSpells")] 
-        public bool RemoveUnspecificStartingSpells { get; set; }
+        [JsonProperty("removeUnspecificStartingSpells")]
+        public bool RemoveUnspecificStartingSpells { get; set; } = true;
     }
 
 }

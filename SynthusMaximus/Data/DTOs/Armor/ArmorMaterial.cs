@@ -10,7 +10,7 @@ namespace SynthusMaximus.Data.DTOs.Armor
         public ArmorClass Class { get; set; } = ArmorClass.Undefined;
         
         [JsonProperty("type")]
-        public BaseMaterialArmor Type { get; set; } = BaseMaterialArmor.None;
+        public DynamicEnum<Material>.DynamicEnumMember Type { get; set; }
         
         [JsonProperty("armorBase")]
         public float ArmorBase { get; set; }

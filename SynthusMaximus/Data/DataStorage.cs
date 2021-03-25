@@ -25,186 +25,42 @@ namespace SynthusMaximus.Data
 {
     public class DataStorage
     {
-        private GeneralSettings _generalSettings = new();
-        private ILogger<DataStorage> _logger;
-        private IPatcherState<ISkyrimMod, ISkyrimModGetter> _state;
-        private JsonSerializerSettings _serializerSettings;
-        private IList<ArmorModifier> _armorModifiers;
+        private readonly GeneralSettings _generalSettings = new();
+        private readonly ILogger<DataStorage> _logger;
+        private readonly IPatcherState<ISkyrimMod, ISkyrimModGetter> _state;
+        private readonly JsonSerializerSettings _serializerSettings;
+        private readonly IList<ArmorModifier> _armorModifiers;
         private IDictionary<string, Material> _materials;
-        private IList<ArmorMasqueradeBinding> _armorMasqueradeBindings;
-        private IDictionary<string, DTOs.Armor.ArmorMaterial> _armorMaterials;
-        private IDictionary<ExclusionType, List<Regex>> _armorReforgeExclusions;
-        private ArmorSettings _armorSettings;
+        private readonly IList<ArmorMasqueradeBinding> _armorMasqueradeBindings;
+        private readonly IDictionary<string, ArmorMaterial> _armorMaterials;
+        private readonly IDictionary<ExclusionType, List<Regex>> _armorReforgeExclusions;
+        private readonly ArmorSettings _armorSettings;
+        private readonly OverlayLoader _loader;
 
-        public DataStorage(ILogger<DataStorage> logger, IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
+        public DataStorage(ILogger<DataStorage> logger, 
+            IPatcherState<ISkyrimMod, ISkyrimModGetter> state,
+            IEnumerable<IInjectedConverter> converters,
+            OverlayLoader loader)
         {
             _state = state;
             _logger = logger;
-
-
-            //_armor = AbsolutePath.EntryPoint.Combine(@"Resources\Armors.json").FromJson<Armors>();
-            //_weapons = AbsolutePath.EntryPoint.Combine(@"Resources\Weapons.json").FromJson<Weapons>();
-            //_generalSettings = AbsolutePath.EntryPoint.Combine(@"Resources\GeneralSettings.json")
-           //     .FromJson<GeneralSettings>();
-            _serializerSettings = new JsonSerializerSettings();
-
-            var sw = Stopwatch.StartNew();
-            var converters = new List<Task<JsonConverter>>()
-            {
-                Task.Run(() => (JsonConverter) new PerkConverter(state)),
-                Task.Run(() => (JsonConverter) new ItemConverter(state)),
-                Task.Run(() => (JsonConverter) new KeywordConverter(state)),
-            };
-
-            _serializerSettings.Converters = converters.Select(c => c.Result)
-                .Concat(new JsonConverter[]
-                {
-                    new BaseMaterialArmorConverter(),
-                    new BaseMaterialArmorConverter(),
-                    new MasqueradeFactionConverter(),
-                    new ArmorClassConverter(),
-                    new ExclusionTypeConverter()
-                })
-                .ToList();
-            _logger.LogInformation("Loaded converters in {MS}ms", sw.ElapsedMilliseconds);
+            _loader = loader;
             
-            sw.Restart();
-            _materials = LoadDictionary<string, Material>("materials.json");
-            _armorSettings = LoadObject<ArmorSettings>(@"armor\armorSettings.json");
-            _armorModifiers = LoadList<ArmorModifier>(@"armor\armorModifiers.json");
-            _armorMasqueradeBindings = LoadList<ArmorMasqueradeBinding>(@"armor\armorMasqueradeBindings.json");
-            _armorMaterials = LoadDictionary<string, DTOs.Armor.ArmorMaterial>(@"armor\armorMaterials.json");
-            _armorReforgeExclusions = LoadValueConcatDictionary<ExclusionType, Regex>(@"exclusions\armor");
+            _loader.Converters = converters.Cast<JsonConverter>().ToArray();
+            
+            var sw = Stopwatch.StartNew();
+            _materials = _loader.LoadDictionary<string, Material>((RelativePath)"materials.json");
+            _armorSettings = _loader.LoadObject<ArmorSettings>((RelativePath)@"armor\armorSettings.json");
+            _armorModifiers = _loader.LoadList<ArmorModifier>((RelativePath)@"armor\armorModifiers.json");
+            _armorMasqueradeBindings = _loader.LoadList<ArmorMasqueradeBinding>((RelativePath)@"armor\armorMasqueradeBindings.json");
+            _armorMaterials = _loader.LoadDictionary<string, ArmorMaterial>((RelativePath)@"armor\armorMaterials.json");
+            _armorReforgeExclusions = _loader.LoadValueConcatDictionary<ExclusionType, Regex>((RelativePath)@"exclusions\armor");
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
             
         }
 
-        private T LoadObject<T>(string name)
-        {
-            T acc = default;
-            foreach (var (modKey, _) in _state.LoadOrder)
-            {
-                var pathA = ((AbsolutePath) _state.DataFolderPath).Combine("config", modKey.Name, name);
-                var pathB = AbsolutePath.EntryPoint.Combine("config", modKey.Name, name);
-                T data;
-                if (pathA.Exists)
-                {
-                    _logger.LogInformation("Loading {Path}", pathA);
-                    data = JsonConvert.DeserializeObject<T>(pathA.ReadAllText(), _serializerSettings)!;
-                }
-                else if (pathB.Exists)
-                {
-                    _logger.LogInformation("Loading {Path}", pathB);
-                    data = JsonConvert.DeserializeObject<T>(pathB.ReadAllText(), _serializerSettings)!;
-                }
-                else
-                    continue;
 
-                acc = data;
-
-            }
-
-            return acc;
-        }
-
-        private IDictionary<TK, List<TV>> LoadValueConcatDictionary<TK, TV>(string name)
-            where TK : notnull
-        {
-            Dictionary<TK, List<TV>> acc = new();
-            foreach (var (modKey, _) in _state.LoadOrder)
-            {
-                var pathA = ((AbsolutePath) _state.DataFolderPath).Combine("config", modKey.Name, name);
-                var pathB = AbsolutePath.EntryPoint.Combine("config", modKey.Name, name);
-                Dictionary<TK, List<TV>> data;
-                if (pathA.Exists)
-                {
-                    _logger.LogInformation("Loading {Path}", pathA);
-                    data = JsonConvert.DeserializeObject<Dictionary<TK, List<TV>>>(pathA.ReadAllText(), _serializerSettings)!;
-                }
-                else if (pathB.Exists)
-                {
-                    _logger.LogInformation("Loading {Path}", pathB);
-                    data = JsonConvert.DeserializeObject<Dictionary<TK, List<TV>>>(pathB.ReadAllText(), _serializerSettings)!;
-                }
-                else
-                    continue;
-
-                foreach (var (key, value) in data)
-                {
-                    if (acc.TryGetValue(key, out var old))
-                    {
-                    }
-                    else
-                    {
-                        old = new List<TV>();
-                        acc[key] = old;
-                    }
-                    old.AddRange(value);
-                }
-
-            }
-            return acc;
-        }
-        
-
-        private IDictionary<TK, TV> LoadDictionary<TK, TV>(string name)
-            where TK : notnull
-        {
-            Dictionary<TK, TV> acc = new();
-            foreach (var (modKey, _) in _state.LoadOrder)
-            {
-                var pathA = ((AbsolutePath) _state.DataFolderPath).Combine("config", modKey.Name, name);
-                var pathB = AbsolutePath.EntryPoint.Combine("config", modKey.Name, name);
-                Dictionary<TK, TV> data;
-                if (pathA.Exists)
-                {
-                    _logger.LogInformation("Loading {Path}", pathA);
-                    data = JsonConvert.DeserializeObject<Dictionary<TK, TV>>(pathA.ReadAllText(), _serializerSettings)!;
-                }
-                else if (pathB.Exists)
-                {
-                    _logger.LogInformation("Loading {Path}", pathB);
-                    data = JsonConvert.DeserializeObject<Dictionary<TK, TV>>(pathB.ReadAllText(), _serializerSettings)!;
-                }
-                else
-                    continue;
-                
-                foreach (var (key, value) in data)
-                    acc[key] = value;
-                
-            }
-
-            return acc;
-        }
-        
-        private IList<TV> LoadList<TV>(string name)
-            where TV : notnull
-        {
-            List<TV> acc = new();
-            foreach (var (modKey, _) in _state.LoadOrder)
-            {
-                var pathA = ((AbsolutePath) _state.DataFolderPath).Combine("config", modKey.Name, name);
-                var pathB = AbsolutePath.EntryPoint.Combine("config", modKey.Name, name);
-                List<TV> data;
-                if (pathA.Exists)
-                {
-                    _logger.LogInformation("Loading {Path}", pathA);
-                    data = JsonConvert.DeserializeObject<List<TV>>(pathA.ReadAllText(), _serializerSettings)!;
-                }
-                else if (pathB.Exists)
-                {
-                    _logger.LogInformation("Loading {Path}", pathB);
-                    data = JsonConvert.DeserializeObject<List<TV>>(pathB.ReadAllText(), _serializerSettings)!;
-                }
-                else
-                    continue;
-                
-                acc.AddRange(data);
-            }
-
-            return acc;
-        }
 
         public bool UseWarrior => _generalSettings.UseWarrior;
         public bool UseMage => _generalSettings.UseMage;
@@ -264,43 +120,6 @@ namespace SynthusMaximus.Data
             }
             return bestMatch;
 
-        }
-
-        private T2? QuerySingleBindingInBindables<T1, T2>(string toMatch, List<T1> bindings, List<T2> bindables)
-        where T1 : IBinding
-        where T2 : IBindable
-        {
-            var bestHit = GetBestBindingMatch(toMatch, bindings);
-            if (bestHit == null)
-                return default;
-            
-            return GetBindableFromIdentifier(bestHit, bindables);
-        }
-
-        private T? GetBindableFromIdentifier<T>(string identifier, IEnumerable<T> list)
-        where T : IBindable
-        {
-            return list.FirstOrDefault(b => b.Identifier == identifier);
-        }
-
-        private string? GetBestBindingMatch<T>(string toMatch, IEnumerable<T> bindings)
-        where T: IBinding
-        {
-            var maxHitSize = 0;
-            string? bestHit = null;
-            
-            foreach (var b in bindings.Where(b => toMatch.Contains(b.SubString)))
-            {
-                string currHit = b.Identifier;
-                var currHitSize = b.Identifier.Length;
-                
-                if (currHitSize <= maxHitSize) continue;
-                
-                maxHitSize = currHitSize;
-                bestHit = currHit;
-            }
-
-            return bestHit;
         }
 
         public float GetArmorSlotMultiplier(IArmorGetter a)
@@ -371,11 +190,6 @@ namespace SynthusMaximus.Data
         private IEnumerable<T> AllMatchingBindings<T>(IEnumerable<T> bindings, string toMatch, Func<T, IEnumerable<string>> selector)
         {
             return bindings.Where(b => selector(b).Any(toMatch.Contains));
-        }
-
-        private IEnumerable<string> GetAllBindingMatches<T1>(string toMatch, IEnumerable<T1> bindings) where T1 : IBinding
-        {
-            return bindings.Where(b => toMatch.Contains(b.SubString)).Select(b => b.Identifier);
         }
 
         public IEnumerable<IFormLink<IKeywordGetter>> GetArmorMasqueradeKeywords(IArmorGetter a)
