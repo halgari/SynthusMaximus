@@ -32,6 +32,17 @@ namespace SynthusMaximus
                 }
             });
         }
+        
+        /// <summary>
+        /// Adds a consumed item to the recipe 
+        /// </summary>
+        /// <param name="cobj"></param>
+        /// <param name="item">Item to consume</param>
+        /// <param name="count">Item count</param>
+        public static void AddCraftingRequirement(this ConstructibleObject cobj, IItemGetter item, int count)
+        {
+            cobj.AddCraftingRequirement(new FormLink<IItemGetter>(item), count);
+        }
 
         /// <summary>
         /// Adds a condition to the recipe that an item exist in the player's inventory
@@ -52,7 +63,7 @@ namespace SynthusMaximus
                 ComparisonValue = count
             });
         }
-        
+
         /// <summary>
         /// Adds a condition to the recipe that the user have a given perk
         /// </summary>
@@ -84,6 +95,23 @@ namespace SynthusMaximus
             if (getter.Name == null || !getter.Name!.TryLookup(Language.English, out var name) || name == null)
                 return "";
             return name!;
+        }
+
+        public static void AddCraftingInventoryCondition(this ConstructibleObject cobj, IItemGetter? item, int count = 1)
+        {
+            cobj.AddCraftingInventoryCondition(new FormLink<ISkyrimMajorRecordGetter>(item.FormKey), count);
+        }
+
+        public static ScriptEntry GetOrAddScript(this Weapon vm, string script)
+        {
+            vm.VirtualMachineAdapter ??= new VirtualMachineAdapter();
+            
+            var se = vm.VirtualMachineAdapter.Scripts.FirstOrDefault(s => s.Name == script);
+            if (se != null)
+                return se;
+            se = new ScriptEntry {Name = script};
+            vm.VirtualMachineAdapter.Scripts.Add(se);
+            return se;
         }
     }
 }

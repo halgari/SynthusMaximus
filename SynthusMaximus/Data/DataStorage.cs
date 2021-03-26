@@ -21,6 +21,7 @@ using SynthusMaximus.Data.DTOs.Armor;
 using SynthusMaximus.Data.DTOs.Weapon;
 using SynthusMaximus.Data.Enums;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Keyword;
+using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.Keyword;
 
 namespace SynthusMaximus.Data
 {
@@ -39,6 +40,9 @@ namespace SynthusMaximus.Data
         private IDictionary<string, WeaponOverride> _weaponOverrides;
         private IList<WeaponType> _weaponTypes;
         private IDictionary<string,WeaponMaterial> _weaponMaterials;
+        private IList<WeaponModifier> _weaponModifiers;
+        private WeaponSettings _weaponSettings;
+        private IDictionary<ExclusionType, List<Regex>> _weaponReforgeExclusions;
 
         public DataStorage(ILogger<DataStorage> logger, 
             IPatcherState<ISkyrimMod, ISkyrimModGetter> state,
@@ -56,13 +60,20 @@ namespace SynthusMaximus.Data
             _armorModifiers = _loader.LoadList<ArmorModifier>((RelativePath)@"armor\armorModifiers.json");
             _armorMasqueradeBindings = _loader.LoadList<ArmorMasqueradeBinding>((RelativePath)@"armor\armorMasqueradeBindings.json");
             _armorMaterials = _loader.LoadDictionary<string, ArmorMaterial>((RelativePath)@"armor\armorMaterials.json");
-            _armorReforgeExclusions = _loader.LoadValueConcatDictionary<ExclusionType, Regex>((RelativePath)@"exclusions\armor");
+            _armorReforgeExclusions = _loader.LoadValueConcatDictionary<ExclusionType, Regex>((RelativePath)@"exclusions\armorReforge.json");
 
             _weaponOverrides =
                 _loader.LoadDictionary<string, WeaponOverride>((RelativePath) @"weapons\weaponOverrides.json");
             _weaponTypes = _loader.LoadList<WeaponType>((RelativePath) @"weapons\weaponTypes.json");
             _weaponMaterials =
                 _loader.LoadDictionary<string, WeaponMaterial>((RelativePath) @"weapons\weaponMaterials.json");
+            _weaponModifiers =
+                _loader.LoadList<WeaponModifier>((RelativePath) @"weapons\weaponModifiers.json");
+            _weaponSettings =
+                _loader.LoadObject<WeaponSettings>((RelativePath) @"weapons\weaponSettings.json");
+            _weaponReforgeExclusions =
+                _loader.LoadValueConcatDictionary<ExclusionType, Regex>(
+                    (RelativePath) @"exclusions\weaponReforge.json");
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
             
@@ -73,7 +84,7 @@ namespace SynthusMaximus.Data
         public bool UseWarrior => _generalSettings.UseWarrior;
         public bool UseMage => _generalSettings.UseMage;
         public bool UseThief => _generalSettings.UseThief;
-
+        public bool ShouldAppendWeaponType => _weaponSettings.AppendTypeToName;
 
         public static bool IsJewelry(IArmorGetter a)
         {
@@ -154,10 +165,10 @@ namespace SynthusMaximus.Data
 
         public bool IsArmorExcludedReforged(IArmorGetter a)
         {
-            return _armorReforgeExclusions.Any(ex => CheckExclusionARMO(ex.Key, ex.Value, a));
+            return _armorReforgeExclusions.Any(ex => CheckExclusion(ex.Key, ex.Value, (ITranslatedNamed)a));
         }
 
-        private bool CheckExclusionARMO(ExclusionType ex, IEnumerable<Regex> patterns, IArmorGetter a)
+        private bool CheckExclusion(ExclusionType ex, IEnumerable<Regex> patterns, ITranslatedNamed a)
         {
             if (ex == ExclusionType.Name || ex == ExclusionType.Full)
             {
@@ -166,7 +177,7 @@ namespace SynthusMaximus.Data
                 return CheckExclusionName(patterns, name);
             }
 
-            return CheckExclusionMajorRecord(ex, patterns, a);
+            return CheckExclusionMajorRecord(ex, patterns, (IMajorRecordGetter)a);
         }
 
         private bool CheckExclusionMajorRecord(ExclusionType e, IEnumerable<Regex> patterns, IMajorRecordGetter m)
@@ -225,6 +236,44 @@ namespace SynthusMaximus.Data
         {
             var name = weaponGetter.NameOrEmpty();
             return FindSingleBiggestSubstringMatch(_weaponMaterials.Values, name, wt => wt.NameSubstrings);
+        }
+
+        public float? GetWeaponSkillDamageBase(DynamicEnum<BaseWeaponType>.DynamicEnumMember wtBaseWeaponType)
+        {
+            var school = wtBaseWeaponType.Data.School;
+            if (Equals(school, xMAWeapSchoolHeavyWeaponry))
+                return _weaponSettings.BaseDamageHeavyWeaponry;
+            if (Equals(school, xMAWeapSchoolRangedWeaponry))
+                return _weaponSettings.BaseDamageRangedWeaponry;
+            if (Equals(school, xMAWeapSchoolLightWeaponry))
+                return _weaponSettings.BaseDamageLightWeaponry;
+
+            return null;
+        }
+
+        public float? GetWeaponSkillDamageMultipler(DynamicEnum<BaseWeaponType>.DynamicEnumMember wtBaseWeaponType)
+        {
+            var school = wtBaseWeaponType.Data.School;
+            if (Equals(school, xMAWeapSchoolHeavyWeaponry))
+                return _weaponSettings.DamageFactorHeavyWeaponry;
+            if (Equals(school, xMAWeapSchoolRangedWeaponry))
+                return _weaponSettings.DamageFactorRangedWeaponry;
+            if (Equals(school, xMAWeapSchoolLightWeaponry))
+                return _weaponSettings.DamageFactorLightWeaponry;
+
+            return null;
+        }
+
+        public bool IsWeaponExcludedReforged(IWeaponGetter w)
+        {
+            return _weaponReforgeExclusions.Any(ex => CheckExclusion(ex.Key, ex.Value, (ITranslatedNamed)w));
+        }
+
+        public IEnumerable<WeaponModifier> GetAllModifiers(Weapon w)
+        {
+            var name = w.NameOrThrow();
+
+            return AllMatchingBindings(_weaponModifiers, name, m => m.NameSubstrings);
         }
     }
 }

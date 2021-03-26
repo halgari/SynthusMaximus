@@ -15,6 +15,7 @@ using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.MiscItem;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.MiscItem;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Perk;
 using Mutagen.Bethesda.FormKeys.SkyrimSE;
+using Noggog;
 using SynthusMaximus.Data.DTOs;
 using SynthusMaximus.Data.DTOs.Weapon;
 using SynthusMaximus.Data.Enums;
@@ -64,6 +65,39 @@ namespace SynthusMaximus.Patchers
                         }
 
                         var wt = _storage.GetWeaponType(w);
+                        if (wt == default)
+                        {
+                            WeaponsWithoutMaterialOrType.Add(w.FormKey);
+                            continue;
+                        }
+
+                        var wp = _state.PatchMod.Weapons.GetOrAddAsOverride(w);
+
+                        AddSpecificKeyword(wp, wt);
+                        AddGenericKeyword(wp, wt);
+
+                        if (Equals(wt.BaseWeaponType.Data.School, xMAWeapSchoolRangedWeaponry))
+                            wp.Data!.Flags |= WeaponData.Flag.NPCsUseAmmo;
+
+                        if (_storage.UseWarrior)
+                        {
+                            if (_storage.ShouldAppendWeaponType)
+                                AppendTypeToName(wp, wt);
+
+                            AddCombatLogicKeywords(wp, wt);
+                            ModStats(wp, wt, wm);
+
+                            if (!w.Data!.Flags.HasFlag(WeaponData.Flag.CantDrop))
+                            {
+                                AddMeltdownRecipe(wp, wt, wm);
+
+                                if (!_storage.IsWeaponExcludedReforged(w))
+                                {
+                                    CreateRefinedSilverWeapon(wp);
+
+                                }
+                            }
+                        }
 
                     }
 
@@ -73,6 +107,227 @@ namespace SynthusMaximus.Patchers
                     _logger.LogError(ex, "Error in patcher {EditorID}", w.EditorID);
                 }
             }
+        }
+
+        private void CreateRefinedSilverWeapon(Weapon w)
+        {
+            if (!w.HasKeyword(WeapMaterialSilver))
+                return;
+
+            var newName = _storage.GetOutputString("Refined") + " " + w.NameOrThrow();
+
+            var nw = _state.PatchMod.Weapons.DuplicateInAsNewRecord(w);
+            nw.Name = newName;
+            nw.Description = SWeaponRefinedDesc;
+            nw.Keywords ??= new ExtendedList<IFormLinkGetter<IKeywordGetter>>();
+            nw.Keywords.Add(xMAWeapMaterialSilverRefined);
+            nw.Keywords.Add(WeapMaterialSilver);
+
+            var wm = _storage.GetWeaponMaterial(nw);
+            var wt = _storage.GetWeaponType(nw);
+            
+            ModStats(nw, wt, wm);
+            ApplyModifiers(nw);
+            
+            // Swap properties on silver sword script
+            var script = nw.GetOrAddScript(SScriptSilversword);
+            script.Properties.Add(new ScriptObjectProperty()
+            {
+                Name = SScriptApplyperkProperty,
+                Object = xMAWeapMaterialSilverRefined
+            });
+
+            if (!_storage.IsWeaponExcludedReforged(w))
+            {
+                var reforged = CreateReforgedWeapon(w, wt, wm);
+                ApplyModifiers(reforged);
+                AddReforgedCraftingRecipe(reforged, w, wm);
+                AddMeltdownRecipe(reforged, wt, wm);
+                AddTemperingRecipe(reforged, wm);
+
+            }
+        }
+
+        private void AddTemperingRecipe(Weapon w, WeaponMaterial wm)
+        {
+            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            cobj.EditorID = SPrefixPatcher + SPrefixWeapon + SPrefixTemper + w.EditorID + w.FormKey;
+            cobj.WorkbenchKeyword.SetTo(CraftingSmithingSharpeningWheel);
+            cobj.CreatedObject.SetTo(w);
+            cobj.CreatedObjectCount = 1;
+
+            var ing = wm.Type.Data.TemperingInput;
+            if (wm.Type.Data.TemperingInput == null)
+            {
+                _logger.LogWarning("No tempering item found for {EditorID} will use meltdown product", w.EditorID);
+                ing = wm.Type.Data.BreakdownProduct;
+            }
+
+            if (ing != null)
+            {
+                cobj.AddCraftingRequirement(ing, 1);
+            }
+            else
+            {
+                _logger.LogWarning("No input found for tempering recipe for {EditorID}", w.EditorID);
+            }
+
+            var perk = wm.Type.Data.SmithingPerk;
+            if (perk != null)
+                cobj.AddCraftingPerkCondition(perk);
+        }
+
+        private void AddReforgedCraftingRecipe(Weapon newWeapon, Weapon? oldWeapon, WeaponMaterial wm)
+        {
+            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            cobj.EditorID = SPrefixPatcher + SPrefixWeapon + SPrefixCrafting + newWeapon.EditorID + newWeapon.FormKey;
+            cobj.WorkbenchKeyword.SetTo(CraftingSmithingForge);
+
+            var ing1 = oldWeapon;
+            var ing2 = wm.Type.Data.TemperingInput;
+
+            if (ing2 == null)
+                ing2 = wm.Type.Data.BreakdownProduct;
+            
+            if (ing1 != null)
+                cobj.AddCraftingRequirement(ing1, 1);
+            
+            if (ing2 != null)
+                cobj.AddCraftingRequirement(ing2, 2);
+            
+            cobj.AddCraftingPerkCondition(xMASMIWeaponsmith);
+            
+            if (wm.Type.Data.SmithingPerk != null)
+                cobj.AddCraftingPerkCondition(wm.Type.Data.SmithingPerk);
+            
+            cobj.AddCraftingInventoryCondition(ing1);
+        }
+
+        private Weapon CreateReforgedWeapon(Weapon w, WeaponType wt, WeaponMaterial wm)
+        {
+            var newName = _storage.GetOutputString("Reforged") + " " + w.NameOrEmpty();
+            var nw = _state.PatchMod.Weapons.DuplicateInAsNewRecord(w);
+            nw.Name = newName;
+            return nw;
+        }
+
+        private void ApplyModifiers(Weapon w)
+        {
+            var modifiers = _storage.GetAllModifiers(w);
+            foreach (var m in modifiers)
+            {
+                w.BasicStats!.Damage = (ushort)(w.BasicStats.Damage * m.FactorDamage);
+                w.Critical!.Damage = (ushort) (w.Critical!.Damage * m.FactorCritDamage);
+                w.Data!.Speed *= m.FactorAttackSpeed;
+                w.BasicStats.Weight = (ushort) (w.BasicStats.Weight * m.FactorWeight);
+                w.Data!.Reach = (ushort) (w.Data!.Reach * m.FactorReach);
+                w.BasicStats.Value = (uint) (w.BasicStats.Value * m.FactorValue);
+            }
+        }
+
+        private void AddMeltdownRecipe(Weapon w, WeaponType wt, WeaponMaterial wm)
+        {
+            var requiredPerk = wm.Type.Data.SmithingPerk;
+            var inputNum = wt.MeltdownInput;
+            var outputNum = wt.MeltdownOutput;
+
+            if (wm.Type.Data.BreakdownProduct == default || inputNum <= 0 || outputNum <= 0)
+                return;
+
+            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            cobj.EditorID = SPrefixPatcher + SPrefixWeapon + SPrefixMeltdown + w.EditorID + w.FormKey.ToString();
+            cobj.AddCraftingRequirement(w, wt.MeltdownInput);
+            cobj.CreatedObject.SetTo(wm.Type.Data.BreakdownProduct!);
+            cobj.CreatedObjectCount = outputNum;
+            
+            if (requiredPerk != default)
+                cobj.AddCraftingPerkCondition(requiredPerk);
+            
+            cobj.AddCraftingInventoryCondition(w);
+            cobj.AddCraftingPerkCondition(xMASMIMeltdown);
+        }
+
+        private void AddCombatLogicKeywords(Weapon w, WeaponType wt)
+        {
+            var bleedKw = wt.BleedTier.GetDefinition().BleedKeyword;
+            var staggerKw = wt.StaggerTier.GetDefinition().StaggerKeyword;
+            var debuffKw = wt.DebuffTier.GetDefinition().DebuffKeyword;
+
+            w.Keywords ??= new ExtendedList<IFormLinkGetter<IKeywordGetter>>();
+            
+            if (bleedKw != default)
+                w.Keywords.Add(bleedKw);
+            
+            if (staggerKw != default)
+                w.Keywords.Add(staggerKw);
+            
+            if (debuffKw != default)
+                w.Keywords.Add(debuffKw);
+        }
+
+        private void ModStats(Weapon w, WeaponType wt, WeaponMaterial wm)
+        {
+            SetReach(w, wt, wm);
+            SetDamage(w, wt, wm);
+            SetCritDamage(w, wt, wm);
+            SetSpeed(w, wt, wm);
+        }
+
+        private void SetSpeed(Weapon w, WeaponType wt, WeaponMaterial wm)
+        {
+            w.Data!.Speed = wt.SpeedBase + wm.SpeedModifier;
+        }
+
+        private void SetCritDamage(Weapon w, WeaponType wt, WeaponMaterial wm)
+        {
+            w.Critical!.Damage = (ushort)(w.BasicStats!.Damage * wt.CritDamageFactor);
+        }
+
+        private void SetDamage(Weapon w, WeaponType wt, WeaponMaterial wm)
+        {
+            var skillBase = _storage.GetWeaponSkillDamageBase(wt.BaseWeaponType);
+            var typeMod = wt.DamageBase;
+            var matMod = wm.DamageModifier;
+            var typeMult = _storage.GetWeaponSkillDamageMultipler(wt.BaseWeaponType);
+
+            if (skillBase == null || typeMult == null)
+                return;
+
+            w.BasicStats!.Damage = (ushort) (skillBase + typeMod + matMod);
+        }
+
+        private void SetReach(Weapon w, WeaponType wt, WeaponMaterial wm)
+        {
+            w.Data!.Reach = wt.ReachBase + wm.ReachModifier;
+        }
+
+        private void AppendTypeToName(Weapon w, WeaponType wt)
+        {
+            var id = wt.Name;
+            var name = w.NameOrThrow();
+
+            if (name.Contains(id, StringComparison.InvariantCultureIgnoreCase))
+                return;
+
+            w.Name = $"{name} [{id.ToLower()}]";
+        }
+
+        private void AddGenericKeyword(IWeapon w, WeaponType wt)
+        {
+            w.Keywords ??= new ExtendedList<IFormLinkGetter<IKeywordGetter>>();
+            
+            if (w.Data!.Flags.HasFlag(WeaponData.Flag.BoundWeapon))
+                w.Keywords.Add(xMACONBoundWeaponKW);
+            
+            w.Keywords.AddRange(wt.WeaponClass.Data.Keywords);
+        }
+
+        private void AddSpecificKeyword(IWeapon w, WeaponType wt)
+        {
+            w.Keywords ??= new ExtendedList<IFormLinkGetter<IKeywordGetter>>();
+            var baseType = wt.BaseWeaponType;
+            w.Keywords.Add(baseType.Data.Keyword);
+            w.Keywords.Add(baseType.Data.School);
         }
 
         private bool ShouldPatch(IWeaponGetter w)
