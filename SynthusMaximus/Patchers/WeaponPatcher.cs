@@ -11,6 +11,7 @@ using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Keyword;
 using static SynthusMaximus.Data.Statics;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.Keyword;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.Perk;
+using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.ObjectEffect;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.MiscItem;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.MiscItem;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Perk;
@@ -44,6 +45,9 @@ namespace SynthusMaximus.Patchers
                 {
                     if (_storage.UseWarrior)
                     {
+                        if (string.IsNullOrEmpty(w.NameOrEmpty()))
+                            continue;
+                        
                         var wo = _storage.GetWeaponOverride(w);
 
                         if (wo != null)
@@ -58,7 +62,7 @@ namespace SynthusMaximus.Patchers
                         }
 
                         var wm = _storage.GetWeaponMaterial(w);
-                        if (wm == default)
+                        if (wm?.Type.Data == default)
                         {
                             WeaponsWithoutMaterialOrType.Add(w.FormKey);
                             continue;
@@ -139,13 +143,106 @@ namespace SynthusMaximus.Patchers
 
             if (!_storage.IsWeaponExcludedReforged(w))
             {
-                var reforged = CreateReforgedWeapon(w, wt, wm);
+                var reforged = CreateReforgedWeapon(nw, wt, wm);
                 ApplyModifiers(reforged);
                 AddReforgedCraftingRecipe(reforged, w, wm);
                 AddMeltdownRecipe(reforged, wt, wm);
                 AddTemperingRecipe(reforged, wm);
 
+                var warforged = CreateWarforgedWeapon(nw, wt, wm);
+                AddWarforgedCraftingRecipe(warforged, reforged, wm);
+                AddMeltdownRecipe(warforged, wt, wm);
+                AddTemperingRecipe(warforged, wm);
+                ApplyModifiers(warforged);
             }
+
+            DoCopycat(w, wm, wt);
+        }
+
+        private void DoCopycat(Weapon w, WeaponMaterial wm, WeaponType wt)
+        {
+            if (!w.HasAnyKeyword(DaedricArtifact, WeapTypeStaff))
+                return;
+
+            var nw = CreateCopycatWeapon(w);
+            CreateCopycatRecipe(nw, w, wm);
+            
+            AddMeltdownRecipe(nw, wt, wm);
+            AddTemperingRecipe(nw, wm);
+            CreateRefinedSilverWeapon(nw);
+            CreateReforgedWeapon(nw, wt, wm);
+            ApplyModifiers(nw);
+        }
+
+        private void CreateCopycatRecipe(Weapon w, Weapon oldWeapon, WeaponMaterial wm)
+        {
+            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            cobj.EditorID = SPrefixPatcher + SPrefixWeapon + SPrefixCrafting + w.EditorID + w.FormKey;
+            cobj.WorkbenchKeyword.SetTo(CraftingSmithingForge);
+            cobj.CreatedObject.SetTo(w);
+
+            var input = wm.Type.Data.TemperingInput;
+            var materialPerk = wm.Type.Data.SmithingPerk;
+            
+            if (input != null)
+                cobj.AddCraftingRequirement(input, 3);
+            
+            cobj.AddCraftingPerkCondition(xMASMICopycat);
+            cobj.AddCraftingRequirement(xMASMICopycatArtifactEssence, 1);
+            
+            if (materialPerk != null)
+                cobj.AddCraftingPerkCondition(materialPerk);
+            
+            cobj.AddCraftingInventoryCondition(oldWeapon);
+        }
+
+        private Weapon CreateCopycatWeapon(Weapon w)
+        {
+            var newName = w.NameOrThrow() + "[" + _storage.GetOutputString(SReplica) + "]";
+            var nw = _state.PatchMod.Weapons.DuplicateInAsNewRecord(w);
+            nw.EditorID = SPrefixPatcher + SPrefixWeapon + w.EditorID + "Replica" + nw.FormKey;
+            nw.Name = newName;
+            nw.ObjectEffect.SetToNull();
+            nw.EnchantmentAmount = 0;
+            return nw;
+        }
+
+        private void AddWarforgedCraftingRecipe(Weapon w, Weapon? oldWeapon, WeaponMaterial wm)
+        {
+            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            cobj.EditorID = SPrefixPatcher + SPrefixWeapon + SPrefixCrafting + w.EditorID + w.FormKey;
+            cobj.WorkbenchKeyword.SetTo(CraftingSmithingForge);
+            cobj.CreatedObject.SetTo(w);
+            var ing2 = wm.Type.Data.TemperingInput;
+
+            if (ing2 == null)
+                ing2 = wm.Type.Data.BreakdownProduct;
+            
+            if (oldWeapon != null)
+                cobj.AddCraftingRequirement(oldWeapon, 1);
+            
+            cobj.AddCraftingRequirement(ing2!, 5);
+            
+            cobj.AddCraftingPerkCondition(xMASMIMasteryWarforged);
+            
+            if (wm.Type.Data.SmithingPerk != null)
+                cobj.AddCraftingPerkCondition(wm.Type.Data.SmithingPerk);
+            
+            cobj.AddCraftingInventoryCondition(oldWeapon);
+        }
+
+        private Weapon CreateWarforgedWeapon(Weapon w, WeaponType wt, WeaponMaterial wm)
+        {
+            var newName = _storage.GetOutputString("Warforged") + " " + w.NameOrEmpty();
+            var nw = _state.PatchMod.Weapons.DuplicateInAsNewRecord(w);
+            nw.EditorID = SPrefixPatcher + SPrefixWeapon + w.EditorID + w.FormKey;
+            nw.Name = newName;
+            nw.ObjectEffect.SetTo(xMASMIMasteryWarforgedEnchWeapon);
+            nw.EnchantmentAmount = 10;
+            nw.Keywords ??= new ExtendedList<IFormLinkGetter<IKeywordGetter>>();
+            nw.Keywords.Add(xMASMIWarforgedWeaponKW);
+            nw.Keywords.Add(MagicDisallowEnchanting);
+            return nw;
         }
 
         private void AddTemperingRecipe(Weapon w, WeaponMaterial wm)
@@ -227,11 +324,11 @@ namespace SynthusMaximus.Patchers
 
         private void AddMeltdownRecipe(Weapon w, WeaponType wt, WeaponMaterial wm)
         {
-            var requiredPerk = wm.Type.Data.SmithingPerk;
+            var requiredPerk = wm.Type.Data!.SmithingPerk;
             var inputNum = wt.MeltdownInput;
             var outputNum = wt.MeltdownOutput;
 
-            if (wm.Type.Data.BreakdownProduct == default || inputNum <= 0 || outputNum <= 0)
+            if (wm.Type.Data!.BreakdownProduct == default || inputNum <= 0 || outputNum <= 0)
                 return;
 
             var cobj = _state.PatchMod.ConstructibleObjects.AddNew();

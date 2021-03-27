@@ -55,15 +55,15 @@ namespace SynthusMaximus.Data.Enums
         public readonly struct DynamicEnumMember : IEquatable<DynamicEnumMember>
         {
             private readonly string _member;
-            private readonly DynamicEnum<T> _denum;
+            private readonly DynamicEnum<T>? _denum;
 
-            public DynamicEnumMember(string member, DynamicEnum<T> denum)
+            public DynamicEnumMember(string member, DynamicEnum<T>? denum)
             {
                 _member = member;
                 _denum = denum;
             }
 
-            public T Data => _denum._data.Value[_member];
+            public T? Data => _denum == default ? default : _denum._data.Value[_member];
 
             public bool Equals(DynamicEnumMember other)
             {

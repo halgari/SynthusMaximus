@@ -14,7 +14,7 @@ namespace SynthusMaximus.Data.Converters
         public override Regex ReadJson(JsonReader reader, Type objectType, Regex existingValue, bool hasExistingValue,
             JsonSerializer serializer)
         {
-            return new Regex((string)reader.Value!);
+            return new((string)reader.Value!);
         }
     }
 }

@@ -77,7 +77,7 @@ namespace SynthusMaximus.Patchers
                     }
                     
                     var am = _storage.GetArmorMaterial(a);
-                    if (am == null)
+                    if (am?.Type.Data == null)
                     {
                         if (!DataStorage.IsJewelry(a))
                         {
@@ -263,7 +263,7 @@ namespace SynthusMaximus.Patchers
 
         private bool DoCopycat(IArmorGetter a, ArmorMaterial am)
         {
-            if (!a.HasKeyword(DaedricArtifact))
+            if (!a.HasKeyword(DaedricArtifact) && am.Type.Data != default)
                 return false;
 
             var newArmor = CreateCopycatArmor(a);
@@ -290,6 +290,7 @@ namespace SynthusMaximus.Patchers
             cobj.EditorID = SPrefixPatcher + SPrefixArmor + newArmor.EditorID + oldArmor.FormKey;
 
             var matdesc = am.Type.Data;
+
             var materialPerk = matdesc.SmithingPerk;
             var input = matdesc.TemperingInput;
             

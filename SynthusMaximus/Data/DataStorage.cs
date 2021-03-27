@@ -56,7 +56,7 @@ namespace SynthusMaximus.Data
             _loader.Converters = converters.Cast<JsonConverter>().ToArray();
             
             var sw = Stopwatch.StartNew();
-            //_armorSettings = _loader.LoadObject<ArmorSettings>((RelativePath)@"armor\armorSettings.json");
+            _armorSettings = _loader.LoadObject<ArmorSettings>((RelativePath)@"armor\armorSettings.json");
             _armorModifiers = _loader.LoadList<ArmorModifier>((RelativePath)@"armor\armorModifiers.json");
             _armorMasqueradeBindings = _loader.LoadList<ArmorMasqueradeBinding>((RelativePath)@"armor\armorMasqueradeBindings.json");
             _armorMaterials = _loader.LoadDictionary<string, ArmorMaterial>((RelativePath)@"armor\armorMaterials.json");
@@ -165,10 +165,10 @@ namespace SynthusMaximus.Data
 
         public bool IsArmorExcludedReforged(IArmorGetter a)
         {
-            return _armorReforgeExclusions.Any(ex => CheckExclusion(ex.Key, ex.Value, (ITranslatedNamed)a));
+            return _armorReforgeExclusions.Any(ex => CheckExclusion(ex.Key, ex.Value, a));
         }
 
-        private bool CheckExclusion(ExclusionType ex, IEnumerable<Regex> patterns, ITranslatedNamed a)
+        private bool CheckExclusion(ExclusionType ex, IEnumerable<Regex> patterns, ITranslatedNamedGetter a)
         {
             if (ex == ExclusionType.Name || ex == ExclusionType.Full)
             {
@@ -266,7 +266,7 @@ namespace SynthusMaximus.Data
 
         public bool IsWeaponExcludedReforged(IWeaponGetter w)
         {
-            return _weaponReforgeExclusions.Any(ex => CheckExclusion(ex.Key, ex.Value, (ITranslatedNamed)w));
+            return _weaponReforgeExclusions.Any(ex => CheckExclusion(ex.Key, ex.Value, w));
         }
 
         public IEnumerable<WeaponModifier> GetAllModifiers(Weapon w)
