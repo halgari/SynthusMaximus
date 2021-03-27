@@ -69,6 +69,9 @@
       <None Update="config\PerkusMaximus_Master\exclusions\armorReforge.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="config\PerkusMaximus_Master\exclusions\distributionExclusionsWeaponRegular.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

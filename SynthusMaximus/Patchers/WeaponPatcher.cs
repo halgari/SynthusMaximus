@@ -157,6 +157,17 @@ namespace SynthusMaximus.Patchers
             }
 
             DoCopycat(w, wm, wt);
+            DistributeWeaponOnLeveledList(w, wm, wt);
+        }
+
+        private void DistributeWeaponOnLeveledList(Weapon w, WeaponMaterial wm, WeaponType wt)
+        {
+            if (w.Data!.Flags.HasFlag(WeaponData.Flag.CantDrop) || w.Data!.Flags.HasFlag(WeaponData.Flag.BoundWeapon))
+                return;
+
+            if (_storage.IsWeaponExcludedDistribution(w))
+                return;
+
         }
 
         private void DoCopycat(Weapon w, WeaponMaterial wm, WeaponType wt)

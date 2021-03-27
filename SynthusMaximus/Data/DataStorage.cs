@@ -43,6 +43,7 @@ namespace SynthusMaximus.Data
         private IList<WeaponModifier> _weaponModifiers;
         private WeaponSettings _weaponSettings;
         private IDictionary<ExclusionType, List<Regex>> _weaponReforgeExclusions;
+        private IDictionary<ExclusionType, List<Regex>> _distributionExclusionsWeaponRegular;
 
         public DataStorage(ILogger<DataStorage> logger, 
             IPatcherState<ISkyrimMod, ISkyrimModGetter> state,
@@ -74,6 +75,9 @@ namespace SynthusMaximus.Data
             _weaponReforgeExclusions =
                 _loader.LoadValueConcatDictionary<ExclusionType, Regex>(
                     (RelativePath) @"exclusions\weaponReforge.json");
+            _distributionExclusionsWeaponRegular =
+                _loader.LoadValueConcatDictionary<ExclusionType, Regex>(
+                    (RelativePath) @"exclusions\distributionExclusionsWeaponRegular.json");
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
             
@@ -274,6 +278,11 @@ namespace SynthusMaximus.Data
             var name = w.NameOrThrow();
 
             return AllMatchingBindings(_weaponModifiers, name, m => m.NameSubstrings);
+        }
+
+        public bool IsWeaponExcludedDistribution(IWeaponGetter w)
+        {
+            return _distributionExclusionsWeaponRegular.Any(ex => CheckExclusion(ex.Key, ex.Value, w));
         }
     }
 }

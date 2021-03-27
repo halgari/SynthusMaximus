@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynthusMaximus", "SynthusMa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynthusMaximus.Test", "SynthusMaximus.Test\SynthusMaximus.Test.csproj", "{BB66839C-34E7-46B9-ACD6-30EF1631FECF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xml2Json", "Xml2Json\Xml2Json.csproj", "{BB727E4A-C5CC-4CFF-8C21-06010E81AD76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{BB66839C-34E7-46B9-ACD6-30EF1631FECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB66839C-34E7-46B9-ACD6-30EF1631FECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB66839C-34E7-46B9-ACD6-30EF1631FECF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB727E4A-C5CC-4CFF-8C21-06010E81AD76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB727E4A-C5CC-4CFF-8C21-06010E81AD76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB727E4A-C5CC-4CFF-8C21-06010E81AD76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB727E4A-C5CC-4CFF-8C21-06010E81AD76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
