@@ -37,13 +37,14 @@ namespace SynthusMaximus.Data
         private readonly IDictionary<ExclusionType, List<Regex>> _armorReforgeExclusions;
         private readonly ArmorSettings _armorSettings;
         private readonly OverlayLoader _loader;
-        private IDictionary<string, WeaponOverride> _weaponOverrides;
-        private IList<WeaponType> _weaponTypes;
-        private IDictionary<string,WeaponMaterial> _weaponMaterials;
-        private IList<WeaponModifier> _weaponModifiers;
-        private WeaponSettings _weaponSettings;
-        private IDictionary<ExclusionType, List<Regex>> _weaponReforgeExclusions;
-        private IDictionary<ExclusionType, List<Regex>> _distributionExclusionsWeaponRegular;
+        private readonly IDictionary<string, WeaponOverride> _weaponOverrides;
+        private readonly IList<WeaponType> _weaponTypes;
+        private readonly IDictionary<string,WeaponMaterial> _weaponMaterials;
+        private readonly IList<WeaponModifier> _weaponModifiers;
+        private readonly WeaponSettings _weaponSettings;
+        private readonly IDictionary<ExclusionType, List<Regex>> _weaponReforgeExclusions;
+        private readonly IDictionary<ExclusionType, List<Regex>> _distributionExclusionsWeaponRegular;
+        private IDictionary<ExclusionType, List<Regex>> _distributionExclusionsWeaponListRegular;
 
         public DataStorage(ILogger<DataStorage> logger, 
             IPatcherState<ISkyrimMod, ISkyrimModGetter> state,
@@ -78,6 +79,9 @@ namespace SynthusMaximus.Data
             _distributionExclusionsWeaponRegular =
                 _loader.LoadValueConcatDictionary<ExclusionType, Regex>(
                     (RelativePath) @"exclusions\distributionExclusionsWeaponRegular.json");
+            _distributionExclusionsWeaponListRegular =
+            _loader.LoadValueConcatDictionary<ExclusionType, Regex>(
+                (RelativePath) @"exclusions\distributionExclusionsWeaponListRegular.json");
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
             
@@ -172,7 +176,7 @@ namespace SynthusMaximus.Data
             return _armorReforgeExclusions.Any(ex => CheckExclusion(ex.Key, ex.Value, a));
         }
 
-        private bool CheckExclusion(ExclusionType ex, IEnumerable<Regex> patterns, ITranslatedNamedGetter a)
+        private bool CheckExclusion(ExclusionType ex, IReadOnlyCollection<Regex> patterns, ITranslatedNamedGetter a)
         {
             if (ex == ExclusionType.Name || ex == ExclusionType.Full)
             {
@@ -184,13 +188,18 @@ namespace SynthusMaximus.Data
             return CheckExclusionMajorRecord(ex, patterns, (IMajorRecordGetter)a);
         }
 
-        private bool CheckExclusionMajorRecord(ExclusionType e, IEnumerable<Regex> patterns, IMajorRecordGetter m)
+        private bool CheckExclusionMajorRecord(ExclusionType e, IReadOnlyCollection<Regex> patterns, IMajorRecordGetter m)
         {
+            var fis = m.FormKey.ID.ToString("X8");
+            if (!patterns.Any())
+                return false;
+            
             return e switch
             {
                 ExclusionType.Name => throw new NotImplementedException("Should have been handled elsewhere"),
                 ExclusionType.EDID => m.EditorID != null && patterns.Any(p => p.IsMatch(m.EditorID!)),
                 ExclusionType.Full => throw new NotImplementedException("Should have been handled elsewhere"),
+                ExclusionType.FormID => patterns.Any(p => p.IsMatch(fis)),
                 _ => throw new ArgumentOutOfRangeException(nameof(e), e, null)
             };
         }
@@ -283,6 +292,11 @@ namespace SynthusMaximus.Data
         public bool IsWeaponExcludedDistribution(IWeaponGetter w)
         {
             return _distributionExclusionsWeaponRegular.Any(ex => CheckExclusion(ex.Key, ex.Value, w));
+        }
+
+        public bool IsListExcludedWeaponRegular(ILeveledItemGetter li)
+        {
+            return _distributionExclusionsWeaponListRegular.Any(ex => CheckExclusionMajorRecord(ex.Key, ex.Value, li));
         }
     }
 }

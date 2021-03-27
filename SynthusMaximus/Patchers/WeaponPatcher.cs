@@ -168,6 +168,87 @@ namespace SynthusMaximus.Patchers
             if (_storage.IsWeaponExcludedDistribution(w))
                 return;
 
+            var flink = new FormLink<IItemGetter>(w.FormKey);
+            bool similarSet = false;
+            IWeaponGetter? firstSimilarMatch = default;
+            
+            foreach (var i in _state.LoadOrder.PriorityOrder.LeveledItem().WinningOverrides().ToArray())
+            {
+                IWeaponGetter? wl = default;
+                
+                if (_storage.IsListExcludedWeaponRegular(i))
+                    continue;
+                
+                if (i.Entries?.Any(e => Equals(e.Data?.Reference, flink)) ?? false)
+                    continue;
+
+                foreach (var li in i.Entries ?? new List<ILeveledItemEntryGetter>())
+                {
+                    // Only consider weapons
+                    if (!(li.Data?.Reference.TryResolve<IWeaponGetter>(_state.LinkCache, out wl) ?? false))
+                        continue;
+
+                    if (!similarSet)
+                    {
+                        if (!AreWeaponsSimilar(w, wm, wt, wl))
+                        {
+                            similarSet = true;
+                            firstSimilarMatch = wl;
+                        }
+                        else
+                        {
+                            if (!Equals(wl, firstSimilarMatch))
+                                continue;
+                        }
+                    }
+
+                    var nw = _state.PatchMod.LeveledItems.DuplicateInAsNewRecord(i);
+                    nw.Entries ??= new ExtendedList<LeveledItemEntry>();
+                    nw.Entries!.Add(new LeveledItemEntry
+                    {
+                        Data = new LeveledItemEntryData
+                        {
+                            Level = li.Data.Level,
+                            Count = li.Data.Count,
+                            Reference = new FormLink<IItemGetter>(w.FormKey)
+                        }
+                    });
+                    
+
+                }
+                
+            }
+            
+
+        }
+
+        private bool AreWeaponsSimilar(Weapon w1, WeaponMaterial wm1, WeaponType wt1, IWeaponGetter w2)
+        {
+            if (WeaponsWithoutMaterialOrType.Contains(w2.FormKey))
+                return false;
+
+            var wm2 = _storage.GetWeaponMaterial(w2);
+            var wt2 = _storage.GetWeaponType(w2);
+
+            if (wm2?.Type.Data == null || wt2 == null)
+                return false;
+
+            return wm1.Type.Data?.TemperingInput == wm2.Type.Data.TemperingInput &&
+                   wt1.BaseWeaponType.Equals(wt2.BaseWeaponType) &&
+                   DoWeaponsContainClasses(w1, w2) &&
+                   Equals(w1.ObjectEffect, w2.ObjectEffect);
+
+        }
+
+        private bool DoWeaponsContainClasses(IWeaponGetter w1, IWeaponGetter w2)
+        {
+            if (w1.HasKeyword(xMAWeapClassBlade) && !w2.HasKeyword(xMAWeapClassBlade))
+                return false;
+            if (w1.HasKeyword(xMAWeapClassBlunt) && !w2.HasKeyword(xMAWeapClassBlunt))
+                return false;
+            if (w1.HasKeyword(xMAWeapClassPiercing) && !w2.HasKeyword(xMAWeapClassPiercing))
+                return false;
+            return true;
         }
 
         private void DoCopycat(Weapon w, WeaponMaterial wm, WeaponType wt)

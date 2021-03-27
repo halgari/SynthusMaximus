@@ -9,7 +9,9 @@ namespace SynthusMaximus.Data.Enums
         [EnumMember(Value = "EDID")]
         EDID,
         [EnumMember(Value = "FULL")]
-        Full
+        Full,
+        [EnumMember(Value = "FORMID")]
+        FormID
         
         
     }
