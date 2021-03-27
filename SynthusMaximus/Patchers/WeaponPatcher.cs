@@ -28,6 +28,7 @@ namespace SynthusMaximus.Patchers
         private ILogger<WeaponPatcher> _logger;
         private DataStorage _storage;
         private IPatcherState<ISkyrimMod, ISkyrimModGetter> _state;
+        private Dictionary<FormKey, IWeaponGetter> _weapons;
 
         public WeaponPatcher(ILogger<WeaponPatcher> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
@@ -37,9 +38,10 @@ namespace SynthusMaximus.Patchers
         }
         public void RunPatcher()
         {
-            var weapons = _state.LoadOrder.PriorityOrder.Weapon().WinningOverrides().ToArray();
-            _logger.LogInformation("Patching {Count} weapons", weapons.Length);
-            foreach (var w in weapons)
+            _weapons = _state.LoadOrder.PriorityOrder.Weapon().WinningOverrides().ToDictionary(f => f.FormKey);
+
+            _logger.LogInformation("Patching {Count} weapons", _weapons.Count);
+            foreach (var w in _weapons.Values)
             {
                 try
                 {
@@ -99,7 +101,30 @@ namespace SynthusMaximus.Patchers
                                 {
                                     CreateRefinedSilverWeapon(wp);
 
+                                    var reforged = CreateReforgedWeapon(wp, wt, wm);
+                                    ApplyModifiers(reforged);
+                                    AddReforgedCraftingRecipe(reforged, wp, wm);
+                                    AddMeltdownRecipe(reforged, wt, wm);
+                                    AddTemperingRecipe(reforged, wm);
+
+                                    var warforgedWeapon = CreateWarforgedWeapon(wp, wt, wm);
+                                    AddWarforgedCraftingRecipe(warforgedWeapon, reforged, wm);
+                                    AddMeltdownRecipe(warforgedWeapon, wt, wm);
+                                    AddTemperingRecipe(warforgedWeapon, wm);
+                                    ApplyModifiers(warforgedWeapon);
+
+                                    CreateCrossbowVariants(w, wm, wt);
                                 }
+                                DoCopycat(wp, wm, wt);
+                                DistributeWeaponOnLeveledList(wp, wm, wt);
+                            }
+                        }
+
+                        if (_storage.UseThief)
+                        {
+                            if (Equals(wt.BaseWeaponType.Data.Keyword, xMAWeapTypeFist))
+                            {
+                                DistributeWeaponOnLeveledList(wp, wm, wt);
                             }
                         }
 
@@ -111,6 +136,11 @@ namespace SynthusMaximus.Patchers
                     _logger.LogError(ex, "Error in patcher {EditorID}", w.EditorID);
                 }
             }
+        }
+
+        private void CreateCrossbowVariants(IWeaponGetter weaponGetter, WeaponMaterial wm, WeaponType wt)
+        {
+            // TODO: Crossbow variants
         }
 
         private void CreateRefinedSilverWeapon(Weapon w)
@@ -171,9 +201,12 @@ namespace SynthusMaximus.Patchers
             var flink = new FormLink<IItemGetter>(w.FormKey);
             bool similarSet = false;
             IWeaponGetter? firstSimilarMatch = default;
+
+            var newItems = new List<LeveledItem>();
             
             foreach (var i in _state.LoadOrder.PriorityOrder.LeveledItem().WinningOverrides().ToArray())
             {
+                _logger.LogWarning("Patching {EditorID} in {LEditorID}", w.EditorID, i.EditorID);
                 IWeaponGetter? wl = default;
                 
                 if (_storage.IsListExcludedWeaponRegular(i))
@@ -185,22 +218,25 @@ namespace SynthusMaximus.Patchers
                 foreach (var li in i.Entries ?? new List<ILeveledItemEntryGetter>())
                 {
                     // Only consider weapons
-                    if (!(li.Data?.Reference.TryResolve<IWeaponGetter>(_state.LinkCache, out wl) ?? false))
+                    if (!_weapons.TryGetValue(li.Data?.Reference.FormKey ?? FormKey.Null, out wl))
                         continue;
 
                     if (!similarSet)
                     {
                         if (!AreWeaponsSimilar(w, wm, wt, wl))
                         {
-                            similarSet = true;
-                            firstSimilarMatch = wl;
+                            continue;
                         }
-                        else
-                        {
-                            if (!Equals(wl, firstSimilarMatch))
-                                continue;
-                        }
+
+                        similarSet = true;
+                        firstSimilarMatch = wl;
                     }
+                    else
+                    {
+                        if (!Equals(wl, firstSimilarMatch))
+                            continue;
+                    }
+
 
                     var nw = _state.PatchMod.LeveledItems.DuplicateInAsNewRecord(i);
                     nw.Entries ??= new ExtendedList<LeveledItemEntry>();
