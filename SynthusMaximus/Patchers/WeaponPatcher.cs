@@ -30,6 +30,10 @@ namespace SynthusMaximus.Patchers
         private IPatcherState<ISkyrimMod, ISkyrimModGetter> _state;
         private Dictionary<FormKey, IWeaponGetter> _weapons;
 
+        private List<(Weapon w, WeaponMaterial wm, WeaponType wt)> _markedForDistribution = new();
+        private long _weaponsDistributed = 0;
+        private IEnumerable<ILeveledItemGetter> _leveledLists;
+
         public WeaponPatcher(ILogger<WeaponPatcher> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
             _logger = logger;
@@ -38,10 +42,8 @@ namespace SynthusMaximus.Patchers
         }
         public void RunPatcher()
         {
-            _weapons = _state.LoadOrder.PriorityOrder.Weapon().WinningOverrides().ToDictionary(f => f.FormKey);
-
-            _logger.LogInformation("Patching {Count} weapons", _weapons.Count);
-            foreach (var w in _weapons.Values)
+            
+            foreach (var w in _state.LoadOrder.PriorityOrder.Weapon().WinningOverrides())
             {
                 try
                 {
@@ -113,10 +115,10 @@ namespace SynthusMaximus.Patchers
                                     AddTemperingRecipe(warforgedWeapon, wm);
                                     ApplyModifiers(warforgedWeapon);
 
-                                    CreateCrossbowVariants(w, wm, wt);
+                                    CreateCrossbowVariants(wp, wm, wt);
                                 }
                                 DoCopycat(wp, wm, wt);
-                                DistributeWeaponOnLeveledList(wp, wm, wt);
+                                MarkForDistribution(wp, wm, wt);
                             }
                         }
 
@@ -124,7 +126,7 @@ namespace SynthusMaximus.Patchers
                         {
                             if (Equals(wt.BaseWeaponType.Data.Keyword, xMAWeapTypeFist))
                             {
-                                DistributeWeaponOnLeveledList(wp, wm, wt);
+                                MarkForDistribution(wp, wm, wt);
                             }
                         }
 
@@ -136,11 +138,177 @@ namespace SynthusMaximus.Patchers
                     _logger.LogError(ex, "Error in patcher {EditorID}", w.EditorID);
                 }
             }
+
+            DistributeMarkedWeapons();
         }
 
-        private void CreateCrossbowVariants(IWeaponGetter weaponGetter, WeaponMaterial wm, WeaponType wt)
+        private void DistributeMarkedWeapons()
         {
-            // TODO: Crossbow variants
+            _weapons = _state.LoadOrder.PriorityOrder.Weapon().WinningOverrides().ToDictionary(f => f.FormKey);
+            _logger.LogInformation("About to distribute {Count} items into leveled lists", _weapons.Count);
+            _leveledLists = _state.LoadOrder.PriorityOrder.LeveledItem().WinningOverrides()
+                .Where(li => !_storage.IsListExcludedWeaponRegular(li))
+                .ToList();
+            
+            foreach (var t in _markedForDistribution)
+            {
+                DistributeWeaponOnLeveledList(t.w, t.wm, t.wt);
+            }
+
+            _logger.LogInformation("Distributed {Count} items", _weaponsDistributed);
+        }
+
+        private void CreateCrossbowVariants(IWeaponGetter w, WeaponMaterial wm, WeaponType wt)
+        {
+            if (!w.HasKeyword(xMAWeapTypeCrossbow))
+                return;
+
+
+
+            // Make basic crossbows
+            var newRecurveCrossbow = ApplyRecurveCrossbowModifications(w);
+            CreateEnhancedCrossbowCraftingRecipe(w, newRecurveCrossbow!, wm, 1, xMARANAspiringEngineer0);
+
+            var newLightweightCrossbow = ApplyLightweightCrossbowModifications(w);
+            CreateEnhancedCrossbowCraftingRecipe(w, newLightweightCrossbow!, wm, 1, xMARANAspiringEngineer1);
+            
+            var newArbalestCrossbow = ApplyArbalestCrossbowModifications(w);
+            CreateEnhancedCrossbowCraftingRecipe(w, newArbalestCrossbow!, wm, 1, xMARANProficientEngineer0);
+
+            var newSilencedCrossbow = ApplySilencedCrossbowModifications(w);
+            CreateEnhancedCrossbowCraftingRecipe(w, newSilencedCrossbow!, wm, 1, xMARANProficientEngineer1);
+            
+            // Cross-mix them into combinations
+
+            var newRecurveArbalestCrossbow = ApplyArbalestCrossbowModifications(newRecurveCrossbow);
+            CreateEnhancedCrossbowCraftingRecipe(newRecurveCrossbow!, newRecurveArbalestCrossbow, wm, 2,
+                xMARANProficientEngineer0, xMARANAspiringEngineer0, xMARANCrossbowTechnician);
+            CreateEnhancedCrossbowCraftingRecipe(newArbalestCrossbow!, newRecurveArbalestCrossbow, wm, 2,
+                xMARANProficientEngineer0, xMARANAspiringEngineer0, xMARANCrossbowTechnician);
+            
+            var newRecurveSilencedCrossbow = ApplySilencedCrossbowModifications(newRecurveCrossbow);
+            CreateEnhancedCrossbowCraftingRecipe(newRecurveCrossbow!, newRecurveSilencedCrossbow, wm, 2,
+                xMARANProficientEngineer1, xMARANAspiringEngineer0, xMARANCrossbowTechnician);
+            CreateEnhancedCrossbowCraftingRecipe(newSilencedCrossbow!, newRecurveSilencedCrossbow, wm, 2,
+                xMARANProficientEngineer1, xMARANAspiringEngineer0, xMARANCrossbowTechnician);
+            
+            var newRecurveLightweightCrossbow = ApplyLightweightCrossbowModifications(newRecurveCrossbow);
+            CreateEnhancedCrossbowCraftingRecipe(newRecurveCrossbow!, newRecurveLightweightCrossbow, wm, 2,
+                xMARANAspiringEngineer1, xMARANAspiringEngineer0, xMARANCrossbowTechnician);
+            CreateEnhancedCrossbowCraftingRecipe(newLightweightCrossbow!, newRecurveSilencedCrossbow, wm, 2,
+                xMARANAspiringEngineer1, xMARANAspiringEngineer0, xMARANCrossbowTechnician);
+            
+            var newSilencedLightweightCrossbow = ApplyArbalestCrossbowModifications(newSilencedCrossbow);
+            CreateEnhancedCrossbowCraftingRecipe(newSilencedCrossbow!, newSilencedLightweightCrossbow, wm, 2,
+                xMARANProficientEngineer1, xMARANAspiringEngineer1, xMARANCrossbowTechnician);
+            CreateEnhancedCrossbowCraftingRecipe(newLightweightCrossbow!, newSilencedLightweightCrossbow, wm, 2,
+                xMARANProficientEngineer1, xMARANAspiringEngineer1, xMARANCrossbowTechnician);
+            
+            var newSilencedArbalestCrossbow = ApplySilencedCrossbowModifications(newRecurveCrossbow);
+            CreateEnhancedCrossbowCraftingRecipe(newSilencedCrossbow!, newSilencedArbalestCrossbow, wm, 2,
+                xMARANProficientEngineer0, xMARANProficientEngineer1, xMARANCrossbowTechnician);
+            CreateEnhancedCrossbowCraftingRecipe(newArbalestCrossbow!, newSilencedArbalestCrossbow, wm, 2,
+                xMARANProficientEngineer0, xMARANProficientEngineer1, xMARANCrossbowTechnician);
+            
+            var newLightweightArbalest = ApplyLightweightCrossbowModifications(newRecurveCrossbow);
+            CreateEnhancedCrossbowCraftingRecipe(newLightweightCrossbow!, newLightweightArbalest, wm, 2,
+                xMARANProficientEngineer0, xMARANAspiringEngineer1, xMARANCrossbowTechnician);
+            CreateEnhancedCrossbowCraftingRecipe(newArbalestCrossbow!, newLightweightArbalest, wm, 2,
+                xMARANProficientEngineer0, xMARANAspiringEngineer1, xMARANCrossbowTechnician);
+
+            List<Weapon> newCrossbows = new()
+            {
+                newRecurveCrossbow,
+                newLightweightCrossbow,
+                newArbalestCrossbow,
+                newSilencedCrossbow,
+                newLightweightArbalest,
+                newSilencedArbalestCrossbow,
+                newSilencedLightweightCrossbow,
+                newRecurveLightweightCrossbow,
+                newRecurveSilencedCrossbow,
+                newRecurveArbalestCrossbow,
+            };
+
+            foreach (var c in newCrossbows)
+            {
+                AddMeltdownRecipe(c, wt, wm);
+                AddTemperingRecipe(c, wm);
+
+                var reforgedWeapon = CreateReforgedWeapon(c, wt, wm);
+                ApplyModifiers(reforgedWeapon);
+                AddReforgedCraftingRecipe(reforgedWeapon, c, wm);
+                AddMeltdownRecipe(reforgedWeapon, wt, wm);
+                AddTemperingRecipe(reforgedWeapon, wm);
+
+                var warforgedWeapon = CreateWarforgedWeapon(c, wt, wm);
+                AddWarforgedCraftingRecipe(warforgedWeapon, reforgedWeapon, wm);
+                AddMeltdownRecipe(warforgedWeapon, wt, wm);
+                AddTemperingRecipe(warforgedWeapon, wm);
+                ApplyModifiers(warforgedWeapon);
+                
+                ApplyModifiers(c);
+            }
+        }
+
+        private Weapon ApplySilencedCrossbowModifications(IWeaponGetter w)
+        {
+            return ApplyCrossbowModifications(w, xMAWARCrossbowSilenced, "Silenced", w =>
+            {
+                w.DetectionSoundLevel = SoundLevel.Silent;
+            });
+        }
+
+        private Weapon ApplyArbalestCrossbowModifications(IWeaponGetter w)
+        {
+            return ApplyCrossbowModifications(w, xMAWARCrossbowArbalest, "Arbalest", w =>
+            {
+                w.BasicStats!.Weight *= 1.2f;
+            });
+        }
+
+        private Weapon ApplyLightweightCrossbowModifications(IWeaponGetter w)
+        {
+            return ApplyCrossbowModifications(w, xMAWARCrossbowLightweight, "Lightweight");
+        }
+
+        private Weapon ApplyRecurveCrossbowModifications(IWeaponGetter w)
+        {
+            return ApplyCrossbowModifications(w, xMAWARCrossbowRecurve, SCrossbowRecurve);
+        }
+
+        private Weapon? ApplyCrossbowModifications(IWeaponGetter w, IFormLink<IKeywordGetter> kw, string nameToAdd,
+            Action<Weapon>? modfn = null)
+        {
+            if (w.HasKeyword(kw))
+                return null;
+
+            var newName = $"{w.NameOrThrow()} [{_storage.GetOutputString(nameToAdd)}]";
+            var newCrossbow = _state.PatchMod.Weapons.DuplicateInAsNewRecord(w);
+            newCrossbow.EditorID = SPrefixPatcher + SPrefixWeapon + newName + w.FormKey;
+
+            newCrossbow.Name = newName;
+            newCrossbow.BasicStats!.Weight = newCrossbow.BasicStats.Weight * 1.2f;
+            newCrossbow.Keywords ??= new ExtendedList<IFormLinkGetter<IKeywordGetter>>();
+            newCrossbow.Keywords.Add(kw);
+            if (modfn != null) modfn(newCrossbow);
+            return newCrossbow;
+        }
+
+        private ConstructibleObject CreateEnhancedCrossbowCraftingRecipe(IWeaponGetter oldWeapon, Weapon newWeapon, WeaponMaterial wm, int numKits, 
+            params FormLink<IPerkGetter>[] perks)
+        {
+            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            cobj.EditorID = SPrefixPatcher + SPrefixWeapon + SPrefixCrafting + newWeapon.EditorID + newWeapon.FormKey;
+            cobj.WorkbenchKeyword.SetTo(CraftingSmithingForge);
+            cobj.CreatedObject.SetTo(newWeapon);
+            cobj.AddCraftingRequirement(xMACrossbowModificationKit, numKits);
+            cobj.AddCraftingRequirement(oldWeapon, 1);
+
+            foreach (var perk in perks) 
+                cobj.AddCraftingPerkCondition(perk);
+            cobj.AddCraftingInventoryCondition(oldWeapon);
+            return cobj;
         }
 
         private void CreateRefinedSilverWeapon(Weapon w)
@@ -187,9 +355,14 @@ namespace SynthusMaximus.Patchers
             }
 
             DoCopycat(w, wm, wt);
-            DistributeWeaponOnLeveledList(w, wm, wt);
+            MarkForDistribution(w, wm, wt);
         }
 
+        private void MarkForDistribution(Weapon w, WeaponMaterial wm, WeaponType wt)
+        {
+            _markedForDistribution.Add((w, wm, wt));
+        }
+        
         private void DistributeWeaponOnLeveledList(Weapon w, WeaponMaterial wm, WeaponType wt)
         {
             if (w.Data!.Flags.HasFlag(WeaponData.Flag.CantDrop) || w.Data!.Flags.HasFlag(WeaponData.Flag.BoundWeapon))
@@ -202,16 +375,12 @@ namespace SynthusMaximus.Patchers
             bool similarSet = false;
             IWeaponGetter? firstSimilarMatch = default;
 
-            var newItems = new List<LeveledItem>();
+            var newItems = new List<LeveledItemEntry>();
             
-            foreach (var i in _state.LoadOrder.PriorityOrder.LeveledItem().WinningOverrides().ToArray())
+            foreach (var i in _leveledLists)
             {
-                _logger.LogWarning("Patching {EditorID} in {LEditorID}", w.EditorID, i.EditorID);
                 IWeaponGetter? wl = default;
-                
-                if (_storage.IsListExcludedWeaponRegular(i))
-                    continue;
-                
+
                 if (i.Entries?.Any(e => Equals(e.Data?.Reference, flink)) ?? false)
                     continue;
 
@@ -238,9 +407,8 @@ namespace SynthusMaximus.Patchers
                     }
 
 
-                    var nw = _state.PatchMod.LeveledItems.DuplicateInAsNewRecord(i);
-                    nw.Entries ??= new ExtendedList<LeveledItemEntry>();
-                    nw.Entries!.Add(new LeveledItemEntry
+                    _weaponsDistributed += 1;
+                    newItems.Add(new LeveledItemEntry
                     {
                         Data = new LeveledItemEntryData
                         {
@@ -249,9 +417,17 @@ namespace SynthusMaximus.Patchers
                             Reference = new FormLink<IItemGetter>(w.FormKey)
                         }
                     });
-                    
-
                 }
+
+                if (newItems.Count != 0)
+                {
+                    var lim = _state.PatchMod.LeveledItems.GetOrAddAsOverride(i);
+                    lim.Entries ??= new ExtendedList<LeveledItemEntry>();
+                    lim.Entries.AddRange(newItems);
+                    newItems.Clear();
+                }
+                    
+                
                 
             }
             

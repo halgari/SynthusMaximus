@@ -239,16 +239,27 @@ namespace SynthusMaximus.Data
             return _weaponOverrides.TryGetValue(w.NameOrThrow(), out var o) ? o : default;
         }
 
+        private static Dictionary<string, WeaponType?> _weaponTypeCache = new();
         public WeaponType? GetWeaponType(IWeaponGetter weaponGetter)
         {
             var name = weaponGetter.NameOrEmpty();
-            return FindSingleBiggestSubstringMatch(_weaponTypes, name, wt => wt.NameSubStrings);
+            if (_weaponTypeCache.TryGetValue(name, out var type))
+                return type;
+            
+            var found =  FindSingleBiggestSubstringMatch(_weaponTypes, name, wt => wt.NameSubStrings);
+            _weaponTypeCache.Add(name, found);
+            return found;
         }
 
+        private static Dictionary<string, WeaponMaterial?> _weaponMaterialCache = new();
         public WeaponMaterial? GetWeaponMaterial(IWeaponGetter weaponGetter)
         {
             var name = weaponGetter.NameOrEmpty();
-            return FindSingleBiggestSubstringMatch(_weaponMaterials.Values, name, wt => wt.NameSubstrings);
+            if (_weaponMaterialCache.TryGetValue(name, out var type))
+                return type;
+            var found = FindSingleBiggestSubstringMatch(_weaponMaterials.Values, name, wt => wt.NameSubstrings);
+            _weaponMaterialCache.Add(name, found);
+            return found;
         }
 
         public float? GetWeaponSkillDamageBase(DynamicEnum<BaseWeaponType>.DynamicEnumMember wtBaseWeaponType)

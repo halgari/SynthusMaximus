@@ -40,6 +40,7 @@ namespace SynthusMaximus.Patchers
         
         public void RunPatcher()
         {
+            return;
             var addRecord = false;
 
             var armors = _state.LoadOrder.PriorityOrder.Armor().WinningOverrides().ToArray();
