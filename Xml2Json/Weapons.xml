@@ -32,6 +32,10 @@
 			<identifier>ancient</identifier>
 		</binding>
 		<binding>
+			<substring>Antique</substring>
+			<identifier>ancient</identifier>
+		</binding>
+		<binding>
 			<substring>Light</substring>
 			<identifier>light</identifier>
 		</binding>
@@ -50,7 +54,11 @@
 			<identifier>hero</identifier>
 		</binding>
 		<binding>
-			<substring>Legend</substring>
+			<substring> Legend</substring>
+			<identifier>legendary</identifier>
+		</binding>
+		<binding>
+			<substring>Legend </substring>
 			<identifier>legendary</identifier>
 		</binding>
 		<binding>
@@ -95,6 +103,10 @@
 		</binding>
 		<binding>
 			<substring>Eastern</substring>
+			<identifier>fine</identifier>
+		</binding>
+		<binding>
+			<substring>Corrupted</substring>
 			<identifier>fine</identifier>
 		</binding>
 	<!-- Bindings that increase the quality of weapons end-->
@@ -1206,7 +1218,7 @@
 		</binding>
 		<binding>
 			<identifier>Daedric</identifier>
-			<substring>Hatred's Heart</substring>
+			<substring>Hatred's</substring>
 		</binding>
 		<binding>
 			<identifier>Daedric</identifier>
@@ -1339,6 +1351,50 @@
 		<binding>
 			<identifier>DaedricHigh</identifier>
 			<substring>Twilight</substring>
+		</binding>
+		<binding>
+			<identifier>Daedric</identifier>
+			<substring>Ancient Dagger of The Vampire</substring>
+		</binding>
+		<binding>
+			<identifier>Daedric</identifier>
+			<substring>Ornate Deathgiver</substring>
+		</binding>
+		<binding>
+			<identifier>Daedric</identifier>
+			<substring>Reaper</substring>
+		</binding>
+		<binding>
+			<identifier>Daedric</identifier>
+			<substring>Acuity</substring>
+		</binding>
+		<binding>
+			<identifier>Daedric</identifier>
+			<substring>Graceshed</substring>
+		</binding>
+		<binding>
+			<identifier>Daedric</identifier>
+			<substring>Phonic</substring>
+		</binding>
+		<binding>
+			<identifier>Daedric</identifier>
+			<substring>Unraveler</substring>
+		</binding>
+		<binding>
+			<identifier>DaedricHigh</identifier>
+			<substring>Armadyl Godsword</substring>
+		</binding>
+		<binding>
+			<identifier>DaedricHigh</identifier>
+			<substring>Saradomin Godsword</substring>
+		</binding>
+		<binding>
+			<identifier>DaedricHigh</identifier>
+			<substring>Zamorak Godsword</substring>
+		</binding>
+		<binding>
+			<identifier>DaedricHigh</identifier>
+			<substring>Bandos Godsword</substring>
 		</binding>
 	<!-- Daedric bindings end -->
 	
@@ -1864,6 +1920,26 @@
 			<identifier>Dwarven</identifier>
 			<substring>Dwemer Tool No.457</substring>
 		</binding>
+		<binding>
+			<identifier>Dwarven</identifier>
+			<substring>Rockshatter</substring>
+		</binding>
+		<binding>
+			<identifier>Dwarven</identifier>
+			<substring>Norsteel</substring>
+		</binding>
+		<binding>
+			<identifier>Dwarven</identifier>
+			<substring>Shadsteel</substring>
+		</binding>
+		<binding>
+			<identifier>Dwarven</identifier>
+			<substring>Vaunting</substring>
+		</binding>
+		<binding>
+			<identifier>Dwarven</identifier>
+			<substring>Westonia</substring>
+		</binding>
 	<!-- Dwarven bindings end -->
 	
 	<!-- Ebony bindings start -->
@@ -2355,6 +2431,22 @@
 			<identifier>Ebony</identifier>
 			<substring>Khajiit Yatagan</substring>
 		</binding>
+		<binding>
+			<identifier>Ebony</identifier>
+			<substring>Conqueror</substring>
+		</binding>
+		<binding>
+			<identifier>Ebony</identifier>
+			<substring>Restless</substring>
+		</binding>
+		<binding>
+			<identifier>Ebony</identifier>
+			<substring>Xersteel</substring>
+		</binding>
+		<binding>
+			<identifier>Ebony</identifier>
+			<substring>Overlord War Axe</substring>
+		</binding>
 	<!-- Ebony bindings end -->
 	
 	<!-- Elven bindings start -->
@@ -2598,6 +2690,26 @@
 			<identifier>ElvenHigh</identifier>
 			<substring>Recurve Elven Bow</substring>
 		</binding>
+		<binding>
+			<identifier>Elven</identifier>
+			<substring>Gibson's Dagger</substring>
+		</binding>
+		<binding>
+			<identifier>Elven</identifier>
+			<substring>Bombard</substring>
+		</binding>
+		<binding>
+			<identifier>Elven</identifier>
+			<substring>Elenium</substring>
+		</binding>
+		<binding>
+			<identifier>Elven</identifier>
+			<substring>Palrada</substring>
+		</binding>
+		<binding>
+			<identifier>Elven</identifier>
+			<substring>Webrend</substring>
+		</binding>
 	<!-- Elven bindings end -->
 	
 	<!-- Falmer/Forsworn bindings start -->
@@ -2802,6 +2914,54 @@
 		<binding>
 			<identifier>Glass</identifier>
 			<substring>Seadog Cutlass</substring>
+		</binding>
+		<binding>
+			<identifier>Glass</identifier>
+			<substring>Blood Sword</substring>
+		</binding>
+		<binding>
+			<identifier>Glass</identifier>
+			<substring>Blood Dagger</substring>
+		</binding>
+		<binding>
+			<identifier>Glass</identifier>
+			<substring>Blood Greatsword</substring>
+		</binding>
+		<binding>
+			<identifier>Glass</identifier>
+			<substring>Blood War Axe</substring>
+		</binding>
+		<binding>
+			<identifier>Glass</identifier>
+			<substring>Blood Bow</substring>
+		</binding>
+		<binding>
+			<identifier>Glass</identifier>
+			<substring>Blood Mace</substring>
+		</binding>
+		<binding>
+			<identifier>Glass</identifier>
+			<substring>Blood Battleaxe</substring>
+		</binding>
+		<binding>
+			<identifier>Glass</identifier>
+			<substring>Blood Warhammer</substring>
+		</binding>
+		<binding>
+			<identifier>Glass</identifier>
+			<substring>Cauterus</substring>
+		</binding>
+		<binding>
+			<identifier>Glass</identifier>
+			<substring>Reprisal</substring>
+		</binding>
+		<binding>
+			<identifier>Glass</identifier>
+			<substring>Sunder</substring><!--TERA Weapons binding overridden by Dwarven binding -->
+		</binding>
+		<binding>
+			<identifier>Glass</identifier>
+			<substring>Umbra</substring><!--TERA Weapons binding overridden by Ebony binding -->
 		</binding>
 	<!-- Glass bindings end -->
 	
@@ -3160,6 +3320,26 @@
 		<binding>
 			<identifier>Orcish</identifier>
 			<substring>Carbon Fiber Compound Bow</substring>
+		</binding>
+		<binding>
+			<identifier>Orcish</identifier>
+			<substring>Arcadian</substring>
+		</binding>
+		<binding>
+			<identifier>Orcish</identifier>
+			<substring>Expedition</substring>
+		</binding>
+		<binding>
+			<identifier>Orcish</identifier>
+			<substring>Krysteel</substring>
+		</binding>
+		<binding>
+			<identifier>Orcish</identifier>
+			<substring>Linsteel</substring>
+		</binding>
+		<binding>
+			<identifier>Orcish</identifier>
+			<substring>Ostgarath</substring>
 		</binding>
 	<!-- Orcish bindings end -->
 	
@@ -4011,6 +4191,14 @@
 			<identifier>SteelHigh</identifier>
 			<substring>Ancient Akaviri Dha</substring>
 		</bindings>
+		<binding>
+			<identifier>Steel</identifier>
+			<substring>Ritual Dagger</substring>
+		</binding>
+		<binding>
+			<identifier>Steel</identifier>
+			<substring>Winterwound</substring>
+		</binding>
 	<!-- Steel bindings end -->
 
 	<!-- Skyforge bindings start -->
@@ -4163,8 +4351,12 @@
 			<substring>Vindskjær</substring> <!-- æ is not supported by UTF-8 encoding will need OEM 861 or OEM 865 -->
 		</binding>
 		<binding>
-			<identifier>Strongwood</identifier>
-			<substring>Vindskjaer</substring>
+			<identifier>DaedricHigh</identifier>
+			<substring>Vindskjaer Bow</substring>
+		</binding>
+		<binding>
+			<identifier>Dawnguard</identifier>
+			<substring>Vindskjaer Crossbow</substring>
 		</binding>
 		<binding>
 			<identifier>Wood</identifier>
@@ -4211,6 +4403,28 @@
 			<substring>Ashlander's Bow</substring>
 		</binding>
 	<!-- Wood bindings end -->
+	<!-- Visdagon Entries -->
+		<binding>
+			<identifier>HNordicLow</identifier>
+			<substring>Sovngarde Steel Sword</substring><!-- Vis Sovngarde Steel Armor -->
+		</binding>
+		<binding>
+			<identifier>Daedric</identifier>
+			<substring>Daedric Blue</substring><!-- Vis Daedric Blue Weapons -->
+		</binding>		
+		<binding>
+			<identifier>Daedric</identifier>
+			<substring>Daedric Blue Mace</substring><!-- Vis Daedric Blue Weapons -->
+		</binding>
+		<binding>
+			<identifier>ElvenHigh</identifier><!-- Vis Elvensilver Dagger -->
+			<substring>ElvenSilver Dagger</substring>
+		</binding>
+		<binding>
+			<identifier>SilverHigh</identifier>
+			<substring>The Rueful War Axe</substring><!-- Vis Rueful War Axe -->
+		</binding>
+	<!-- Visdagon Entries -->
 	</weapon_material_bindings>
 
 	<weapon_materials>
@@ -5036,6 +5250,10 @@
 		</binding>
 		<binding>
 			<substring>Spear</substring>
+			<identifier>Spear</identifier>
+		</binding>
+		<binding>
+			<substring>Lance</substring>
 			<identifier>Spear</identifier>
 		</binding>
 		<binding>
@@ -5885,6 +6103,10 @@
 			<substring>The Crab Slayer</substring>
 			<identifier>Dagger</identifier>
 		</binding>
+		<binding>
+			<substring>Winterwound</substring>
+			<identifier>Dagger</identifier>
+		</binding>
 	<!-- Dagger bindings end -->
 
 	<!-- Hatchet bindings start -->
@@ -6164,6 +6386,10 @@
 			<substring>Venus</substring>
 			<identifier>Longsword</identifier>
 		</binding>
+		<binding>
+			<substring>Vengence</substring>
+			<identifier>Longsword</identifier>
+		</binding>
 	<!-- Longsword bindings end -->
 
 	<!-- Mace bindings start -->
@@ -6250,6 +6476,18 @@
 		<binding>
 			<substring>Lilith's Ancient Obliterator (mace1h</substring>
 			<identifier>Longmace</identifier>
+		</binding>
+		<binding>
+			<identifier>Mace</identifier>
+			<substring>Scepter</substring>
+		</binding>
+		<binding>
+			<identifier>Mace</identifier>
+			<substring>Hatred's Heart</substring>
+		</binding>
+		<binding>
+			<identifier>Mace</identifier>
+			<substring>Rockshatter</substring>
 		</binding>
 	<!-- Mace bindings end -->
 
@@ -7052,6 +7290,14 @@
 			<identifier>Greatsword</identifier>
 		</binding>
 		<binding>
+			<substring>Riders Great Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Great Riders Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
 			<substring>Great Crescent</substring>
 			<identifier>Greatsword</identifier>
 		</binding>
@@ -7257,6 +7503,122 @@
 		</binding>
 		<binding>
 			<substring>Twilight</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Acuity Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Arcadian Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Bombard Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Cauterus Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Conqueror Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Elenium Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Expedition Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Graceshed Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Krysteel Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Legate Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Linsteel Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Norsteel Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Ostgarath Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Palrada Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Phonic Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Reprisal Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Restless Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Shadsteel Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Sunder Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Umbra Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Unraveler Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Vaunting Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Webrend Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Westonia Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Xersteel Blade</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Armadyl Godsword</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Saradomin Godsword</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Zamorak Godsword</substring>
+			<identifier>Greatsword</identifier>
+		</binding>
+		<binding>
+			<substring>Bandos Godsword</substring>
 			<identifier>Greatsword</identifier>
 		</binding>
 	<!-- Greatsword bindings end -->
@@ -7521,6 +7883,10 @@
 			<substring>Sulfuras</substring>
 			<identifier>Warhammer</identifier>
 		</binding>
+		<binding>
+			<substring>Greatscepter</substring>
+			<identifier>Warhammer</identifier>
+		</binding>
 	<!-- Warhammer bindings end -->
 	<!-- Great Morning Star bindings start -->
 		<binding>
@@ -7773,6 +8139,26 @@
 		</binding>
 		<binding>
 			<substring>The Giant's Downfall</substring>
+			<identifier>Longbow</identifier>
+		</binding>
+		<binding>
+			<substring>Blood Bow</substring>
+			<identifier>Longbow</identifier>
+		</binding>
+		<binding>
+			<substring>Ornate Deathgiver</substring>
+			<identifier>Longbow</identifier>
+		</binding>
+		<binding>
+			<substring>Reaper</substring>
+			<identifier>Longbow</identifier>
+		</binding>
+		<binding>
+			<substring>Hatred's Soul</substring>
+			<identifier>Longbow</identifier>
+		</binding>
+		<binding>
+			<substring>Eclipse</substring>
 			<identifier>Longbow</identifier>
 		</binding>
 	<!-- Longbow bindings end -->
@@ -8675,16 +9061,6 @@
 			<type>CONTAINS</type>
 		</exclusion>
 		<exclusion>
-			<text>Replica</text>
-			<target>EDID</target>
-			<type>CONTAINS</type>
-		</exclusion>
-		<exclusion>
-			<text>Replica</text>
-			<target>NAME</target>
-			<type>CONTAINS</type>
-		</exclusion>
-		<exclusion>
 			<text>Lydia's</text>
 			<target>NAME</target>
 			<type>CONTAINS</type>
@@ -8778,6 +9154,11 @@
 		<exclusion>
 			<text>Auriel</text>
 			<target>EDID</target>
+			<type>CONTAINS</type>
+		</exclusion>
+		<exclusion>
+			<text>The Rueful War Axe</text><!-- Vis The Rueful War Axe -->
+			<target>NAME</target>
 			<type>CONTAINS</type>
 		</exclusion>
 	<!-- Artifacts -->
@@ -9410,6 +9791,75 @@
 			<type>EQUALS</type>
 		</exclusion>
 	<!-- The Ashbringers -->
+	<!-- The Shrouded Lair - A Vampire Home -->
+		<exclusion>
+			<text>000SLVampDagger</text>
+			<target>EDID</target>
+			<type>STARTSWITH</type>
+		</exclusion>
+		<exclusion>
+			<text>000SLBow02</text>
+			<target>EDID</target>
+			<type>STARTSWITH</type>
+		</exclusion>
+		<exclusion>
+			<text>000BloodSwordSwordSL</text>
+			<target>EDID</target>
+			<type>STARTSWITH</type>
+		</exclusion>
+		<exclusion>
+			<text>000BloodDaggerSL</text>
+			<target>EDID</target>
+			<type>STARTSWITH</type>
+		</exclusion>
+		<exclusion>
+			<text>000BloodGreatswordSL</text>
+			<target>EDID</target>
+			<type>STARTSWITH</type>
+		</exclusion>
+		<exclusion>
+			<text>000BloodWaraxeSL</text>
+			<target>EDID</target>
+			<type>STARTSWITH</type>
+		</exclusion>
+		<exclusion>
+			<text>000BloodBowSL</text>
+			<target>EDID</target>
+			<type>STARTSWITH</type>
+		</exclusion>
+		<exclusion>
+			<text>000BloodMaceSL</text>
+			<target>EDID</target>
+			<type>STARTSWITH</type>
+		</exclusion>
+		<exclusion>
+			<text>000BloodBattleaxeSL</text>
+			<target>EDID</target>
+			<type>STARTSWITH</type>
+		</exclusion>
+		<exclusion>
+			<text>000BloodWarhammerSL</text>
+			<target>EDID</target>
+			<type>STARTSWITH</type>
+		</exclusion>
+	<!-- The Shrouded Lair - A Vampire Home -->
+	<!-- Skyfall Estate Buildable -->
+		<exclusion>
+			<text>aaaReaperBow</text>
+			<target>EDID</target>
+			<type>STARTSWITH</type>
+		</exclusion>
+		<exclusion>
+			<text>aaaSFSword</text>
+			<target>EDID</target>
+			<type>STARTSWITH</type>
+		</exclusion>
+		<exclusion>
+			<text>aaaGibsonsDagger</text>
+			<target>EDID</target>
+			<type>STARTSWITH</type>
+		</exclusion>
+	<!-- Skyfall Estate Buildable -->
 	</reforge_exclusions>
 
 </ns2:weapons>

@@ -1,128 +1,141 @@
-{
-  "Flare Undead": {
-    "baseMagnitude": "0",
-    "baseDuration": "4",
-    "baseCost": "50",
+[
+  {
+    "identifier": "Flare Undead",
+    "baseMagnitude": 0.0,
+    "baseDuration": 4.0,
+    "baseCost": 50.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": false,
     "nameSubstrings": [
       "Flare Undead"
     ]
   },
-  "Corrode Armor": {
-    "baseMagnitude": "0",
-    "baseDuration": "4",
-    "baseCost": "50",
+  {
+    "identifier": "Corrode Armor",
+    "baseMagnitude": 0.0,
+    "baseDuration": 4.0,
+    "baseCost": 50.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": false,
     "nameSubstrings": [
       "Corrode Armor"
     ]
   },
-  "Arcane Detachment": {
-    "baseMagnitude": "800",
-    "baseDuration": "1",
-    "baseCost": "0.1",
+  {
+    "identifier": "Arcane Detachment",
+    "baseMagnitude": 800.0,
+    "baseDuration": 1.0,
+    "baseCost": 0.1,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": false,
     "nameSubstrings": [
       "Arcane Detachment"
     ]
   },
-  "Exhaust": {
-    "baseMagnitude": "800",
-    "baseDuration": "1",
-    "baseCost": "0.1",
+  {
+    "identifier": "Exhaust",
+    "baseMagnitude": 800.0,
+    "baseDuration": 1.0,
+    "baseCost": 0.1,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": false,
     "nameSubstrings": [
       "Exhaust"
     ]
   },
-  "Paralysis": {
-    "baseMagnitude": "0",
-    "baseDuration": "1",
-    "baseCost": "400",
+  {
+    "identifier": "Paralysis",
+    "baseMagnitude": 0.0,
+    "baseDuration": 1.0,
+    "baseCost": 400.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": false,
     "nameSubstrings": [
       "Paralysis"
     ]
   },
-  "Waterbreathing": {
-    "baseMagnitude": "0",
-    "baseDuration": "5",
-    "baseCost": "37",
+  {
+    "identifier": "Waterbreathing",
+    "baseMagnitude": 0.0,
+    "baseDuration": 5.0,
+    "baseCost": 37.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": false,
     "nameSubstrings": [
       "Waterbreathing"
     ]
   },
-  "Fear": {
-    "baseMagnitude": "1.645",
-    "baseDuration": "30",
-    "baseCost": "0.8",
+  {
+    "identifier": "Fear",
+    "baseMagnitude": 1.645,
+    "baseDuration": 30.0,
+    "baseCost": 0.8,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Fear"
     ]
   },
-  "Frenzy": {
-    "baseMagnitude": "1.316",
-    "baseDuration": "10",
-    "baseCost": "4.5",
+  {
+    "identifier": "Frenzy",
+    "baseMagnitude": 1.316,
+    "baseDuration": 10.0,
+    "baseCost": 4.5,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Frenzy"
     ]
   },
-  "Invisibility": {
-    "baseMagnitude": "0",
-    "baseDuration": "5",
-    "baseCost": "60",
+  {
+    "identifier": "Invisibility",
+    "baseMagnitude": 0.0,
+    "baseDuration": 5.0,
+    "baseCost": 60.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": false,
     "nameSubstrings": [
       "Invisibility"
     ]
   },
-  "Cure Disease": {
-    "baseMagnitude": "5",
-    "baseDuration": "0",
-    "baseCost": "5",
+  {
+    "identifier": "Cure Disease",
+    "baseMagnitude": 5.0,
+    "baseDuration": 0.0,
+    "baseCost": 5.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": false,
     "nameSubstrings": [
       "Cure Disease"
     ]
   },
-  "Cure Poison": {
-    "baseMagnitude": "100",
-    "baseDuration": "0",
-    "baseCost": "5",
+  {
+    "identifier": "Cure Poison",
+    "baseMagnitude": 100.0,
+    "baseDuration": 0.0,
+    "baseCost": 5.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": false,
     "nameSubstrings": [
       "Cure Poison"
     ]
   },
-  "Regenerate Health": {
-    "baseMagnitude": "13.16",
-    "baseDuration": "60",
-    "baseCost": "0.18",
+  {
+    "identifier": "Regenerate Health",
+    "baseMagnitude": 13.16,
+    "baseDuration": 60.0,
+    "baseCost": 0.18,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Regenerate Health"
     ]
   },
-  "Regenerate": {
-    "baseMagnitude": "8.772",
-    "baseDuration": "60",
-    "baseCost": "0.2",
+  {
+    "identifier": "Regenerate",
+    "baseMagnitude": 8.772,
+    "baseDuration": 60.0,
+    "baseCost": 0.2,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
@@ -130,70 +143,77 @@
       "Regenerate Stamina"
     ]
   },
-  "Resist Fire": {
-    "baseMagnitude": "4.386",
-    "baseDuration": "60",
-    "baseCost": "0.5",
+  {
+    "identifier": "Resist Fire",
+    "baseMagnitude": 4.386,
+    "baseDuration": 60.0,
+    "baseCost": 0.5,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Resist Fire"
     ]
   },
-  "Resist Frost": {
-    "baseMagnitude": "4.386",
-    "baseDuration": "60",
-    "baseCost": "0.4",
+  {
+    "identifier": "Resist Frost",
+    "baseMagnitude": 4.386,
+    "baseDuration": 60.0,
+    "baseCost": 0.4,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Resist Frost"
     ]
   },
-  "Resist Shock": {
-    "baseMagnitude": "4.386",
-    "baseDuration": "60",
-    "baseCost": "0.6",
+  {
+    "identifier": "Resist Shock",
+    "baseMagnitude": 4.386,
+    "baseDuration": 60.0,
+    "baseCost": 0.6,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Resist Shock"
     ]
   },
-  "Resist Magic": {
-    "baseMagnitude": "2.193",
-    "baseDuration": "60",
-    "baseCost": "1.2",
+  {
+    "identifier": "Resist Magic",
+    "baseMagnitude": 2.193,
+    "baseDuration": 60.0,
+    "baseCost": 1.2,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Resist Magic"
     ]
   },
-  "Resist Poison": {
-    "baseMagnitude": "4.386",
-    "baseDuration": "60",
-    "baseCost": "0.3",
+  {
+    "identifier": "Resist Poison",
+    "baseMagnitude": 4.386,
+    "baseDuration": 60.0,
+    "baseCost": 0.3,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": false,
     "nameSubstrings": [
       "Resist Poison"
     ]
   },
-  "Restore Health": {
-    "baseMagnitude": "1.9",
-    "baseDuration": "8",
-    "baseCost": "6.6",
+  {
+    "identifier": "Restore Health",
+    "baseMagnitude": 1.9,
+    "baseDuration": 8.0,
+    "baseCost": 6.6,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Restore Health"
     ]
   },
-  "Restore": {
-    "baseMagnitude": "2.36",
-    "baseDuration": "8",
-    "baseCost": "4.6",
+  {
+    "identifier": "Restore",
+    "baseMagnitude": 2.36,
+    "baseDuration": 8.0,
+    "baseCost": 4.6,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
@@ -201,10 +221,11 @@
       "Restore Stamina"
     ]
   },
-  "Fortify Single Skill": {
-    "baseMagnitude": "4.386",
-    "baseDuration": "60",
-    "baseCost": "0.5",
+  {
+    "identifier": "Fortify Single Skill",
+    "baseMagnitude": 4.386,
+    "baseDuration": 60.0,
+    "baseCost": 0.5,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
@@ -221,10 +242,11 @@
       "Fortify Sneak"
     ]
   },
-  "Fortify Armor": {
-    "baseMagnitude": "2.193",
-    "baseDuration": "60",
-    "baseCost": "1",
+  {
+    "identifier": "Fortify Armor",
+    "baseMagnitude": 2.193,
+    "baseDuration": 60.0,
+    "baseCost": 1.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
@@ -232,10 +254,11 @@
       "Fortify Heavy Armor"
     ]
   },
-  "Fortify Double Skill": {
-    "baseMagnitude": "2.193",
-    "baseDuration": "60",
-    "baseCost": "1",
+  {
+    "identifier": "Fortify Double Skill",
+    "baseMagnitude": 2.193,
+    "baseDuration": 60.0,
+    "baseCost": 1.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
@@ -243,60 +266,66 @@
       "Guardian"
     ]
   },
-  "Fortify Barter": {
-    "baseMagnitude": "2.193",
-    "baseDuration": "300",
-    "baseCost": "0.14",
+  {
+    "identifier": "Fortify Barter",
+    "baseMagnitude": 2.193,
+    "baseDuration": 300.0,
+    "baseCost": 0.14,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Fortify Barter"
     ]
   },
-  "Fortify Persuasion": {
-    "baseMagnitude": "2.193",
-    "baseDuration": "300",
-    "baseCost": "0.14",
+  {
+    "identifier": "Fortify Persuasion",
+    "baseMagnitude": 2.193,
+    "baseDuration": 300.0,
+    "baseCost": 0.14,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Fortify Persuasion"
     ]
   },
-  "Dexterity": {
-    "baseMagnitude": "4.386",
-    "baseDuration": "300",
-    "baseCost": "0.08",
+  {
+    "identifier": "Dexterity",
+    "baseMagnitude": 4.386,
+    "baseDuration": 300.0,
+    "baseCost": 0.08,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Dexterity"
     ]
   },
-  "Fortify Carry Weight": {
-    "baseMagnitude": "8.772",
-    "baseDuration": "300",
-    "baseCost": "0.03",
+  {
+    "identifier": "Fortify Carry Weight",
+    "baseMagnitude": 8.772,
+    "baseDuration": 300.0,
+    "baseCost": 0.03,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Fortify Carry Weight"
     ]
   },
-  "Fortify Health": {
-    "baseMagnitude": "8.772",
-    "baseDuration": "60",
-    "baseCost": "0.22",
+  {
+    "identifier": "Fortify Health",
+    "baseMagnitude": 8.772,
+    "baseDuration": 60.0,
+    "baseCost": 0.22,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Fortify Health"
     ]
   },
-  "Fortify Magicka Stamina": {
-    "baseMagnitude": "13.158",
-    "baseDuration": "60",
-    "baseCost": "0.13",
+  {
+    "identifier": "Fortify Magicka Stamina",
+    "baseMagnitude": 13.158,
+    "baseDuration": 60.0,
+    "baseCost": 0.13,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
@@ -304,174 +333,191 @@
       "Fortify Stamina"
     ]
   },
-  "Damage Health": {
-    "baseMagnitude": "1.755",
-    "baseDuration": "5",
-    "baseCost": "5",
+  {
+    "identifier": "Damage Health",
+    "baseMagnitude": 1.755,
+    "baseDuration": 5.0,
+    "baseCost": 5.0,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Damage Health"
     ]
   },
-  "Lingering Damage Health": {
-    "baseMagnitude": "0.585",
-    "baseDuration": "30",
-    "baseCost": "5",
+  {
+    "identifier": "Lingering Damage Health",
+    "baseMagnitude": 0.585,
+    "baseDuration": 30.0,
+    "baseCost": 5.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Lingering Damage Health"
     ]
   },
-  "Ravage Health": {
-    "baseMagnitude": "0.2",
-    "baseDuration": "8",
-    "baseCost": "100",
+  {
+    "identifier": "Ravage Health",
+    "baseMagnitude": 0.2,
+    "baseDuration": 8.0,
+    "baseCost": 100.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": false,
     "nameSubstrings": [
       "Ravage Health"
     ]
   },
-  "Damage Magicka": {
-    "baseMagnitude": "2.632",
-    "baseDuration": "5",
-    "baseCost": "5",
+  {
+    "identifier": "Damage Magicka",
+    "baseMagnitude": 2.632,
+    "baseDuration": 5.0,
+    "baseCost": 5.0,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Damage Magicka"
     ]
   },
-  "Lingering Damage Magicka": {
-    "baseMagnitude": "0.878",
-    "baseDuration": "30",
-    "baseCost": "5",
+  {
+    "identifier": "Lingering Damage Magicka",
+    "baseMagnitude": 0.878,
+    "baseDuration": 30.0,
+    "baseCost": 5.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Lingering Damage Magicka"
     ]
   },
-  "Ravage Magicka": {
-    "baseMagnitude": "1",
-    "baseDuration": "10",
-    "baseCost": "5",
+  {
+    "identifier": "Ravage Magicka",
+    "baseMagnitude": 1.0,
+    "baseDuration": 10.0,
+    "baseCost": 5.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": false,
     "nameSubstrings": [
       "Ravage Magicka"
     ]
   },
-  "Damage Magicka Regen": {
-    "baseMagnitude": "300",
-    "baseDuration": "2",
-    "baseCost": "5",
+  {
+    "identifier": "Damage Magicka Regen",
+    "baseMagnitude": 300.0,
+    "baseDuration": 2.0,
+    "baseCost": 5.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Damage Magicka Regen"
     ]
   },
-  "Damage Stamina": {
-    "baseMagnitude": "2.632",
-    "baseDuration": "5",
-    "baseCost": "5",
+  {
+    "identifier": "Damage Stamina",
+    "baseMagnitude": 2.632,
+    "baseDuration": 5.0,
+    "baseCost": 5.0,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Damage Stamina"
     ]
   },
-  "Lingering Damage Stamina": {
-    "baseMagnitude": "0.878",
-    "baseDuration": "30",
-    "baseCost": "5",
+  {
+    "identifier": "Lingering Damage Stamina",
+    "baseMagnitude": 0.878,
+    "baseDuration": 30.0,
+    "baseCost": 5.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Lingering Damage Stamina"
     ]
   },
-  "Ravage Stamina": {
-    "baseMagnitude": "1",
-    "baseDuration": "10",
-    "baseCost": "5",
+  {
+    "identifier": "Ravage Stamina",
+    "baseMagnitude": 1.0,
+    "baseDuration": 10.0,
+    "baseCost": 5.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": false,
     "nameSubstrings": [
       "Ravage Stamina"
     ]
   },
-  "Damage Stamina Regen": {
-    "baseMagnitude": "300",
-    "baseDuration": "2",
-    "baseCost": "5",
+  {
+    "identifier": "Damage Stamina Regen",
+    "baseMagnitude": 300.0,
+    "baseDuration": 2.0,
+    "baseCost": 5.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Damage Stamina Regen"
     ]
   },
-  "Slow": {
-    "baseMagnitude": "50",
-    "baseDuration": "3",
-    "baseCost": "5",
+  {
+    "identifier": "Slow",
+    "baseMagnitude": 50.0,
+    "baseDuration": 3.0,
+    "baseCost": 5.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": false,
     "nameSubstrings": [
       "Slow"
     ]
   },
-  "Weakness to Fire": {
-    "baseMagnitude": "4.386",
-    "baseDuration": "30",
-    "baseCost": "0.6",
+  {
+    "identifier": "Weakness to Fire",
+    "baseMagnitude": 4.386,
+    "baseDuration": 30.0,
+    "baseCost": 0.6,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Weakness to Fire"
     ]
   },
-  "Weakness to Frost": {
-    "baseMagnitude": "4.386",
-    "baseDuration": "30",
-    "baseCost": "0.6",
+  {
+    "identifier": "Weakness to Frost",
+    "baseMagnitude": 4.386,
+    "baseDuration": 30.0,
+    "baseCost": 0.6,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Weakness to Frost"
     ]
   },
-  "Weakness to Shock": {
-    "baseMagnitude": "4.386",
-    "baseDuration": "30",
-    "baseCost": "0.7",
+  {
+    "identifier": "Weakness to Shock",
+    "baseMagnitude": 4.386,
+    "baseDuration": 30.0,
+    "baseCost": 0.7,
     "allowIngredientVariation": true,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Weakness to Shock"
     ]
   },
-  "Weakness to Magic": {
-    "baseMagnitude": "2.193",
-    "baseDuration": "30",
-    "baseCost": "2",
+  {
+    "identifier": "Weakness to Magic",
+    "baseMagnitude": 2.193,
+    "baseDuration": 30.0,
+    "baseCost": 2.0,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": true,
     "nameSubstrings": [
       "Weakness to Magic"
     ]
   },
-  "Weakness to Poison": {
-    "baseMagnitude": "2.193",
-    "baseDuration": "30",
-    "baseCost": "0.5",
+  {
+    "identifier": "Weakness to Poison",
+    "baseMagnitude": 2.193,
+    "baseDuration": 30.0,
+    "baseCost": 0.5,
     "allowIngredientVariation": false,
     "allowPotionMultiplier": false,
     "nameSubstrings": [
       "Weakness to Poison"
     ]
   }
-}
+]

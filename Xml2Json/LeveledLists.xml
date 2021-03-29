@@ -2035,6 +2035,26 @@
 		<!-- Target = Unenchanted Items in this list will not be distributed to LLs by PaMa -->
 		<!-- Faction Exclusions start -->
 			<exclusion>
+				<text>MJB_Bow</text>
+				<target>EDID</target>
+				<type>STARTSWITH</type>
+			</exclusion>
+			<exclusion>
+				<text>aaIS3</text>
+				<target>EDID</target>
+				<type>STARTSWITH</type>
+			</exclusion>
+			<exclusion>
+				<text>Noldor</text>
+				<target>EDID</target>
+				<type>STARTSWITH</type>
+			</exclusion>
+			<exclusion>
+				<text>CBC_</text>
+				<target>EDID</target>
+				<type>STARTSWITH</type>
+			</exclusion>
+			<exclusion>
 				<text>Akaviri</text>
 				<target>EDID</target>
 				<type>CONTAINS</type>
@@ -2954,6 +2974,11 @@
 				<target>EDID</target>
 				<type>STARTSWITH</type>
 			</exclusion>
+			<exclusion>
+				<text>RecurveBow</text>
+				<target>EDID</target>
+				<type>STARTSWITH</type>
+			</exclusion>
 		<!-- Nock to Tip end -->
 		<!-- Death Alternative -->
 			<exclusion>
@@ -3213,7 +3238,7 @@
 		<!-- Lilith -->
 			<exclusion>
 				<text>Lilith</text>
-				<target>NAME</target>
+				<target>EDID</target>
 				<type>STARTSWITH</type>
 			</exclusion>
 		<!-- Lilith -->
@@ -3556,6 +3581,13 @@
 				<type>EQUALS</type>
 			</exclusion>
 		<!-- Twilight Guild Wars 2 Legendary GreatSword -->
+		<!-- Black Overlord Armor Set -->
+			<exclusion>
+				<text>OverlordWarAxe</text>
+				<target>EDID</target>
+				<type>STARTSWITH</type>
+			</exclusion>
+		<!-- Black Overlord Armor Set -->
 		</distribution_exclusions_weapon_regular>
 
 		<distribution_exclusions_list_regular>
@@ -3850,6 +3882,11 @@
 		<!-- Target = NAME/EDID/FORMID Type = EQUALS/EQUALS_IGNORECASE/CONTAINS -->
 		<!-- Target = Enchanted Items in this list will not be distributed to LLs by PaMa -->
 		<!-- Faction Exclusions start -->
+			<exclusion>
+				<text>MJB_Bow</text>
+				<target>EDID</target>
+				<type>STARTSWITH</type>
+			</exclusion>
 			<exclusion>
 				<text>Akaviri</text>
 				<target>EDID</target>
@@ -4877,6 +4914,48 @@
 				<type>STARTSWITH</type>
 			</exclusion>
 		<!-- Immersive Jewelry -->
+		<!-- The Godswords of Gielinor -->
+			<exclusion>
+				<text>ArmadylGodsword</text>
+				<target>EDID</target>
+				<type>EQUALS</type>
+			</exclusion>
+			<exclusion>
+				<text>ArmadylGodsword2</text>
+				<target>EDID</target>
+				<type>EQUALS</type>
+			</exclusion>
+			<exclusion>
+				<text>BandosGodsword</text>
+				<target>EDID</target>
+				<type>EQUALS</type>
+			</exclusion>
+			<exclusion>
+				<text>BandosGodsword2</text>
+				<target>EDID</target>
+				<type>EQUALS</type>
+			</exclusion>
+			<exclusion>
+				<text>SaradominGodsword</text>
+				<target>EDID</target>
+				<type>EQUALS</type>
+			</exclusion>
+			<exclusion>
+				<text>SaradominGodsword2</text>
+				<target>EDID</target>
+				<type>EQUALS</type>
+			</exclusion>
+			<exclusion>
+				<text>ZamorakGodsword</text>
+				<target>EDID</target>
+				<type>EQUALS</type>
+			</exclusion>
+			<exclusion>
+				<text>ZamorakGodsword2</text>
+				<target>EDID</target>
+				<type>EQUALS</type>
+			</exclusion>
+		<!-- The Godswords of Gielinor -->
 		</distribution_exclusions_weapon_enchanted>
 
 		<distribution_exclusions_list_enchanted>
@@ -5120,6 +5199,11 @@
 		<!-- Target = Enchanted Items in this list will not be distributed to LLs by PaMa -->
 		<!-- Faction Exclusions start -->
 			<exclusion>
+				<text>sample</text>
+				<target>EDID</target>
+				<type>CONTAINS</type>
+			</exclusion>
+			<exclusion>
 				<text>Akaviri</text>
 				<target>EDID</target>
 				<type>CONTAINS</type>
@@ -5299,6 +5383,11 @@
 				<type>CONTAINS</type>
 			</exclusion>
 		<!-- Quest Items end -->
+			<exclusion>
+				<text>dnn</text>
+				<target>EDID</target>
+				<type>STARTSWITH</type>
+			</exclusion>
 			<exclusion>
 				<text>xMAEasterEggMaskNerjal</text>
 				<target>EDID</target>
@@ -6645,6 +6734,20 @@
 				<type>STARTSWITH</type>
 			</exclusion>
 		<!-- Immersive Jewelry -->
+		<!-- Blades Hakama -->
+			<exclusion>
+				<text>Blades Shihan</text>
+				<target>NAME</target>
+				<type>STARTSWITH</type>
+			</exclusion>
+		<!-- Blades Hakama -->
+		<!-- Black Overlord Armor Set -->
+			<exclusion>
+				<text>xxxBlack</text>
+				<target>NAME</target>
+				<type>STARTSWITH</type>
+			</exclusion>
+		<!-- Black Overlord Armor Set -->
 		</distribution_exclusions_armor_regular>
 
 		<distribution_exclusions_list_regular>
@@ -8199,6 +8302,13 @@
 				<type>STARTSWITH</type>
 			</exclusion>
 		<!-- Immersive Jewelry -->
+		<!-- Harbinger's Set -->
+			<exclusion>
+				<text>00Harbinger</text>
+				<target>EDID</target>
+				<type>STARTSWITH</type>
+			</exclusion>
+		<!-- Harbinger's Set -->
 		</distribution_exclusions_armor_enchanted>
 
 		<distribution_exclusions_list_enchanted>

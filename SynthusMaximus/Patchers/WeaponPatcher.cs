@@ -253,7 +253,7 @@ namespace SynthusMaximus.Patchers
 
         private Weapon ApplySilencedCrossbowModifications(IWeaponGetter w)
         {
-            return ApplyCrossbowModifications(w, xMAWARCrossbowSilenced, "Silenced", w =>
+            return ApplyCrossbowModifications(w, xMAWARCrossbowSilenced, SCrossbowSilenced, w =>
             {
                 w.DetectionSoundLevel = SoundLevel.Silent;
             });
@@ -261,7 +261,7 @@ namespace SynthusMaximus.Patchers
 
         private Weapon ApplyArbalestCrossbowModifications(IWeaponGetter w)
         {
-            return ApplyCrossbowModifications(w, xMAWARCrossbowArbalest, "Arbalest", w =>
+            return ApplyCrossbowModifications(w, xMAWARCrossbowArbalest, SCrossbowArbalest, w =>
             {
                 w.BasicStats!.Weight *= 1.2f;
             });
@@ -269,7 +269,7 @@ namespace SynthusMaximus.Patchers
 
         private Weapon ApplyLightweightCrossbowModifications(IWeaponGetter w)
         {
-            return ApplyCrossbowModifications(w, xMAWARCrossbowLightweight, "Lightweight");
+            return ApplyCrossbowModifications(w, xMAWARCrossbowLightweight, SCrossbowLightweight);
         }
 
         private Weapon ApplyRecurveCrossbowModifications(IWeaponGetter w)
