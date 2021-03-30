@@ -17,6 +17,7 @@ using Mutagen.Bethesda.FormKeys.SkyrimSE;
 using Mutagen.Bethesda.Synthesis;
 using SynthusMaximus.Data.Converters;
 using SynthusMaximus.Data.DTOs;
+using SynthusMaximus.Data.DTOs.Alchemy;
 using SynthusMaximus.Data.DTOs.Armor;
 using SynthusMaximus.Data.DTOs.Weapon;
 using SynthusMaximus.Data.Enums;
@@ -44,7 +45,13 @@ namespace SynthusMaximus.Data
         private readonly WeaponSettings _weaponSettings;
         private readonly IDictionary<ExclusionType, List<Regex>> _weaponReforgeExclusions;
         private readonly IDictionary<ExclusionType, List<Regex>> _distributionExclusionsWeaponRegular;
-        private IDictionary<ExclusionType, List<Regex>> _distributionExclusionsWeaponListRegular;
+        private readonly IDictionary<ExclusionType, List<Regex>> _distributionExclusionsWeaponListRegular;
+        private readonly IDictionary<ExclusionType, List<Regex>> _potionExclusions;
+        private readonly IList<AlchemyEffect> _alchemyEffect;
+        private readonly IList<PotionMultiplier> _potionMultipliers;
+        private IList<IngredientVariation> _ingredientVariations;
+        private IDictionary<ExclusionType, List<Regex>> _ingredientExclusions;
+
 
         public DataStorage(ILogger<DataStorage> logger, 
             IPatcherState<ISkyrimMod, ISkyrimModGetter> state,
@@ -80,8 +87,21 @@ namespace SynthusMaximus.Data
                 _loader.LoadValueConcatDictionary<ExclusionType, Regex>(
                     (RelativePath) @"exclusions\distributionExclusionsWeaponRegular.json");
             _distributionExclusionsWeaponListRegular =
-            _loader.LoadValueConcatDictionary<ExclusionType, Regex>(
+                _loader.LoadValueConcatDictionary<ExclusionType, Regex>(
                 (RelativePath) @"exclusions\distributionExclusionsWeaponListRegular.json");
+
+            // Alchemy
+            _potionExclusions =
+                _loader.LoadValueConcatDictionary<ExclusionType, Regex>((RelativePath) @"exclusions\potionExclusions");
+            _ingredientExclusions =
+                _loader.LoadValueConcatDictionary<ExclusionType, Regex>((RelativePath) @"exclusions\ingredientExclusions");
+            _alchemyEffect =
+                _loader.LoadList<AlchemyEffect>((RelativePath) @"alchemy\alchemyEffects.json");
+            _potionMultipliers =
+                _loader.LoadList<PotionMultiplier>((RelativePath) @"alchemy\potionMultiplier.json");
+            _ingredientVariations =
+                _loader.LoadList<IngredientVariation>((RelativePath) @"alchemy\ingredientVariations.json");
+            
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
             
@@ -252,6 +272,8 @@ namespace SynthusMaximus.Data
         }
 
         private static Dictionary<string, WeaponMaterial?> _weaponMaterialCache = new();
+
+
         public WeaponMaterial? GetWeaponMaterial(IWeaponGetter weaponGetter)
         {
             var name = weaponGetter.NameOrEmpty();
@@ -308,6 +330,31 @@ namespace SynthusMaximus.Data
         public bool IsListExcludedWeaponRegular(ILeveledItemGetter li)
         {
             return _distributionExclusionsWeaponListRegular.Any(ex => CheckExclusionMajorRecord(ex.Key, ex.Value, li));
+        }
+
+        public bool IsAlchemyExcluded(ITranslatedNamedGetter a)
+        {
+            return _potionExclusions.Any(ex => CheckExclusion(ex.Key, ex.Value, a));
+        }
+
+        public AlchemyEffect? GetAlchemyEffect(IMagicEffectGetter m)
+        {
+            return FindSingleBiggestSubstringMatch(_alchemyEffect, m.NameOrThrow(), e => e.NameSubstrings);
+        }
+
+        public PotionMultiplier? GetPotionMultipiler(IIngestibleGetter i)
+        {
+            return FindSingleBiggestSubstringMatch(_potionMultipliers, i.NameOrThrow(), e => e.NameSubstrings);
+        }
+
+        public bool IsIngredientExcluded(IIngredientGetter i)
+        {
+            return _ingredientExclusions.Any(ex => CheckExclusion(ex.Key, ex.Value, i));
+        }
+
+        public IngredientVariation? GetIngredientVariation(IIngredientGetter ig)
+        {
+            return FindSingleBiggestSubstringMatch(_ingredientVariations, ig.NameOrThrow(), i => i.NameSubstrings);
         }
     }
 }

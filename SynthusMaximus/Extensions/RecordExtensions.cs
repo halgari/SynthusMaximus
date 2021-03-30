@@ -97,6 +97,21 @@ namespace SynthusMaximus
             return name!;
         }
 
+        
+        public static string NameOrThrow(this ITranslatedStringGetter? getter)
+        {
+            if (getter == null || !getter!.TryLookup(Language.English, out var name) || name == null)
+                throw new InvalidDataException($"Cannot get English name from {getter}");
+            return name!;
+        }
+        
+        public static string NameOrEmpty(this ITranslatedStringGetter? getter)
+        {
+            if (getter == null || !getter!.TryLookup(Language.English, out var name) || name == null)
+                return "";
+            return name!;
+        }
+
         public static void AddCraftingInventoryCondition(this ConstructibleObject cobj, IItemGetter? item, int count = 1)
         {
             cobj.AddCraftingInventoryCondition(new FormLink<ISkyrimMajorRecordGetter>(item.FormKey), count);

@@ -75,6 +75,21 @@
       <None Update="config\PerkusMaximus_Master\exclusions\distributionExclusionsWeaponListRegular.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="config\PerkusMaximus_Master\alchemy\alchemyEffects.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\alchemy\ingredientVariations.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\alchemy\potionMultipliers.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\exclusions\ingredientExclusions.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\exclusions\potionExclusions.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
