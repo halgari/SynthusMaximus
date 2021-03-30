@@ -1,0 +1,35 @@
+[
+  {
+    "identifier": "Standard Arrow",
+    "type": "ARROW",
+    "damageBase": 13.0,
+    "rangeBase": 60000.0,
+    "speedBase": 4900.0,
+    "gravityBase": 0.3,
+    "nameSubstrings": [
+      "Arrow"
+    ]
+  },
+  {
+    "identifier": "Standard Bolt",
+    "type": "BOLT",
+    "damageBase": 17.0,
+    "rangeBase": 80000.0,
+    "speedBase": 5500.0,
+    "gravityBase": 0.05,
+    "nameSubstrings": [
+      "Bolt"
+    ]
+  },
+  {
+    "identifier": "Standard Javelin",
+    "type": "ARROW",
+    "damageBase": 20.0,
+    "rangeBase": 20000.0,
+    "speedBase": 2400.0,
+    "gravityBase": 1.0,
+    "nameSubstrings": [
+      "Javelin"
+    ]
+  }
+]

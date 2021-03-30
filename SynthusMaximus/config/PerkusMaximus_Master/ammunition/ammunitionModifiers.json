@@ -1,0 +1,139 @@
+[
+  {
+    "identifier": "Strong",
+    "damageModifier": 4.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -20.0,
+    "gravityModifier": 0.03,
+    "nameSubstrings": [
+      "Strong"
+    ]
+  },
+  {
+    "identifier": "Strongest",
+    "damageModifier": 8.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -30.0,
+    "gravityModifier": 0.05,
+    "nameSubstrings": [
+      "Strongest"
+    ]
+  },
+  {
+    "identifier": "Poisoned",
+    "damageModifier": 0.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -10.0,
+    "gravityModifier": 0.02,
+    "nameSubstrings": [
+      "Poisoned"
+    ]
+  },
+  {
+    "identifier": "Fire",
+    "damageModifier": -2.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 10.0,
+    "gravityModifier": -0.02,
+    "nameSubstrings": [
+      "Fire"
+    ]
+  },
+  {
+    "identifier": "Frost",
+    "damageModifier": -2.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 10.0,
+    "gravityModifier": -0.02,
+    "nameSubstrings": [
+      "Frost"
+    ]
+  },
+  {
+    "identifier": "Shock",
+    "damageModifier": -2.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 10.0,
+    "gravityModifier": -0.02,
+    "nameSubstrings": [
+      "Shock"
+    ]
+  },
+  {
+    "identifier": "Barbed",
+    "damageModifier": 2.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 10.0,
+    "gravityModifier": 0.02,
+    "nameSubstrings": [
+      "Barbed"
+    ]
+  },
+  {
+    "identifier": "Explosive",
+    "damageModifier": -3.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -50.0,
+    "gravityModifier": 0.2,
+    "nameSubstrings": [
+      "Explosive"
+    ]
+  },
+  {
+    "identifier": "Timebomb",
+    "damageModifier": -5.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -50.0,
+    "gravityModifier": 0.2,
+    "nameSubstrings": [
+      "Timebomb"
+    ]
+  },
+  {
+    "identifier": "Lightsource",
+    "damageModifier": -5.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -50.0,
+    "gravityModifier": 0.1,
+    "nameSubstrings": [
+      "Lightsource"
+    ]
+  },
+  {
+    "identifier": "Noisemaker",
+    "damageModifier": -3.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -20.0,
+    "gravityModifier": 0.1,
+    "nameSubstrings": [
+      "Noisemaker"
+    ]
+  },
+  {
+    "identifier": "Cruel",
+    "damageModifier": 1.0,
+    "rangeModifier": 25.0,
+    "speedModifier": 75.0,
+    "gravityModifier": 0.03,
+    "nameSubstrings": [
+      "Cruel"
+    ]
+  },
+  {
+    "identifier": "Fletched",
+    "damageModifier": -2.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 0.0,
+    "gravityModifier": 0.0,
+    "nameSubstrings": [
+      "Fletched"
+    ]
+  },
+  {
+    "identifier": "Elder",
+    "damageModifier": 2.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 0.0,
+    "gravityModifier": 0.0
+  }
+]

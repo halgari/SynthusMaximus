@@ -18,6 +18,7 @@ using Mutagen.Bethesda.Synthesis;
 using SynthusMaximus.Data.Converters;
 using SynthusMaximus.Data.DTOs;
 using SynthusMaximus.Data.DTOs.Alchemy;
+using SynthusMaximus.Data.DTOs.Ammunition;
 using SynthusMaximus.Data.DTOs.Armor;
 using SynthusMaximus.Data.DTOs.Weapon;
 using SynthusMaximus.Data.Enums;
@@ -49,8 +50,10 @@ namespace SynthusMaximus.Data
         private readonly IDictionary<ExclusionType, List<Regex>> _potionExclusions;
         private readonly IList<AlchemyEffect> _alchemyEffect;
         private readonly IList<PotionMultiplier> _potionMultipliers;
-        private IList<IngredientVariation> _ingredientVariations;
-        private IDictionary<ExclusionType, List<Regex>> _ingredientExclusions;
+        private readonly IList<IngredientVariation> _ingredientVariations;
+        private readonly IDictionary<ExclusionType, List<Regex>> _ingredientExclusions;
+        private IDictionary<ExclusionType, List<Regex>> _ammunitionExclusionsMultiplication;
+        private IList<AmmunitionType> _ammunitionTypes;
 
 
         public DataStorage(ILogger<DataStorage> logger, 
@@ -101,6 +104,13 @@ namespace SynthusMaximus.Data
                 _loader.LoadList<PotionMultiplier>((RelativePath) @"alchemy\potionMultiplier.json");
             _ingredientVariations =
                 _loader.LoadList<IngredientVariation>((RelativePath) @"alchemy\ingredientVariations.json");
+            
+            // Ammunition
+            _ammunitionExclusionsMultiplication =
+            _loader.LoadValueConcatDictionary<ExclusionType, Regex>(
+                (RelativePath) @"ammunition\ammunitionExclusionsMultiplication.json");
+
+            _ammunitionTypes = _loader.LoadList<AmmunitionType>((RelativePath) @"ammunition\ammunitionTypes.json");
             
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
@@ -355,6 +365,11 @@ namespace SynthusMaximus.Data
         public IngredientVariation? GetIngredientVariation(IIngredientGetter ig)
         {
             return FindSingleBiggestSubstringMatch(_ingredientVariations, ig.NameOrThrow(), i => i.NameSubstrings);
+        }
+
+        public AmmunitionType? GetAmmunitionType(IAmmunitionGetter ammo)
+        {
+            return FindSingleBiggestSubstringMatch(_ammunitionTypes, ammo.NameOrThrow(), a => a.NameSubstrings);
         }
     }
 }

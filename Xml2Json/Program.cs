@@ -50,6 +50,29 @@ namespace Xml2Json
                     {"multiplierMagnitude", typeof(float)},
                     {"multiplierDuration", typeof(float)}
                 });
+
+            var ammo = XElement.Load("Ammunition.xml");
+            ExtractBindingList(ammo, "ammunition_type_bindings", "ammunition_types", "ammunitionTypes.json", 
+                    new ()
+                    {
+                        {"identifier", typeof(string)},
+                        {"type", typeof(string)},
+                        {"damageBase", typeof(float)},
+                        {"rangeBase", typeof(float)},
+                        {"speedBase", typeof(float)},
+                        {"gravityBase", typeof(float)}
+                    });
+                
+            ExtractBindingList(ammo, "ammunition_modifier_bindings", "ammunition_modifiers", "ammunitionModifiers.json", 
+                    new ()
+                    {
+                        {"identifier", typeof(string)},
+                        {"damageModifier", typeof(float)},
+                        {"rangeModifier", typeof(float)},
+                        {"speedModifier", typeof(float)},
+                        {"gravityModifier", typeof(float)}
+                    });
+            ExtractExclusionList(ammo, "ammunition_exclusions_multiplication", "ammunitionExclusionsMultiplication.json");
         }
 
         private static void ExtractBindingList(XElement doc, string bindingName, string bindableName, string fileName,
