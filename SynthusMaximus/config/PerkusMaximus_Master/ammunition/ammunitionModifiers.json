@@ -24,7 +24,8 @@
     "damageModifier": 2.0,
     "rangeModifier": 0.0,
     "speedModifier": 0.0,
-    "gravityModifier": 0.0
+    "gravityModifier": 0.0,
+    "nameSubstrings": []
   },
   {
     "identifier": "Explosive",

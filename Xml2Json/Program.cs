@@ -14,17 +14,18 @@ namespace Xml2Json
 {
     class Program
     {
+        public static string OutputFolder = @"..\SynthusMaximus\config\PerkusMaximus_Master";
         static void Main(string[] args)
         {
             var leveledLists = XElement.Load("LeveledLists.xml");
 
-            ExtractExclusionList(leveledLists, "distribution_exclusions_weapon_regular", "distributionExclusionsWeaponRegular.json");
-            ExtractExclusionList(leveledLists, "distribution_exclusions_list_regular", "distributionExclusionsWeaponListRegular.json");
+            ExtractExclusionList(leveledLists, "distribution_exclusions_weapon_regular", @"exclusions\distributionExclusionsWeaponRegular.json");
+            ExtractExclusionList(leveledLists, "distribution_exclusions_list_regular", @"exclusions\distributionExclusionsWeaponListRegular.json");
             
             var alchemy = XElement.Load("Alchemy.xml");
-            ExtractExclusionList(alchemy, "potion_exclusions", "potionExclusions.json");
-            ExtractExclusionList(alchemy, "ingredient_exclusions", "ingredientExclusions.json");
-            ExtractBindingList(alchemy, "alchemy_effect_bindings", "alchemy_effects", "alchemyEffects.json",
+            ExtractExclusionList(alchemy, "potion_exclusions", @"exclusions\potionExclusions.json");
+            ExtractExclusionList(alchemy, "ingredient_exclusions", @"exclusions\ingredientExclusions.json");
+            ExtractBindingList(alchemy, "alchemy_effect_bindings", "alchemy_effects", @"alchemy\alchemyEffects.json",
                 new()
                 {
                     {"identifier", typeof(string)},
@@ -35,7 +36,7 @@ namespace Xml2Json
                     {"allowPotionMultiplier", typeof(bool)}
                 });
             
-            ExtractBindingList(alchemy, "ingredient_variation_bindings", "ingredient_variations", "ingredientVariations.json",
+            ExtractBindingList(alchemy, "ingredient_variation_bindings", "ingredient_variations", @"alchemy\ingredientVariations.json",
                 new ()
                 {
                     {"identifier", typeof(string)},
@@ -43,7 +44,7 @@ namespace Xml2Json
                     {"multiplierDuration", typeof(float)}
                 });
             
-            ExtractBindingList(alchemy, "potion_multiplier_bindings", "potion_multipliers", "potionMultipliers.json",
+            ExtractBindingList(alchemy, "potion_multiplier_bindings", "potion_multipliers", @"alchemy\potionMultipliers.json",
                 new ()
                 {
                     {"identifier", typeof(string)},
@@ -52,7 +53,7 @@ namespace Xml2Json
                 });
 
             var ammo = XElement.Load("Ammunition.xml");
-            ExtractBindingList(ammo, "ammunition_type_bindings", "ammunition_types", "ammunitionTypes.json", 
+            ExtractBindingList(ammo, "ammunition_type_bindings", "ammunition_types", @"ammunition\ammunitionTypes.json", 
                     new ()
                     {
                         {"identifier", typeof(string)},
@@ -63,7 +64,7 @@ namespace Xml2Json
                         {"gravityBase", typeof(float)}
                     });
                 
-            ExtractBindingList(ammo, "ammunition_modifier_bindings", "ammunition_modifiers", "ammunitionModifiers.json", 
+            ExtractBindingList(ammo, "ammunition_modifier_bindings", "ammunition_modifiers", @"ammunition\ammunitionModifiers.json", 
                     new ()
                     {
                         {"identifier", typeof(string)},
@@ -72,7 +73,7 @@ namespace Xml2Json
                         {"speedModifier", typeof(float)},
                         {"gravityModifier", typeof(float)}
                     });
-            ExtractExclusionList(ammo, "ammunition_exclusions_multiplication", "ammunitionExclusionsMultiplication.json");
+            ExtractExclusionList(ammo, "ammunition_exclusions_multiplication", @"ammunition\ammunitionExclusionsMultiplication.json");
         }
 
         private static void ExtractBindingList(XElement doc, string bindingName, string bindableName, string fileName,
@@ -101,8 +102,7 @@ namespace Xml2Json
                 .OrderBy(b => b["identifier"]).ToList();
             
 
-            File.WriteAllText(fileName,
-                JsonConvert.SerializeObject(bindables, new JsonSerializerSettings() {Formatting = Formatting.Indented}));
+            WriteFile(fileName, bindables);
         }
 
         private static List<Dictionary<string, object>> ExtractBindables(XElement e, string bindableName, Dictionary<string,Type> members)
@@ -145,8 +145,18 @@ namespace Xml2Json
         {
             var data = ExportExclusionList(
                     doc.Descendants().FirstOrDefault(c => c.Name == nodeName));
-            File.WriteAllText(fileName,
+            WriteFile(fileName, data);
+        }
+
+        private static void WriteFile(string name, object data)
+        {
+            var outpath = Path.Combine(OutputFolder, name);
+            if (!Directory.Exists(Path.GetDirectoryName(outpath)))
+                Directory.CreateDirectory(Path.GetDirectoryName(outpath)!);
+            Console.WriteLine($"Writing: {outpath}");
+            File.WriteAllText(outpath,
                 JsonConvert.SerializeObject(data, new JsonSerializerSettings() {Formatting = Formatting.Indented}));
+            
         }
 
         private static Dictionary<string, List<string>> ExportExclusionList(XElement n)

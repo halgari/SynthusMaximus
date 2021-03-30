@@ -1,5 +1,9 @@
 {
   "EDID": [
+    "^MJB_Bow",
+    "^aaIS3",
+    "^Noldor",
+    "^CBC_",
     "Akaviri",
     "Blades",
     "Companions",
@@ -111,6 +115,7 @@
     "^80lb",
     "^120lb",
     "^TripleStringBow",
+    "^RecurveBow",
     "^daymoyl_",
     "^axBow",
     "aaaValdmiresSword",
@@ -125,6 +130,7 @@
     "^03DwarvenCrossbow",
     "^05DragonboneBow",
     "^Merta",
+    "^Lilith",
     "^Bosmer",
     "^mslVTPwMagShaARendingClawsWPN$",
     "^ZAeR_0",
@@ -177,7 +183,8 @@
     "^KhajiitYatagan",
     "^IJ",
     "^01dam",
-    "^00LegendaryTwilightGreatSword$"
+    "^00LegendaryTwilightGreatSword$",
+    "^OverlordWarAxe"
   ],
   "NAME": [
     "Akaviri",
@@ -270,7 +277,6 @@
     "Nameless\\ Light",
     "^Dovahkiin\\ Mercenary",
     "^Warglaive",
-    "^Lilith",
     "^Genesis'\\ Rapier",
     "^Throw\\ Javelins"
   ],
