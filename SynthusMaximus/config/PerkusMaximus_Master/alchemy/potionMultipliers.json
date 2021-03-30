@@ -1,5 +1,94 @@
 [
   {
+    "identifier": "DamRegen1",
+    "multiplierMagnitude": 1.0,
+    "multiplierDuration": 3.0,
+    "nameSubstrings": [
+      "Weak Recovery Poison",
+      "Weak Vigor Poison"
+    ]
+  },
+  {
+    "identifier": "DamRegen2",
+    "multiplierMagnitude": 1.0,
+    "multiplierDuration": 5.0,
+    "nameSubstrings": [
+      "Magicka Recovery Poison",
+      "Vigor Poison"
+    ]
+  },
+  {
+    "identifier": "DamRegen3",
+    "multiplierMagnitude": 1.0,
+    "multiplierDuration": 7.0,
+    "nameSubstrings": [
+      "Potent Recovery Poison",
+      "Potent Vigor Poison"
+    ]
+  },
+  {
+    "identifier": "DamRegen4",
+    "multiplierMagnitude": 1.0,
+    "multiplierDuration": 9.0,
+    "nameSubstrings": [
+      "Malign Recovery Poison",
+      "Malign Vigor Poison"
+    ]
+  },
+  {
+    "identifier": "DamRegen5",
+    "multiplierMagnitude": 1.0,
+    "multiplierDuration": 10.0,
+    "nameSubstrings": [
+      "Deadly Recovery Poison"
+    ]
+  },
+  {
+    "identifier": "MindAffecting1",
+    "multiplierMagnitude": 8.0,
+    "multiplierDuration": 0.7,
+    "nameSubstrings": [
+      "Weak Fear Poison",
+      "Weak Frenzy Poison"
+    ]
+  },
+  {
+    "identifier": "MindAffecting2",
+    "multiplierMagnitude": 12.2,
+    "multiplierDuration": 1.0,
+    "nameSubstrings": [
+      "Fear Poison",
+      "Frenzy Poison"
+    ]
+  },
+  {
+    "identifier": "MindAffecting3",
+    "multiplierMagnitude": 18.3,
+    "multiplierDuration": 1.0,
+    "nameSubstrings": [
+      "Potent Fear Poison",
+      "Potent Frenzy Poison"
+    ]
+  },
+  {
+    "identifier": "MindAffecting4",
+    "multiplierMagnitude": 24.4,
+    "multiplierDuration": 1.0,
+    "nameSubstrings": [
+      "Virulent Fear Poison",
+      "Virulent Frenzy Poison"
+    ]
+  },
+  {
+    "identifier": "MindAffecting5",
+    "multiplierMagnitude": 30.5,
+    "multiplierDuration": 1.0,
+    "nameSubstrings": [
+      "Deadly Fear Poison",
+      "Deadly Frenzy Poison"
+    ]
+  },
+  {
     "identifier": "Tier1",
     "multiplierMagnitude": 4.25,
     "multiplierDuration": 1.0,
@@ -122,95 +211,6 @@
     "multiplierDuration": 1.25,
     "nameSubstrings": [
       "Prime Elixir"
-    ]
-  },
-  {
-    "identifier": "DamRegen1",
-    "multiplierMagnitude": 1.0,
-    "multiplierDuration": 3.0,
-    "nameSubstrings": [
-      "Weak Recovery Poison",
-      "Weak Vigor Poison"
-    ]
-  },
-  {
-    "identifier": "DamRegen2",
-    "multiplierMagnitude": 1.0,
-    "multiplierDuration": 5.0,
-    "nameSubstrings": [
-      "Magicka Recovery Poison",
-      "Vigor Poison"
-    ]
-  },
-  {
-    "identifier": "DamRegen3",
-    "multiplierMagnitude": 1.0,
-    "multiplierDuration": 7.0,
-    "nameSubstrings": [
-      "Potent Recovery Poison",
-      "Potent Vigor Poison"
-    ]
-  },
-  {
-    "identifier": "DamRegen4",
-    "multiplierMagnitude": 1.0,
-    "multiplierDuration": 9.0,
-    "nameSubstrings": [
-      "Malign Recovery Poison",
-      "Malign Vigor Poison"
-    ]
-  },
-  {
-    "identifier": "DamRegen5",
-    "multiplierMagnitude": 1.0,
-    "multiplierDuration": 10.0,
-    "nameSubstrings": [
-      "Deadly Recovery Poison"
-    ]
-  },
-  {
-    "identifier": "MindAffecting1",
-    "multiplierMagnitude": 8.0,
-    "multiplierDuration": 0.7,
-    "nameSubstrings": [
-      "Weak Fear Poison",
-      "Weak Frenzy Poison"
-    ]
-  },
-  {
-    "identifier": "MindAffecting2",
-    "multiplierMagnitude": 12.2,
-    "multiplierDuration": 1.0,
-    "nameSubstrings": [
-      "Fear Poison",
-      "Frenzy Poison"
-    ]
-  },
-  {
-    "identifier": "MindAffecting3",
-    "multiplierMagnitude": 18.3,
-    "multiplierDuration": 1.0,
-    "nameSubstrings": [
-      "Potent Fear Poison",
-      "Potent Frenzy Poison"
-    ]
-  },
-  {
-    "identifier": "MindAffecting4",
-    "multiplierMagnitude": 24.4,
-    "multiplierDuration": 1.0,
-    "nameSubstrings": [
-      "Virulent Fear Poison",
-      "Virulent Frenzy Poison"
-    ]
-  },
-  {
-    "identifier": "MindAffecting5",
-    "multiplierMagnitude": 30.5,
-    "multiplierDuration": 1.0,
-    "nameSubstrings": [
-      "Deadly Fear Poison",
-      "Deadly Frenzy Poison"
     ]
   }
 ]

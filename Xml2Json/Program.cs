@@ -86,7 +86,20 @@ namespace Xml2Json
                 {
                     b["nameSubstrings"] = substrs;
                 }
+                else
+                {
+                    b["nameSubstrings"] = Array.Empty<string>();
+                }
             }
+
+            bindables = bindables
+                .Select(b =>
+                {
+                    b["nameSubstrings"] = ((string[]) b["nameSubstrings"]).OrderBy(x => x).ToArray();
+                    return b;
+                })
+                .OrderBy(b => b["identifier"]).ToList();
+            
 
             File.WriteAllText(fileName,
                 JsonConvert.SerializeObject(bindables, new JsonSerializerSettings() {Formatting = Formatting.Indented}));

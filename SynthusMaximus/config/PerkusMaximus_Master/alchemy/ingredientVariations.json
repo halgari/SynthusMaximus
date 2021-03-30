@@ -1,23 +1,5 @@
 [
   {
-    "identifier": "Fish Tier 1",
-    "multiplierMagnitude": 1.2,
-    "multiplierDuration": 1.0,
-    "nameSubstrings": [
-      "Abecean Longfin",
-      "Histcarp",
-      "Silverside Perch",
-      "Cyrodilic Spadetail",
-      "River Betty",
-      "Eye of Bear",
-      "Eye of Bristleback",
-      "Eye of Fox",
-      "Eye of Hare",
-      "Eye of Mammoth",
-      "Eye of Wolf"
-    ]
-  },
-  {
     "identifier": "Creature Tier 2",
     "multiplierMagnitude": 1.3,
     "multiplierDuration": 1.0,
@@ -68,29 +50,21 @@
     ]
   },
   {
-    "identifier": "Special Classic Tier 3",
-    "multiplierMagnitude": 1.5,
+    "identifier": "Fish Tier 1",
+    "multiplierMagnitude": 1.2,
     "multiplierDuration": 1.0,
     "nameSubstrings": [
-      "Canis Root",
-      "Swamp Fungal Pod",
-      "Deathbell",
-      "Giant Lichen",
-      "Frost Mirriam",
-      "Charred Skeever Hide",
-      "Nirnroot",
-      "Poison Bloom",
-      "Garlic",
-      "Nightshade",
-      "Boiled Skeever Tail",
-      "Bristleback Heart",
-      "Cured Skeever Hide",
-      "Deer Heart",
-      "Polished Troll Eye",
-      "Polished Werewolf Eye",
-      "Sabre Cat Heart",
-      "Wolf Heart",
-      "Goat Heart"
+      "Abecean Longfin",
+      "Histcarp",
+      "Silverside Perch",
+      "Cyrodilic Spadetail",
+      "River Betty",
+      "Eye of Bear",
+      "Eye of Bristleback",
+      "Eye of Fox",
+      "Eye of Hare",
+      "Eye of Mammoth",
+      "Eye of Wolf"
     ]
   },
   {
@@ -118,6 +92,32 @@
       "Troll Heart",
       "Werewolf Heart",
       "Moon Dust"
+    ]
+  },
+  {
+    "identifier": "Special Classic Tier 3",
+    "multiplierMagnitude": 1.5,
+    "multiplierDuration": 1.0,
+    "nameSubstrings": [
+      "Canis Root",
+      "Swamp Fungal Pod",
+      "Deathbell",
+      "Giant Lichen",
+      "Frost Mirriam",
+      "Charred Skeever Hide",
+      "Nirnroot",
+      "Poison Bloom",
+      "Garlic",
+      "Nightshade",
+      "Boiled Skeever Tail",
+      "Bristleback Heart",
+      "Cured Skeever Hide",
+      "Deer Heart",
+      "Polished Troll Eye",
+      "Polished Werewolf Eye",
+      "Sabre Cat Heart",
+      "Wolf Heart",
+      "Goat Heart"
     ]
   }
 ]
