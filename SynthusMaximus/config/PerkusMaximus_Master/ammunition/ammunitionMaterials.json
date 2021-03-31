@@ -1,0 +1,655 @@
+[
+  {
+    "identifier": "Ancient Falmer",
+    "damageModifier": 9.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 35.0,
+    "gravityModifier": 0.09,
+    "multiply": true,
+    "nameSubstrings": [
+      "Ancient Falmer"
+    ]
+  },
+  {
+    "identifier": "Ancient Nord",
+    "damageModifier": 2.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 250.0,
+    "gravityModifier": 0.02,
+    "multiply": true,
+    "nameSubstrings": [
+      "Ancient Nord"
+    ]
+  },
+  {
+    "identifier": "Ancient NordNoMult",
+    "damageModifier": 2.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 25.0,
+    "gravityModifier": 0.02,
+    "multiply": false,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "BlackArrow",
+    "damageModifier": 77.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -50.0,
+    "gravityModifier": 0.15,
+    "multiply": true,
+    "nameSubstrings": [
+      "Black Arrow"
+    ]
+  },
+  {
+    "identifier": "Bound",
+    "damageModifier": 15.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -0.0,
+    "gravityModifier": 0.0,
+    "multiply": false,
+    "nameSubstrings": [
+      "Bound"
+    ]
+  },
+  {
+    "identifier": "Corundum",
+    "damageModifier": 8.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 35.0,
+    "gravityModifier": 0.08,
+    "multiply": true,
+    "nameSubstrings": [
+      "Corundum"
+    ]
+  },
+  {
+    "identifier": "CorundumNoMult",
+    "damageModifier": 8.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 35.0,
+    "gravityModifier": 0.08,
+    "multiply": false,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "Crude",
+    "damageModifier": -1.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -25.0,
+    "gravityModifier": 0.01,
+    "multiply": true,
+    "nameSubstrings": [
+      "Crude Bone"
+    ]
+  },
+  {
+    "identifier": "Daedric",
+    "damageModifier": 15.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -50.0,
+    "gravityModifier": 0.15,
+    "multiply": true,
+    "nameSubstrings": [
+      "Cynder",
+      "Daedric",
+      "Vampire"
+    ]
+  },
+  {
+    "identifier": "DaedricNoMult",
+    "damageModifier": 15.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -50.0,
+    "gravityModifier": 0.15,
+    "multiply": false,
+    "nameSubstrings": [
+      "Mystic Elven"
+    ]
+  },
+  {
+    "identifier": "Dragonbone",
+    "damageModifier": 14.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -45.0,
+    "gravityModifier": 0.14,
+    "multiply": true,
+    "nameSubstrings": [
+      "Dovahkiin",
+      "Dragonbone",
+      "Dragonsteel"
+    ]
+  },
+  {
+    "identifier": "DragonboneNoMult",
+    "damageModifier": 14.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -45.0,
+    "gravityModifier": 0.14,
+    "multiply": false,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "Dragonscale",
+    "damageModifier": 13.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 50.0,
+    "gravityModifier": 0.13,
+    "multiply": true,
+    "nameSubstrings": [
+      "Dragonscale"
+    ]
+  },
+  {
+    "identifier": "DragonscaleNoMult",
+    "damageModifier": 13.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 50.0,
+    "gravityModifier": 0.13,
+    "multiply": false,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "Dwarven",
+    "damageModifier": 6.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -20.0,
+    "gravityModifier": 0.06,
+    "multiply": true,
+    "nameSubstrings": [
+      "Aetherial Rifle Bolt",
+      "Blades",
+      "Dwarven",
+      "Gold"
+    ]
+  },
+  {
+    "identifier": "DwarvenNoMult",
+    "damageModifier": 6.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -20.0,
+    "gravityModifier": 0.06,
+    "multiply": false,
+    "nameSubstrings": [
+      "Dwarven Arrow, Exploding (Fire)",
+      "Dwarven Arrow, Exploding (Frost)",
+      "Dwarven Arrow, Exploding (Shock)"
+    ]
+  },
+  {
+    "identifier": "Ebony",
+    "damageModifier": 11.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -35.0,
+    "gravityModifier": 0.11,
+    "multiply": true,
+    "nameSubstrings": [
+      "Amethyst",
+      "Black Dragon",
+      "Black Sacrament",
+      "Dark Brotherhood",
+      "Diamond",
+      "Ebony",
+      "Exotic Arrow",
+      "Sapphire",
+      "Thieves"
+    ]
+  },
+  {
+    "identifier": "EbonyNoMult",
+    "damageModifier": 11.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -35.0,
+    "gravityModifier": 0.11,
+    "multiply": false,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "Elven",
+    "damageModifier": 7.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 30.0,
+    "gravityModifier": 0.06,
+    "multiply": true,
+    "nameSubstrings": [
+      "Bloodcursed",
+      "Bosmer",
+      "Dariit",
+      "Elven",
+      "Justiciar",
+      "Scoia'tael",
+      "Seeker",
+      "Spriggan",
+      "Sunhallowed"
+    ]
+  },
+  {
+    "identifier": "ElvenNoMult",
+    "damageModifier": 7.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 30.0,
+    "gravityModifier": 0.06,
+    "multiply": false,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "Falmer",
+    "damageModifier": 4.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 20.0,
+    "gravityModifier": 0.04,
+    "multiply": true,
+    "nameSubstrings": [
+      "Falmer",
+      "Wolf"
+    ]
+  },
+  {
+    "identifier": "FalmerH",
+    "damageModifier": 5.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 20.0,
+    "gravityModifier": 0.05,
+    "multiply": true,
+    "nameSubstrings": [
+      "Falmer Honed",
+      "Horker Honed"
+    ]
+  },
+  {
+    "identifier": "FalmerNoMult",
+    "damageModifier": 4.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 20.0,
+    "gravityModifier": 0.04,
+    "multiply": false,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "Forsworn",
+    "damageModifier": 3.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 15.0,
+    "gravityModifier": 0.03,
+    "multiply": true,
+    "nameSubstrings": [
+      "Forsworn"
+    ]
+  },
+  {
+    "identifier": "ForswornNoMult",
+    "damageModifier": 3.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 15.0,
+    "gravityModifier": 0.03,
+    "multiply": false,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "Glass",
+    "damageModifier": 10.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 400.0,
+    "gravityModifier": 0.1,
+    "multiply": true,
+    "nameSubstrings": [
+      "Glass",
+      "Mephala",
+      "Ruby"
+    ]
+  },
+  {
+    "identifier": "GlassNoMult",
+    "damageModifier": 10.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 40.0,
+    "gravityModifier": 0.1,
+    "multiply": false,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "Honed",
+    "damageModifier": 3.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 20.0,
+    "gravityModifier": 0.02,
+    "multiply": true,
+    "nameSubstrings": [
+      "Honed Bone"
+    ]
+  },
+  {
+    "identifier": "Hunter",
+    "damageModifier": 1.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 10.0,
+    "gravityModifier": 0.01,
+    "multiply": true,
+    "nameSubstrings": [
+      "Hunter's Bone"
+    ]
+  },
+  {
+    "identifier": "Iron",
+    "damageModifier": 1.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -5.0,
+    "gravityModifier": 0.01,
+    "multiply": true,
+    "nameSubstrings": [
+      "Horker",
+      "Iron",
+      "Long Bow Arrow",
+      "Rusty"
+    ]
+  },
+  {
+    "identifier": "IronNoMult",
+    "damageModifier": 1.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -5.0,
+    "gravityModifier": 0.01,
+    "multiply": false,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "Mirkwood",
+    "damageModifier": 14.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 50.0,
+    "gravityModifier": 0.01,
+    "multiply": true,
+    "nameSubstrings": [
+      "Mirkwood"
+    ]
+  },
+  {
+    "identifier": "Noldor",
+    "damageModifier": 6.5,
+    "rangeModifier": 0.0,
+    "speedModifier": 30.0,
+    "gravityModifier": 0.06,
+    "multiply": true,
+    "nameSubstrings": [
+      "Noldor"
+    ]
+  },
+  {
+    "identifier": "Nord Hero",
+    "damageModifier": 10.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -30.0,
+    "gravityModifier": 0.1,
+    "multiply": true,
+    "nameSubstrings": [
+      "Nord Hero"
+    ]
+  },
+  {
+    "identifier": "Nord HeroNoMult",
+    "damageModifier": 10.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -30.0,
+    "gravityModifier": 0.1,
+    "multiply": false,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "Nordic",
+    "damageModifier": 8.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 35.0,
+    "gravityModifier": 0.08,
+    "multiply": true,
+    "nameSubstrings": [
+      "Nordic"
+    ]
+  },
+  {
+    "identifier": "NordicNoMult",
+    "damageModifier": 8.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 35.0,
+    "gravityModifier": 0.08,
+    "multiply": false,
+    "nameSubstrings": [
+      "VanNord"
+    ]
+  },
+  {
+    "identifier": "Orcish",
+    "damageModifier": 9.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -25.0,
+    "gravityModifier": 0.09,
+    "multiply": true,
+    "nameSubstrings": [
+      "An-Xileel",
+      "Orcish",
+      "Troll"
+    ]
+  },
+  {
+    "identifier": "OrcishNoMult",
+    "damageModifier": 9.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -25.0,
+    "gravityModifier": 0.09,
+    "multiply": false,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "Perfect",
+    "damageModifier": 7.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 40.0,
+    "gravityModifier": 0.04,
+    "multiply": true,
+    "nameSubstrings": [
+      "Perfect Bone"
+    ]
+  },
+  {
+    "identifier": "Practice",
+    "damageModifier": -5.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 0.0,
+    "gravityModifier": 0.0,
+    "multiply": false,
+    "nameSubstrings": [
+      "Practice"
+    ]
+  },
+  {
+    "identifier": "RNoldor",
+    "damageModifier": 13.5,
+    "rangeModifier": 0.0,
+    "speedModifier": 50.0,
+    "gravityModifier": 0.13,
+    "multiply": true,
+    "nameSubstrings": [
+      "Royal Noldor"
+    ]
+  },
+  {
+    "identifier": "Silver",
+    "damageModifier": 2.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 5.0,
+    "gravityModifier": 0.02,
+    "multiply": true,
+    "nameSubstrings": [
+      "Silver"
+    ]
+  },
+  {
+    "identifier": "SilverNoMult",
+    "damageModifier": 2.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 5.0,
+    "gravityModifier": 0.02,
+    "multiply": false,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "Skyforge",
+    "damageModifier": 4.5,
+    "rangeModifier": 0.0,
+    "speedModifier": -15.0,
+    "gravityModifier": 0.04,
+    "multiply": true,
+    "nameSubstrings": [
+      "Skyforge"
+    ]
+  },
+  {
+    "identifier": "SkyforgeNoMult",
+    "damageModifier": 4.5,
+    "rangeModifier": 0.0,
+    "speedModifier": -15.0,
+    "gravityModifier": 0.04,
+    "multiply": false,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "Stalhrim",
+    "damageModifier": 12.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -40.0,
+    "gravityModifier": 0.12,
+    "multiply": true,
+    "nameSubstrings": [
+      "Stalhrim"
+    ]
+  },
+  {
+    "identifier": "StalhrimNoMult",
+    "damageModifier": 12.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -40.0,
+    "gravityModifier": 0.12,
+    "multiply": false,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "Stalker",
+    "damageModifier": 5.0,
+    "rangeModifier": -100.0,
+    "speedModifier": 30.0,
+    "gravityModifier": 0.03,
+    "multiply": true,
+    "nameSubstrings": [
+      "Stalker's Bone"
+    ]
+  },
+  {
+    "identifier": "Steam",
+    "damageModifier": 57.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 1800.0,
+    "gravityModifier": 0.4,
+    "multiply": false,
+    "nameSubstrings": [
+      "Steam Arrows"
+    ]
+  },
+  {
+    "identifier": "Steel",
+    "damageModifier": 2.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -10.0,
+    "gravityModifier": 0.02,
+    "multiply": true,
+    "nameSubstrings": [
+      "Arrow of Extrication",
+      "Bandit",
+      "Breton Knighl",
+      "Breton Knight",
+      "Gondorian",
+      "Paladin",
+      "Steel"
+    ]
+  },
+  {
+    "identifier": "SteelNoMult",
+    "damageModifier": 2.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -10.0,
+    "gravityModifier": 0.02,
+    "multiply": false,
+    "nameSubstrings": [
+      "Ash Rock Arrows",
+      "Cobalt Frost Arrows",
+      "Crimson Flame Arrows",
+      "Flaming Arrows",
+      "Flaming Bolt",
+      "Frost Arrows",
+      "Gem Arrows",
+      "Gem Bolts",
+      "Gust Arrows",
+      "Gust Arrows",
+      "Magebreaker Arrows",
+      "Quake Arrows",
+      "Shock Arrows",
+      "Steel Bolt TEST",
+      "Swarm Arrows",
+      "Thunderbolt Arrows",
+      "Trick Arrows"
+    ]
+  },
+  {
+    "identifier": "TrickShot",
+    "damageModifier": 32.0,
+    "rangeModifier": 0.0,
+    "speedModifier": -10.0,
+    "gravityModifier": 0.02,
+    "multiply": true,
+    "nameSubstrings": [
+      "Trick Shot"
+    ]
+  },
+  {
+    "identifier": "Wood",
+    "damageModifier": 0.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 10.0,
+    "gravityModifier": 0.01,
+    "multiply": true,
+    "nameSubstrings": [
+      "Bone",
+      "Wood",
+      "Wooden"
+    ]
+  },
+  {
+    "identifier": "WoodH",
+    "damageModifier": 2.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 10.0,
+    "gravityModifier": 0.02,
+    "multiply": true,
+    "nameSubstrings": []
+  },
+  {
+    "identifier": "WoodNoMult",
+    "damageModifier": 0.0,
+    "rangeModifier": 0.0,
+    "speedModifier": 10.0,
+    "gravityModifier": 0.01,
+    "multiply": false,
+    "nameSubstrings": [
+      "Fire",
+      "Mudcrab",
+      "Noisemaker",
+      "Oil",
+      "Riekling",
+      "Rope",
+      "Stone",
+      "test",
+      "Test",
+      "TEST",
+      "Torch",
+      "Water"
+    ]
+  }
+]

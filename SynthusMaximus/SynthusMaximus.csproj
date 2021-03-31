@@ -99,6 +99,9 @@
       <None Update="config\PerkusMaximus_Master\ammunition\ammunitionTypes.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="config\PerkusMaximus_Master\ammunition\ammunitionMaterials.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

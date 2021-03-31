@@ -35,5 +35,10 @@ namespace SynthusMaximus.Patchers
         {
             Logger.LogError(exception, "Failed processing {EditorID}", r.EditorID);
         }
+
+        protected void SkipRecord(IMajorRecordGetter r, string reason)
+        {
+            Logger.LogInformation("Skipping {EditorID}: {reason}", r.EditorID, reason);
+        }
     }
 }

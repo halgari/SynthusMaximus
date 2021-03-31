@@ -74,6 +74,17 @@ namespace Xml2Json
                         {"gravityModifier", typeof(float)}
                     });
             ExtractExclusionList(ammo, "ammunition_exclusions_multiplication", @"ammunition\ammunitionExclusionsMultiplication.json");
+            
+            ExtractBindingList(ammo, "ammunition_material_bindings", "ammunition_materials", @"ammunition\ammunitionMaterials.json",
+            new () {
+                    {"identifier", typeof(string)},
+                    {"damageModifier", typeof(float)},
+                    {"rangeModifier", typeof(float)},
+                    {"speedModifier", typeof(float)},
+                    {"gravityModifier", typeof(float)},
+                    {"multiply", typeof(bool)}
+                });
+
         }
 
         private static void ExtractBindingList(XElement doc, string bindingName, string bindableName, string fileName,

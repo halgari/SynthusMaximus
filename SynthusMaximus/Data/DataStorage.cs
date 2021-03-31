@@ -53,7 +53,9 @@ namespace SynthusMaximus.Data
         private readonly IList<IngredientVariation> _ingredientVariations;
         private readonly IDictionary<ExclusionType, List<Regex>> _ingredientExclusions;
         private IDictionary<ExclusionType, List<Regex>> _ammunitionExclusionsMultiplication;
-        private IList<AmmunitionType> _ammunitionTypes;
+        private readonly IList<AmmunitionType> _ammunitionTypes;
+        private IList<AmmunitionMaterial> _ammunitionMaterials;
+        private IList<AmmunitionModifier> _ammunitionModifer;
 
 
         public DataStorage(ILogger<DataStorage> logger, 
@@ -111,6 +113,8 @@ namespace SynthusMaximus.Data
                 (RelativePath) @"ammunition\ammunitionExclusionsMultiplication.json");
 
             _ammunitionTypes = _loader.LoadList<AmmunitionType>((RelativePath) @"ammunition\ammunitionTypes.json");
+            _ammunitionMaterials = _loader.LoadList<AmmunitionMaterial>((RelativePath) @"ammunition\ammunitionMaterials.json");
+            _ammunitionModifer = _loader.LoadList<AmmunitionModifier>((RelativePath) @"ammunition\ammunitionModifiers.json");
             
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
@@ -370,6 +374,16 @@ namespace SynthusMaximus.Data
         public AmmunitionType? GetAmmunitionType(IAmmunitionGetter ammo)
         {
             return FindSingleBiggestSubstringMatch(_ammunitionTypes, ammo.NameOrThrow(), a => a.NameSubstrings);
+        }
+
+        public AmmunitionMaterial? GetAmmunitionMaterial(IAmmunitionGetter ammo)
+        {
+            return FindSingleBiggestSubstringMatch(_ammunitionMaterials, ammo.NameOrThrow(), a => a.NameSubstrings);
+        }
+
+        public IEnumerable<AmmunitionModifier> GetAmmunitionModifiers(IAmmunitionGetter a)
+        {
+            return AllMatchingBindings(_ammunitionModifer, a.NameOrThrow(), a => a.NameSubstrings);
         }
     }
 }

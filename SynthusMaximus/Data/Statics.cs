@@ -118,5 +118,11 @@ namespace SynthusMaximus.Data
         public const string SEnchantmentDelimiter = "of";
         public const int ExpensiveClothingThreshold = 50;
         
+        public const int EnhancementIn = 20;
+        public const int EnhancementOut = 10;
+        public const int EnhancementOutSe0 = (int) (EnhancementOut * 1.2);
+        public const int EnhancementOutSe1 = (int) (EnhancementOut * 1.4);
+        public const float TimebombTimer = 4.0f;
+
     }
 }

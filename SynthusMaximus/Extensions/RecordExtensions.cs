@@ -69,7 +69,7 @@ namespace SynthusMaximus
         /// </summary>
         /// <param name="cobj"></param>
         /// <param name="perk"></param>
-        public static void AddCraftingPerkCondition(this ConstructibleObject cobj, IFormLink<IPerkGetter> perk)
+        public static void AddCraftingPerkCondition(this ConstructibleObject cobj, IFormLink<IPerkGetter> perk, bool mustHave = true)
         {
             cobj.Conditions.Add(new ConditionFloat
             {
@@ -79,7 +79,7 @@ namespace SynthusMaximus
                     ParameterOneRecord = perk,
                 },
                 CompareOperator = CompareOperator.EqualTo,
-                ComparisonValue = 1,
+                ComparisonValue = mustHave ? 1 : 0,
             });
         }
 
