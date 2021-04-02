@@ -31,6 +31,7 @@ namespace SynthusMaximus.Test
             {
                 try
                 {
+                    if (theirArmor.FormKey.ModKey.Name == "PatchusMaximus") continue;
                     if (theirArmor.NameOrEmpty().StartsWith(SReforged)) continue;
                     if (theirArmor.NameOrEmpty().StartsWith(SWarforged)) continue;
                     if (theirArmor.NameOrEmpty().EndsWith("[" + SReplica + "]")) continue;
@@ -54,8 +55,6 @@ namespace SynthusMaximus.Test
                     throw;
                 }
             }
-            
-            Assert.Equal(TheirMod.Mod!.Armors.ToArray().Length, OurMod.Mod!.Armors.ToArray().Length);
 
         }
 
