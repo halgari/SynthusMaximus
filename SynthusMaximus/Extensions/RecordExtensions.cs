@@ -56,7 +56,7 @@ namespace SynthusMaximus
             {
                 Data = new FunctionConditionData
                 {
-                    Function = ConditionData.Function.GetItemCount,
+                    Function = Condition.Function.GetItemCount,
                     ParameterOneRecord = item
                 },
                 CompareOperator = CompareOperator.GreaterThanOrEqualTo,
@@ -75,7 +75,7 @@ namespace SynthusMaximus
             {
                 Data = new FunctionConditionData
                 {
-                    Function = ConditionData.Function.HasPerk,
+                    Function = Condition.Function.HasPerk,
                     ParameterOneRecord = perk,
                 },
                 CompareOperator = CompareOperator.EqualTo,

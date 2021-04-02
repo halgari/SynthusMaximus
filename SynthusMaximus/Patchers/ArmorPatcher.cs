@@ -40,7 +40,6 @@ namespace SynthusMaximus.Patchers
         
         public void RunPatcher()
         {
-            return;
             var addRecord = false;
 
             var armors = _state.LoadOrder.PriorityOrder.Armor().WinningOverrides().ToArray();
@@ -433,13 +432,17 @@ namespace SynthusMaximus.Patchers
         private void ApplyArmorModifiers(IArmorGetter a)
         {
             var ar = _state.PatchMod.Armors.GetOrAddAsOverride(a);
-            
+
+            float value = a.Value;
             foreach (var m in _storage.GetArmorModifiers(a))
             {
                 ar.Weight *= m.FactorWeight;
-                ar.Value = (uint)(ar.Value * m.FactorValue);
+                value *= m.FactorValue;
                 ar.ArmorRating *= m.FactorArmor;
             }
+
+            // Cast here avoid compounding rounding errors
+            ar.Value = (uint)value;
         }
 
         private void AddMeltdownRecipe(IArmorGetter a, ArmorMaterial am)
@@ -494,27 +497,28 @@ namespace SynthusMaximus.Patchers
         private bool AddSpecificKeyword(IArmorGetter a, ArmorMaterial am)
         {
             var mod = _state.PatchMod.Armors.GetOrAddAsOverride(a);
+            var kws = mod.Keywords?.ToHashSet() ?? new HashSet<IFormLinkGetter<IKeywordGetter>>();
             
-            if (mod.HasKeyword(ArmorHeavy))
-                mod.Keywords!.Remove(ArmorHeavy);
-            if (mod.HasKeyword(ArmorLight))
-                mod.Keywords!.Remove(ArmorLight);
+            if (kws.Contains(ArmorHeavy))
+                kws.Remove(ArmorHeavy);
+            if (kws.Contains(ArmorLight))
+                kws.Remove(ArmorLight);
 
             mod.Keywords ??= new ExtendedList<IFormLinkGetter<IKeywordGetter>>();
 
             switch (am.Class)
             {
                 case ArmorClass.Light :
-                    mod.Keywords!.Add(ArmorLight);
+                    kws.Add(ArmorLight);
                     mod.BodyTemplate!.ArmorType = ArmorType.LightArmor;
                     break;
                 case ArmorClass.Heavy:
-                    mod.Keywords!.Add(ArmorHeavy);
+                    kws.Add(ArmorHeavy);
                     mod.BodyTemplate!.ArmorType = ArmorType.HeavyArmor;
                     break;
                 case ArmorClass.Both:
-                    mod.Keywords!.Add(ArmorLight);
-                    mod.Keywords!.Add(ArmorHeavy);
+                    kws.Add(ArmorLight);
+                    kws.Add(ArmorHeavy);
                     break;
                 case ArmorClass.Undefined:
                     return true;
@@ -522,39 +526,39 @@ namespace SynthusMaximus.Patchers
                     return true;
             }
 
-            if (mod.HasKeyword(ArmorBoots))
+            if (kws.Contains(ArmorBoots))
             {
-                if (mod.HasKeyword(ArmorHeavy))
+                if (kws.Contains(ArmorHeavy))
                     mod.Keywords.Add(xMAArmorHeavyLegs);
-                if (mod.HasKeyword(ArmorLight))
+                if (kws.Contains(ArmorLight))
                     mod.Keywords.Add(xMAArmorLightLegs);
             }
-            else if (mod.HasKeyword(ArmorCuirass))
+            else if (kws.Contains(ArmorCuirass))
             {
-                if (mod.HasKeyword(ArmorHeavy))
+                if (kws.Contains(ArmorHeavy))
                     mod.Keywords.Add(xMAArmorHeavyChest);
-                if (mod.HasKeyword(ArmorLight))
+                if (kws.Contains(ArmorLight))
                     mod.Keywords.Add(xMAArmorLightChest);
             }
-            else if (mod.HasKeyword(ArmorGauntlets))
+            else if (kws.Contains(ArmorGauntlets))
             {
-                if (mod.HasKeyword(ArmorHeavy))
+                if (kws.Contains(ArmorHeavy))
                     mod.Keywords.Add(xMAArmorHeavyArms);
-                if (mod.HasKeyword(ArmorLight))
+                if (kws.Contains(ArmorLight))
                     mod.Keywords.Add(xMAArmorLightArms);
             }
-            else if (mod.HasKeyword(ArmorBoots))
+            else if (kws.Contains(ArmorHelmet))
             {
-                if (mod.HasKeyword(ArmorHelmet))
+                if (kws.Contains(ArmorHeavy))
                     mod.Keywords.Add(xMAArmorHeavyHead);
-                if (mod.HasKeyword(ArmorLight))
+                if (kws.Contains(ArmorLight))
                     mod.Keywords.Add(xMAArmorLightHead);
             }
-            else if (mod.HasKeyword(ArmorShield))
+            else if (kws.Contains(ArmorShield))
             {
-                if (mod.HasKeyword(ArmorHeavy))
+                if (kws.Contains(ArmorHeavy))
                     mod.Keywords.Add(xMAArmorHeavyShield);
-                if (mod.HasKeyword(ArmorLight))
+                if (kws.Contains(ArmorLight))
                     mod.Keywords.Add(xMAArmorLightShield);
             }
 

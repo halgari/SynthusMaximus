@@ -23,6 +23,7 @@ namespace SynthusMaximus
 {
     public class Program
     {
+        public static Action<ILoggingBuilder>? AddLogger = null;
         public static async Task<int> Main(string[] args)
         {
             return await SynthesisPipeline.Instance.AddPatch<ISkyrimMod, ISkyrimModGetter>(RunPatch)
@@ -60,7 +61,10 @@ namespace SynthusMaximus
             {
                 logging.SetMinimumLevel(LogLevel.Trace);
                 logging.ClearProviders();
-                logging.AddConsole();
+                if (AddLogger != null)
+                    AddLogger(logging);
+                else 
+                    logging.AddConsole();
             });
             collection.AddTransient<OverlayLoader>();
             collection.AddSingleton<DataStorage>();
