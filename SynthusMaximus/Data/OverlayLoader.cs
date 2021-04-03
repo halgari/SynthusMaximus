@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Microsoft.Extensions.Logging;
 using Mutagen.Bethesda;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
 using Newtonsoft.Json;
+using SynthusMaximus.Data.DTOs;
+using SynthusMaximus.Data.Enums;
 using Wabbajack.Common;
 
 namespace SynthusMaximus.Data
@@ -101,6 +104,14 @@ namespace SynthusMaximus.Data
             return OverlayFiles(name)
                 .SelectMany(f => JsonConvert.DeserializeObject<List<T>>(f.ReadAllText(), Settings)!)
                 .ToList();
+        }
+
+        public ExclusionList<T> LoadExclusionList<T>(RelativePath name)
+        where T : ITranslatedNamedGetter
+        {
+            var data = LoadValueConcatDictionary<ExclusionType, Regex>(name);
+            return new ExclusionList<T>(data);
+
         }
 
         /// <summary>

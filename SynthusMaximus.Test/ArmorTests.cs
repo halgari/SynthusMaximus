@@ -54,7 +54,8 @@ namespace SynthusMaximus.Test
         [Fact]
         public void ReforgedArmorsMatch()
         {
-            var ourArmors = OurMod.Mod!.Armors.GroupBy(a => a.EditorID).ToDictionary(a => a.Key);
+            var ourArmors = SEMods.PriorityOrder.Armor().WinningOverrides().GroupBy(a => a.EditorID)
+                .ToDictionary(a => a.Key);
             
             foreach (var theirArmor in TheirMod.Mod!.Armors.Where(t => t.NameOrEmpty().Contains(SReforged)))
             {

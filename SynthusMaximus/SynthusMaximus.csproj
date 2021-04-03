@@ -102,6 +102,18 @@
       <None Update="config\PerkusMaximus_Master\ammunition\ammunitionMaterials.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="config\PerkusMaximus_Master\exclusions\scrollCrafting.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\exclusions\staffCrafting.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\exclusions\staffCraftingDisableCraftingExclusions.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\PerkusMaximus_Master\exclusions\distributionExclusionsSpell.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

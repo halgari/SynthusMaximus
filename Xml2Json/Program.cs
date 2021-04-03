@@ -21,6 +21,7 @@ namespace Xml2Json
 
             ExtractExclusionList(leveledLists, "distribution_exclusions_weapon_regular", @"exclusions\distributionExclusionsWeaponRegular.json");
             ExtractExclusionList(leveledLists, "distribution_exclusions_list_regular", @"exclusions\distributionExclusionsWeaponListRegular.json");
+            ExtractExclusionList(leveledLists, "distribution_exclusions_spell", @"exclusions\distributionExclusionsSpell.json");
             
             var alchemy = XElement.Load("Alchemy.xml");
             ExtractExclusionList(alchemy, "potion_exclusions", @"exclusions\potionExclusions.json");
@@ -84,6 +85,15 @@ namespace Xml2Json
                     {"gravityModifier", typeof(float)},
                     {"multiply", typeof(bool)}
                 });
+            
+            // Enchanting 
+            
+            var ench = XElement.Load("Enchanting.xml");
+            ExtractExclusionList(ench, "scroll_crafting_exclusions", @"exclusions\scrollCrafting.json");
+            ExtractExclusionList(ench, "staff_crafting_exclusions", @"exclusions\staffCrafting.json");
+            ExtractExclusionList(ench, "staff_crafting_disable_crafting_exclusions", @"exclusions\staffCraftingDisableCraftingExclusions.json");
+            
+            
 
         }
 

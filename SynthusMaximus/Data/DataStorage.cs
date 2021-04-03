@@ -115,12 +115,28 @@ namespace SynthusMaximus.Data
             _ammunitionTypes = _loader.LoadList<AmmunitionType>((RelativePath) @"ammunition\ammunitionTypes.json");
             _ammunitionMaterials = _loader.LoadList<AmmunitionMaterial>((RelativePath) @"ammunition\ammunitionMaterials.json");
             _ammunitionModifer = _loader.LoadList<AmmunitionModifier>((RelativePath) @"ammunition\ammunitionModifiers.json");
-            
+
+            ScrollCraftingExclusions =
+                _loader.LoadExclusionList<ITranslatedNamedGetter>((RelativePath) @"exclusions\scrollCrafting.json");
+            StaffCraftingExclusions =
+                _loader.LoadExclusionList<ITranslatedNamedGetter>((RelativePath) @"exclusions\staffCrafting.json");
+            StaffCraftingDisableCraftingExclusions =
+                _loader.LoadExclusionList<ITranslatedNamedGetter>(
+                    (RelativePath) @"exclusions\staffCraftingDisableCraftingExclusions.json");
+                    
+            SpellDistributionExclusions =
+                _loader.LoadExclusionList<ITranslatedNamedGetter>((RelativePath) @"exclusions\distributionExclusionsSpell.json");
+
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
             
         }
 
+        public ExclusionList<ITranslatedNamedGetter> SpellDistributionExclusions { get; }
+
+        public ExclusionList<ITranslatedNamedGetter> StaffCraftingDisableCraftingExclusions { get; }
+        public ExclusionList<ITranslatedNamedGetter> StaffCraftingExclusions { get; }
+        public ExclusionList<ITranslatedNamedGetter> ScrollCraftingExclusions { get; }
 
 
         public bool UseWarrior => _generalSettings.UseWarrior;

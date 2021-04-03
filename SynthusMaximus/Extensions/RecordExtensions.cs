@@ -2,6 +2,7 @@
 using Mutagen.Bethesda;
 using Mutagen.Bethesda.Skyrim;
 using System.Linq;
+using Mutagen.Bethesda.Synthesis;
 using Noggog;
 
 namespace SynthusMaximus
@@ -82,6 +83,25 @@ namespace SynthusMaximus
                 ComparisonValue = mustHave ? 1 : 0,
             });
         }
+        
+        /// <summary>
+        /// Adds a condition to the recipe that the user have a given spell
+        /// </summary>
+        /// <param name="cobj"></param>
+        /// <param name="spell"></param>
+        public static void AddCraftingSpellCondition(this ConstructibleObject cobj, ISpellGetter spell, bool mustHave = true)
+        {
+            cobj.Conditions.Add(new ConditionFloat
+            {
+                Data = new FunctionConditionData
+                {
+                    Function = Condition.Function.HasSpell,
+                    ParameterOneRecord = new FormLink<ISkyrimMajorRecordGetter>(spell.FormKey),
+                },
+                CompareOperator = CompareOperator.EqualTo,
+                ComparisonValue = mustHave ? 1 : 0,
+            });
+        }
 
         public static string NameOrThrow(this ITranslatedNamedGetter getter)
         {
@@ -133,5 +153,6 @@ namespace SynthusMaximus
         {
             rec.EditorID = id.Replace(" ", "")+mr.FormKey.ToString().Replace(":", "");
         }
+
     }
 }

@@ -52,7 +52,7 @@ namespace SynthusMaximus.Patchers
                 try
                 {
                     if (!ShouldPatch(a))
-                    {
+                    { 
                         _logger.LogInformation("{Name}: Ingored", a.EditorID);
                         continue;
                     }
@@ -145,6 +145,7 @@ namespace SynthusMaximus.Patchers
             }
             
         }
+        
 
         private bool DoQualityLeather(IArmorGetter a, ArmorMaterial am)
         {
@@ -311,12 +312,9 @@ namespace SynthusMaximus.Patchers
 
         private IArmor CreateCopycatArmor(IArmorGetter a)
         {
-            if (!a.Name!.TryLookup(Language.English, out var name))
-                throw new InvalidDataException("Could not get English name");
-
-            var newName = name + "[" + _storage.GetOutputString(SReplica) + "]";
+            var newName = a.NameOrThrow() + " [" + _storage.GetOutputString(SReplica) + "]";
             var newArmor = _state.PatchMod.Armors.DuplicateInAsNewRecord(a);
-            newArmor.EditorID = SPrefixPatcher + SPrefixArmor + newName + a.FormKey;
+            newArmor.SetEditorID(SPrefixPatcher + SPrefixArmor + newName, a);
             newArmor.Name = newName;
             newArmor.ObjectEffect.SetToNull();
             ApplyArmorModifiers(newArmor);
