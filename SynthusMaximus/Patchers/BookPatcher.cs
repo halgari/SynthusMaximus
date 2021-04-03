@@ -6,8 +6,11 @@ using Microsoft.Extensions.Logging;
 using Mutagen.Bethesda;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
+using Noggog;
 using SynthusMaximus.Data;
+using SynthusMaximus.Data.Enums;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Weapon;
+using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.MiscItem;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.EquipType;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Keyword;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Dragonborn.Keyword;
@@ -44,8 +47,17 @@ namespace SynthusMaximus.Patchers
                     if (createStaff)
                     {
                         var st = GenerateStaff(sp, sp.NameOrThrow());
-                        var recipe = GenerateStaffCraftingRecipe(st, sp, b);
+                        GenerateStaffCraftingRecipe(st, sp, b);
                     }
+
+                    if (createScroll)
+                    {
+                        var scroll = GenerateScroll(sp);
+                        GenerateScrollCraftingRecipe(sp, scroll);
+                    }
+
+                    if (distribute)
+                        DistributeBookOnLeveledLists(distribute);
 
                 }
                 catch (Exception ex)
@@ -54,6 +66,70 @@ namespace SynthusMaximus.Patchers
                 }
                 
             }
+        }
+
+        private void DistributeBookOnLeveledLists(bool distribute)
+        {
+            throw new NotImplementedException();
+        }
+
+        private IConstructibleObjectGetter? GenerateScrollCraftingRecipe(ISpellGetter sp, IScrollGetter sc)
+        {
+            var perk = GetRequiredScrollCraftingPerk(sp);
+            if (perk == null)
+                return null;
+
+            var cobj = Patch.ConstructibleObjects.AddNew();
+            cobj.SetEditorID(SPrefixPatcher + SPrefixCrafting + SPrefixScroll + sc.NameOrThrow(), sp);
+            cobj.CreatedObject.SetTo(sc);
+            cobj.CreatedObjectCount = 1;
+            
+            cobj.AddCraftingPerkCondition(perk);
+            cobj.AddCraftingRequirement(Inkwell01, 1);
+            cobj.AddCraftingRequirement(PaperRoll, 1);
+            cobj.AddCraftingSpellCondition(sp);
+
+            return cobj;
+        }
+
+        private Dictionary<SpellTier, IFormLink<IPerkGetter>> SpellTierToPerk = new()
+        {
+            {SpellTier.Novice, xMAENCBasicScripture},
+            {SpellTier.Apprentice, xMAENCBasicScripture},
+            {SpellTier.Adept, xMAENCAdvancedScripture},
+            {SpellTier.Expert, xMAENCElaborateScripture},
+            {SpellTier.Master, xMAENCSagesScripture}
+        };
+
+        private IFormLink<IPerkGetter>? GetRequiredScrollCraftingPerk(ISpellGetter sp)
+        {
+            var tier = GetSpellTier(sp);
+            return tier == null ? null : SpellTierToPerk[(SpellTier)tier!];
+        }
+
+        private SpellTier? GetSpellTier(ISpellGetter sp)
+        {
+            var level = sp.Effects.Select(e => e.BaseEffect.Resolve(State.LinkCache))
+                .Select(e => e.MinimumSkillLevel)
+                .Max();
+            return SpellTiers.FromLevel((int)level);
+        }
+
+        private IScrollGetter? GenerateScroll(ISpellGetter sp)
+        {
+            if (sp.CastType == CastType.Concentration)
+                return null;
+
+            var newScroll = Patch.Scrolls.AddNew();
+            newScroll.SetEditorID(SPrefixPatcher + SPrefixScroll + sp.NameOrEmpty(), sp);
+            newScroll.CastDuration = sp.CastDuration;
+            newScroll.CastType = sp.CastType;
+            newScroll.TargetType = sp.TargetType;
+            newScroll.EquipmentType.SetTo(sp.EquipmentType);
+            newScroll.Type = sp.Type;
+            newScroll.Name = sp.NameOrEmpty() + " [" + Storage.GetOutputString(SScroll) + "]";
+            newScroll.Effects.AddRange(sp.Effects.Select(e => e.DeepCopy()));
+            return newScroll;
         }
 
         private Dictionary<ActorValue, IFormLink<IWeaponGetter>> EmptyStaves =
