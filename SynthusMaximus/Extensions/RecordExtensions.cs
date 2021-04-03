@@ -128,5 +128,10 @@ namespace SynthusMaximus
             vm.VirtualMachineAdapter.Scripts.Add(se);
             return se;
         }
+
+        public static void SetEditorID(this IMajorRecord rec, string id, IMajorRecordGetter mr)
+        {
+            rec.EditorID = id.Replace(" ", "")+mr.FormKey.ToString().Replace(":", "");
+        }
     }
 }

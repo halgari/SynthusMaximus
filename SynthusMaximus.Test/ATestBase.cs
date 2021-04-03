@@ -16,29 +16,36 @@ using static Mutagen.Bethesda.FormKeys.SkyrimSE.Update.Keyword;
 
 namespace SynthusMaximus.Test
 {
-    public class ATestBase
+    public class TestData
     {
-        protected LoadOrder<IModListing<SkyrimMod>> LEMods;
-        protected LoadOrder<IModListing<SkyrimMod>> SEMods;
-        public IModListing<SkyrimMod> OurMod;
-        public IModListing<SkyrimMod> TheirMod;
-
-
-        public ATestBase(ITestOutputHelper outputHelper)
-        {
-            OutputHelper = outputHelper;
-        }
+        private static TestData? _instance = null;
+        public LoadOrder<IModListing<ISkyrimModGetter>> LEMods;
+        public LoadOrder<IModListing<ISkyrimModGetter>> SEMods;
+        public IModListing<ISkyrimModGetter> OurMod;
+        public IModListing<ISkyrimModGetter> TheirMod;
 
         public ITestOutputHelper OutputHelper { get; }
 
-        protected void Setup()
+        private static readonly object _lock = new();
+        public static TestData Create(ITestOutputHelper output)
+        {
+            lock (_lock)
+            {
+                if (_instance != null) return _instance!;
+                var d = new TestData();
+                d.Setup(output);
+                _instance = d;
+                return _instance;
+            }
+        }
+        private void Setup(ITestOutputHelper output)
         {
             LoadLELoadOrder();
-            RunPatcher();
+            RunPatcher(output);
             LoadSELoadOrder();
         }
 
-        protected void LoadLELoadOrder()
+        private void LoadLELoadOrder()
         {
             foreach (var file in 
                 Game.Skyrim.MetaData().GameLocation().Combine("Data").EnumerateFiles(false, "*.esm"))
@@ -64,7 +71,7 @@ namespace SynthusMaximus.Test
 
 
             
-            LEMods = LoadOrder.Import<SkyrimMod>(new DirectoryPath(@".\Resources\LegendaryEdition"), new List<ModKey>()
+            LEMods = LoadOrder.Import<ISkyrimModGetter>(new DirectoryPath(@".\Resources\LegendaryEdition"), new List<ModKey>()
             {
                 ModKey.FromNameAndExtension("Skyrim.esm"),
                 ModKey.FromNameAndExtension("Update.esm"),
@@ -82,9 +89,9 @@ namespace SynthusMaximus.Test
 
 
 
-        protected void LoadSELoadOrder()
+        private void LoadSELoadOrder()
         {
-            SEMods = LoadOrder.Import<SkyrimMod>(new DirectoryPath(@".\Resources\SpecialEdition"), new List<ModKey>()
+            SEMods = LoadOrder.Import<ISkyrimModGetter>(new DirectoryPath(@".\Resources\SpecialEdition"), new List<ModKey>()
             {
                 ModKey.FromNameAndExtension("Skyrim.esm"),
                 ModKey.FromNameAndExtension("Update.esm"),
@@ -103,8 +110,14 @@ namespace SynthusMaximus.Test
 
 
 
-        protected bool RunPatcher()
+        private void RunPatcher(ITestOutputHelper helper)
         {
+            var outputFile = AbsolutePath.EntryPoint.Combine("Resources", "SpecialEdition", "SynthusMaximus.esp");
+            var sourceLastModified = ((AbsolutePath) typeof(Program).Assembly.Location).LastModifiedUtc;
+
+            if (sourceLastModified < outputFile.LastModifiedUtc)
+                return;
+            
             foreach (var file in 
                 Game.SkyrimSpecialEdition.MetaData().GameLocation().Combine("Data").EnumerateFiles(false, "*.esm"))
             {
@@ -144,28 +157,75 @@ namespace SynthusMaximus.Test
             
             Console.SetOut(stringWriter);
             Console.SetError(stringWriter);
-            Program.AddLogger = logging =>
+
+            if (helper != null)
             {
-                logging.AddXUnit(OutputHelper);
-            };
-            
+                Program.AddLogger = logging => { logging.AddXUnit(helper); };
+            }
+
             var result = Program.Main(new string[]
             {
                 "run-patcher",
                 "--DataFolderPath", AbsolutePath.EntryPoint.Combine("Resources", "SpecialEdition").ToString(),
                 "--GameRelease", "SkyrimSE",
                 "--LoadOrderFilePath", loadOrder.ToString(),
-                "--OutputPath", AbsolutePath.EntryPoint.Combine("Resources", "SpecialEdition", "SynthusMaximus.esp").ToString()
+                "--OutputPath", outputFile.ToString()
             }).Result;
 
-            OutputHelper.WriteLine(stringWriter.ToString());
-            return result == 0;
+            helper?.WriteLine(stringWriter.ToString());
+            if (result != 0)
+                throw new Exception("Patcher exception");
+        }
+    }
+
+    public class MatchRecord<T>
+    where T : IMajorRecordGetter
+    {
+        public MatchRecord(T expected, T actual)
+        {
+            Expected = expected;
+            Actual = actual;
+        }
+        public override string ToString()
+        {
+            return $"{Expected.FormKey} = {Actual.FormKey}";
         }
 
-        public void AssertEqual(IArmorGetter a, IArmorGetter b)
+        public T Expected { get; }
+        public T Actual { get; }
+    }
+    
+    public class ATestBase
+    {
+
+        private TestData _data;
+        public LoadOrder<IModListing<ISkyrimModGetter>> LEMods => _data.LEMods;
+        public LoadOrder<IModListing<ISkyrimModGetter>> SEMods => _data.SEMods;
+        public IModListing<ISkyrimModGetter> OurMod => _data.OurMod;
+        public IModListing<ISkyrimModGetter> TheirMod => _data.TheirMod;
+        
+        public ImmutableLoadOrderLinkCache<ISkyrimMod, ISkyrimModGetter> LELinkCache { get; }
+        public ImmutableLoadOrderLinkCache<ISkyrimMod, ISkyrimModGetter> SELinkCache { get; }       
+
+        public ATestBase(ITestOutputHelper outputHelper)
         {
+            OutputHelper = outputHelper;
+            _data = TestData.Create(outputHelper);
+            LELinkCache = new ImmutableLoadOrderLinkCache<ISkyrimMod, ISkyrimModGetter>(LEMods.PriorityOrder.Select(m => m.Mod), LinkCachePreferences.Default);
+            SELinkCache = new ImmutableLoadOrderLinkCache<ISkyrimMod, ISkyrimModGetter>(SEMods.PriorityOrder.Select(m => m.Mod), LinkCachePreferences.Default);
+        }
+
+
+
+
+        public ITestOutputHelper OutputHelper { get; set; }
+
+
+        public static void AssertEqual(IArmorGetter a, IArmorGetter b, bool sameFormkey = false)
+        {
+            if (sameFormkey)
+                Assert.Equal(a.FormKey, b.FormKey);
             
-            Assert.Equal(a.FormKey, b.FormKey);
             Assert.Equal(a.Name.NameOrEmpty(), b.Name.NameOrEmpty());
             Assert.True(Math.Abs((int)a.Value - (int)b.Value) <= 1); // Some rounding error is okay
             Assert.Equal(a.Weight, b.Weight, 4);
@@ -179,8 +239,9 @@ namespace SynthusMaximus.Test
             Survival_BodyAndHead,
             Survival_LocTypeFreeShrineUse
         };
-        
-        private void AssertEqual(IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? a, IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? b)
+
+
+        private static void AssertEqual(IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? a, IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? b)
         {
             a ??= new List<IFormLinkGetter<IKeywordGetter>>();
             b ??= new List<IFormLinkGetter<IKeywordGetter>>();
@@ -191,7 +252,7 @@ namespace SynthusMaximus.Test
             Assert.Equal(aset, bset);
         }
 
-        public bool AreEqual(IArmorGetter a, IArmorGetter b)
+        public static bool AreEqual(IArmorGetter a, IArmorGetter b)
         {
             try
             {

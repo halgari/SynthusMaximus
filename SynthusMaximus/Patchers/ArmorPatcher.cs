@@ -332,7 +332,7 @@ namespace SynthusMaximus.Patchers
 
             var newArmor = _state.PatchMod.Armors.DuplicateInAsNewRecord(a);
             newArmor.Name = newname;
-            newArmor.EditorID = SPrefixPatcher + SPrefixArmor + newname + a.FormKey;
+            newArmor.SetEditorID(SPrefixPatcher + SPrefixArmor + newname, a);
 
             return newArmor;
 
