@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Mutagen.Bethesda;
@@ -23,36 +24,31 @@ using SynthusMaximus.Data.Enums;
 
 namespace SynthusMaximus.Patchers
 {
-    public class WeaponPatcher : IPatcher
+    public class WeaponPatcher : APatcher<WeaponPatcher>
     {
-        private ILogger<WeaponPatcher> _logger;
-        private DataStorage _storage;
-        private IPatcherState<ISkyrimMod, ISkyrimModGetter> _state;
         private Dictionary<FormKey, IWeaponGetter> _weapons;
 
         private List<(Weapon w, WeaponMaterial wm, WeaponType wt)> _markedForDistribution = new();
         private long _weaponsDistributed = 0;
         private IEnumerable<ILeveledItemGetter> _leveledLists;
-
-        public WeaponPatcher(ILogger<WeaponPatcher> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
+        
+        public WeaponPatcher(ILogger<WeaponPatcher> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state) : base(logger, storage, state)
         {
-            _logger = logger;
-            _storage = storage;
-            _state = state;
         }
-        public void RunPatcher()
+        
+        public override void RunPatcher()
         {
             
-            foreach (var w in _state.LoadOrder.PriorityOrder.Weapon().WinningOverrides())
+            foreach (var w in Mods.Weapon().WinningOverrides())
             {
                 try
                 {
-                    if (_storage.UseWarrior)
+                    if (Storage.UseWarrior)
                     {
                         if (string.IsNullOrEmpty(w.NameOrEmpty()))
                             continue;
                         
-                        var wo = _storage.GetWeaponOverride(w);
+                        var wo = Storage.GetWeaponOverride(w);
 
                         if (wo != null)
                         {
@@ -61,25 +57,25 @@ namespace SynthusMaximus.Patchers
 
                         if (!ShouldPatch(w))
                         {
-                            _logger.LogTrace("{EditorID} : Ignored", w.EditorID);
+                            Logger.LogTrace("{EditorID} : Ignored", w.EditorID);
                             continue;
                         }
 
-                        var wm = _storage.GetWeaponMaterial(w);
+                        var wm = Storage.GetWeaponMaterial(w);
                         if (wm?.Type.Data == default)
                         {
                             WeaponsWithoutMaterialOrType.Add(w.FormKey);
                             continue;
                         }
 
-                        var wt = _storage.GetWeaponType(w);
+                        var wt = Storage.GetWeaponType(w);
                         if (wt == default)
                         {
                             WeaponsWithoutMaterialOrType.Add(w.FormKey);
                             continue;
                         }
 
-                        var wp = _state.PatchMod.Weapons.GetOrAddAsOverride(w);
+                        var wp = Patch.Weapons.GetOrAddAsOverride(w);
 
                         AddSpecificKeyword(wp, wt);
                         AddGenericKeyword(wp, wt);
@@ -87,9 +83,9 @@ namespace SynthusMaximus.Patchers
                         if (Equals(wt.BaseWeaponType.Data.School, xMAWeapSchoolRangedWeaponry))
                             wp.Data!.Flags |= WeaponData.Flag.NPCsUseAmmo;
 
-                        if (_storage.UseWarrior)
+                        if (Storage.UseWarrior)
                         {
-                            if (_storage.ShouldAppendWeaponType)
+                            if (Storage.ShouldAppendWeaponType)
                                 AppendTypeToName(wp, wt);
 
                             AddCombatLogicKeywords(wp, wt);
@@ -99,7 +95,7 @@ namespace SynthusMaximus.Patchers
                             {
                                 AddMeltdownRecipe(wp, wt, wm);
 
-                                if (!_storage.IsWeaponExcludedReforged(w))
+                                if (!Storage.IsWeaponExcludedReforged(w))
                                 {
                                     CreateRefinedSilverWeapon(wp);
 
@@ -122,7 +118,7 @@ namespace SynthusMaximus.Patchers
                             }
                         }
 
-                        if (_storage.UseThief)
+                        if (Storage.UseThief)
                         {
                             if (Equals(wt.BaseWeaponType.Data.Keyword, xMAWeapTypeFist))
                             {
@@ -135,7 +131,7 @@ namespace SynthusMaximus.Patchers
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "Error in patcher {EditorID}", w.EditorID);
+                    Logger.LogError(ex, "Error in patcher {EditorID}", w.EditorID);
                 }
             }
 
@@ -144,18 +140,25 @@ namespace SynthusMaximus.Patchers
 
         private void DistributeMarkedWeapons()
         {
-            _weapons = _state.LoadOrder.PriorityOrder.Weapon().WinningOverrides().ToDictionary(f => f.FormKey);
-            _logger.LogInformation("About to distribute {Count} items into leveled lists", _weapons.Count);
-            _leveledLists = _state.LoadOrder.PriorityOrder.LeveledItem().WinningOverrides()
-                .Where(li => !_storage.IsListExcludedWeaponRegular(li))
+            var sw = Stopwatch.StartNew();
+            _weapons = Mods.Weapon().WinningOverrides().ToDictionary(f => f.FormKey);
+            Logger.LogInformation("About to distribute {Count} items into leveled lists", _weapons.Count);
+            _leveledLists = Mods.LeveledItem().WinningOverrides()
+                .Where(li => !Storage.IsListExcludedWeaponRegular(li))
                 .ToList();
+
+            var indexed = IndexLeveledLists<IWeaponGetter, (WeaponMaterial?, WeaponType?, FormKey)>
+                (f => (Storage.GetWeaponMaterial(f), Storage.GetWeaponType(f), f.ObjectEffect.FormKey));
             
+            Logger.LogInformation("Ran distribution prep in {MS}", sw.ElapsedMilliseconds);
             foreach (var t in _markedForDistribution)
             {
-                DistributeWeaponOnLeveledList(t.w, t.wm, t.wt);
+                DistributeWeaponOnLeveledList(indexed, t.w, t.wm, t.wt);
             }
 
-            _logger.LogInformation("Distributed {Count} items", _weaponsDistributed);
+            Logger.LogInformation("Finished Distribution in {MS}", sw.ElapsedMilliseconds);
+
+            Logger.LogInformation("Distributed {Count} items", _weaponsDistributed);
         }
 
         private void CreateCrossbowVariants(IWeaponGetter w, WeaponMaterial wm, WeaponType wt)
@@ -283,8 +286,8 @@ namespace SynthusMaximus.Patchers
             if (w.HasKeyword(kw))
                 return null;
 
-            var newName = $"{w.NameOrThrow()} [{_storage.GetOutputString(nameToAdd)}]";
-            var newCrossbow = _state.PatchMod.Weapons.DuplicateInAsNewRecord(w);
+            var newName = $"{w.NameOrThrow()} [{Storage.GetOutputString(nameToAdd)}]";
+            var newCrossbow = Patch.Weapons.DuplicateInAsNewRecord(w);
             newCrossbow.EditorID = SPrefixPatcher + SPrefixWeapon + newName + w.FormKey;
 
             newCrossbow.Name = newName;
@@ -298,7 +301,7 @@ namespace SynthusMaximus.Patchers
         private ConstructibleObject CreateEnhancedCrossbowCraftingRecipe(IWeaponGetter oldWeapon, Weapon newWeapon, WeaponMaterial wm, int numKits, 
             params FormLink<IPerkGetter>[] perks)
         {
-            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            var cobj = Patch.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixWeapon + SPrefixCrafting + newWeapon.EditorID + newWeapon.FormKey;
             cobj.WorkbenchKeyword.SetTo(CraftingSmithingForge);
             cobj.CreatedObject.SetTo(newWeapon);
@@ -316,17 +319,17 @@ namespace SynthusMaximus.Patchers
             if (!w.HasKeyword(WeapMaterialSilver))
                 return;
 
-            var newName = _storage.GetOutputString("Refined") + " " + w.NameOrThrow();
+            var newName = Storage.GetOutputString("Refined") + " " + w.NameOrThrow();
 
-            var nw = _state.PatchMod.Weapons.DuplicateInAsNewRecord(w);
+            var nw = Patch.Weapons.DuplicateInAsNewRecord(w);
             nw.Name = newName;
             nw.Description = SWeaponRefinedDesc;
             nw.Keywords ??= new ExtendedList<IFormLinkGetter<IKeywordGetter>>();
             nw.Keywords.Add(xMAWeapMaterialSilverRefined);
             nw.Keywords.Add(WeapMaterialSilver);
 
-            var wm = _storage.GetWeaponMaterial(nw);
-            var wt = _storage.GetWeaponType(nw);
+            var wm = Storage.GetWeaponMaterial(nw);
+            var wt = Storage.GetWeaponType(nw);
             
             ModStats(nw, wt, wm);
             ApplyModifiers(nw);
@@ -339,7 +342,7 @@ namespace SynthusMaximus.Patchers
                 Object = xMAWeapMaterialSilverRefined
             });
 
-            if (!_storage.IsWeaponExcludedReforged(w))
+            if (!Storage.IsWeaponExcludedReforged(w))
             {
                 var reforged = CreateReforgedWeapon(nw, wt, wm);
                 ApplyModifiers(reforged);
@@ -363,12 +366,14 @@ namespace SynthusMaximus.Patchers
             _markedForDistribution.Add((w, wm, wt));
         }
         
-        private void DistributeWeaponOnLeveledList(Weapon w, WeaponMaterial wm, WeaponType wt)
+        private void DistributeWeaponOnLeveledList(
+            Dictionary<(WeaponMaterial?, WeaponType?, FormKey), IEnumerable<IndexedEntry<IWeaponGetter>>> lookupSimilar,
+            Weapon w, WeaponMaterial wm, WeaponType wt)
         {
             if (w.Data!.Flags.HasFlag(WeaponData.Flag.CantDrop) || w.Data!.Flags.HasFlag(WeaponData.Flag.BoundWeapon))
                 return;
 
-            if (_storage.IsWeaponExcludedDistribution(w))
+            if (Storage.IsWeaponExcludedDistribution(w))
                 return;
 
             var flink = new FormLink<IItemGetter>(w.FormKey);
@@ -376,60 +381,44 @@ namespace SynthusMaximus.Patchers
             IWeaponGetter? firstSimilarMatch = default;
 
             var newItems = new List<LeveledItemEntry>();
-            
-            foreach (var i in _leveledLists)
-            {
-                IWeaponGetter? wl = default;
 
-                if (i.Entries?.Any(e => Equals(e.Data?.Reference, flink)) ?? false)
+            if (!lookupSimilar.TryGetValue((wm, wt, w.ObjectEffect.FormKey), out var similar))
+                return;
+            
+            foreach (var li in similar)
+            {
+                if (li.Resolved.Data!.Reference.FormKey == w.FormKey)
                     continue;
 
-                foreach (var li in i.Entries ?? new List<ILeveledItemEntryGetter>())
+                if (!similarSet)
                 {
-                    // Only consider weapons
-                    if (!_weapons.TryGetValue(li.Data?.Reference.FormKey ?? FormKey.Null, out wl))
+                    if (!DoWeaponsContainClasses(w, li.Item))
                         continue;
 
-                    if (!similarSet)
-                    {
-                        if (!AreWeaponsSimilar(w, wm, wt, wl))
-                        {
-                            continue;
-                        }
-
-                        similarSet = true;
-                        firstSimilarMatch = wl;
-                    }
-                    else
-                    {
-                        if (!Equals(wl, firstSimilarMatch))
-                            continue;
-                    }
-
-
-                    _weaponsDistributed += 1;
-                    newItems.Add(new LeveledItemEntry
-                    {
-                        Data = new LeveledItemEntryData
-                        {
-                            Level = li.Data.Level,
-                            Count = li.Data.Count,
-                            Reference = new FormLink<IItemGetter>(w.FormKey)
-                        }
-                    });
+                    similarSet = true;
+                    firstSimilarMatch = li.Item;
                 }
-
-                if (newItems.Count != 0)
+                else
                 {
-                    var lim = _state.PatchMod.LeveledItems.GetOrAddAsOverride(i);
-                    lim.Entries ??= new ExtendedList<LeveledItemEntry>();
-                    lim.Entries.AddRange(newItems);
-                    newItems.Clear();
+                    if (!Equals(li.Item, firstSimilarMatch))
+                        continue;
                 }
-                    
-                
-                
+
+                var lim = Patch.LeveledItems.GetOrAddAsOverride(li.List);
+                lim.Entries ??= new ExtendedList<LeveledItemEntry>();
+                lim.Entries.Add(new LeveledItemEntry
+                {
+                    Data = new LeveledItemEntryData
+                    {
+                        Level = li.Resolved.Data!.Level,
+                        Count = li.Resolved.Data!.Count,
+                        Reference = new FormLink<IItemGetter>(w.FormKey)
+                    }
+                });
             }
+
+
+
             
 
         }
@@ -439,8 +428,8 @@ namespace SynthusMaximus.Patchers
             if (WeaponsWithoutMaterialOrType.Contains(w2.FormKey))
                 return false;
 
-            var wm2 = _storage.GetWeaponMaterial(w2);
-            var wt2 = _storage.GetWeaponType(w2);
+            var wm2 = Storage.GetWeaponMaterial(w2);
+            var wt2 = Storage.GetWeaponType(w2);
 
             if (wm2?.Type.Data == null || wt2 == null)
                 return false;
@@ -480,7 +469,7 @@ namespace SynthusMaximus.Patchers
 
         private void CreateCopycatRecipe(Weapon w, Weapon oldWeapon, WeaponMaterial wm)
         {
-            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            var cobj = Patch.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixWeapon + SPrefixCrafting + w.EditorID + w.FormKey;
             cobj.WorkbenchKeyword.SetTo(CraftingSmithingForge);
             cobj.CreatedObject.SetTo(w);
@@ -502,8 +491,8 @@ namespace SynthusMaximus.Patchers
 
         private Weapon CreateCopycatWeapon(Weapon w)
         {
-            var newName = w.NameOrThrow() + "[" + _storage.GetOutputString(SReplica) + "]";
-            var nw = _state.PatchMod.Weapons.DuplicateInAsNewRecord(w);
+            var newName = w.NameOrThrow() + "[" + Storage.GetOutputString(SReplica) + "]";
+            var nw = Patch.Weapons.DuplicateInAsNewRecord(w);
             nw.EditorID = SPrefixPatcher + SPrefixWeapon + w.EditorID + "Replica" + nw.FormKey;
             nw.Name = newName;
             nw.ObjectEffect.SetToNull();
@@ -513,7 +502,7 @@ namespace SynthusMaximus.Patchers
 
         private void AddWarforgedCraftingRecipe(Weapon w, Weapon? oldWeapon, WeaponMaterial wm)
         {
-            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            var cobj = Patch.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixWeapon + SPrefixCrafting + w.EditorID + w.FormKey;
             cobj.WorkbenchKeyword.SetTo(CraftingSmithingForge);
             cobj.CreatedObject.SetTo(w);
@@ -537,8 +526,8 @@ namespace SynthusMaximus.Patchers
 
         private Weapon CreateWarforgedWeapon(Weapon w, WeaponType wt, WeaponMaterial wm)
         {
-            var newName = _storage.GetOutputString("Warforged") + " " + w.NameOrEmpty();
-            var nw = _state.PatchMod.Weapons.DuplicateInAsNewRecord(w);
+            var newName = Storage.GetOutputString("Warforged") + " " + w.NameOrEmpty();
+            var nw = Patch.Weapons.DuplicateInAsNewRecord(w);
             nw.EditorID = SPrefixPatcher + SPrefixWeapon + w.EditorID + w.FormKey;
             nw.Name = newName;
             nw.ObjectEffect.SetTo(xMASMIMasteryWarforgedEnchWeapon);
@@ -551,7 +540,7 @@ namespace SynthusMaximus.Patchers
 
         private void AddTemperingRecipe(Weapon w, WeaponMaterial wm)
         {
-            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            var cobj = Patch.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixWeapon + SPrefixTemper + w.EditorID + w.FormKey;
             cobj.WorkbenchKeyword.SetTo(CraftingSmithingSharpeningWheel);
             cobj.CreatedObject.SetTo(w);
@@ -560,7 +549,7 @@ namespace SynthusMaximus.Patchers
             var ing = wm.Type.Data.TemperingInput;
             if (wm.Type.Data.TemperingInput == null)
             {
-                _logger.LogWarning("No tempering item found for {EditorID} will use meltdown product", w.EditorID);
+                Logger.LogWarning("No tempering item found for {EditorID} will use meltdown product", w.EditorID);
                 ing = wm.Type.Data.BreakdownProduct;
             }
 
@@ -570,7 +559,7 @@ namespace SynthusMaximus.Patchers
             }
             else
             {
-                _logger.LogWarning("No input found for tempering recipe for {EditorID}", w.EditorID);
+                Logger.LogWarning("No input found for tempering recipe for {EditorID}", w.EditorID);
             }
 
             var perk = wm.Type.Data.SmithingPerk;
@@ -580,7 +569,7 @@ namespace SynthusMaximus.Patchers
 
         private void AddReforgedCraftingRecipe(Weapon newWeapon, Weapon? oldWeapon, WeaponMaterial wm)
         {
-            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            var cobj = Patch.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixWeapon + SPrefixCrafting + newWeapon.EditorID + newWeapon.FormKey;
             cobj.WorkbenchKeyword.SetTo(CraftingSmithingForge);
 
@@ -606,15 +595,15 @@ namespace SynthusMaximus.Patchers
 
         private Weapon CreateReforgedWeapon(Weapon w, WeaponType wt, WeaponMaterial wm)
         {
-            var newName = _storage.GetOutputString("Reforged") + " " + w.NameOrEmpty();
-            var nw = _state.PatchMod.Weapons.DuplicateInAsNewRecord(w);
+            var newName = Storage.GetOutputString("Reforged") + " " + w.NameOrEmpty();
+            var nw = Patch.Weapons.DuplicateInAsNewRecord(w);
             nw.Name = newName;
             return nw;
         }
 
         private void ApplyModifiers(Weapon w)
         {
-            var modifiers = _storage.GetAllModifiers(w);
+            var modifiers = Storage.GetAllModifiers(w);
             foreach (var m in modifiers)
             {
                 w.BasicStats!.Damage = (ushort)(w.BasicStats.Damage * m.FactorDamage);
@@ -635,7 +624,7 @@ namespace SynthusMaximus.Patchers
             if (wm.Type.Data!.BreakdownProduct == default || inputNum <= 0 || outputNum <= 0)
                 return;
 
-            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            var cobj = Patch.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixWeapon + SPrefixMeltdown + w.EditorID + w.FormKey.ToString();
             cobj.AddCraftingRequirement(w, wt.MeltdownInput);
             cobj.CreatedObject.SetTo(wm.Type.Data.BreakdownProduct!);
@@ -686,10 +675,10 @@ namespace SynthusMaximus.Patchers
 
         private void SetDamage(Weapon w, WeaponType wt, WeaponMaterial wm)
         {
-            var skillBase = _storage.GetWeaponSkillDamageBase(wt.BaseWeaponType);
+            var skillBase = Storage.GetWeaponSkillDamageBase(wt.BaseWeaponType);
             var typeMod = wt.DamageBase;
             var matMod = wm.DamageModifier;
-            var typeMult = _storage.GetWeaponSkillDamageMultipler(wt.BaseWeaponType);
+            var typeMult = Storage.GetWeaponSkillDamageMultipler(wt.BaseWeaponType);
 
             if (skillBase == null || typeMult == null)
                 return;
@@ -749,7 +738,7 @@ namespace SynthusMaximus.Patchers
 
         private void ApplyWeaponOverride(IWeaponGetter wg, WeaponOverride wo)
         {
-            var w = _state.PatchMod.Weapons.GetOrAddAsOverride(wg);
+            var w = Patch.Weapons.GetOrAddAsOverride(wg);
             w.BasicStats!.Damage = wo.Damage;
             w.Data!.Reach = wo.Reach;
             w.Data!.Speed = wo.Speed;
@@ -767,11 +756,11 @@ namespace SynthusMaximus.Patchers
 
             if (output == null || meltdownIn <= 0 || meltdownOut <= 0)
             {
-                _logger.LogInformation("Weapon {EditorID}: no meltdown recipe generated", w.EditorID);
+                Logger.LogInformation("Weapon {EditorID}: no meltdown recipe generated", w.EditorID);
                 return;
             }
 
-            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            var cobj = Patch.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixWeapon + SPrefixMeltdown + w.EditorID + w.FormKey;
             
             cobj.AddCraftingRequirement(new FormLink<IItemGetter>(w), meltdownIn);
@@ -789,10 +778,10 @@ namespace SynthusMaximus.Patchers
 
         private void AlterTemperingRecipe(Weapon w, Material bmw)
         {
-            foreach (var c in _state.LoadOrder.PriorityOrder.ConstructibleObject().WinningOverrides()
+            foreach (var c in Mods.ConstructibleObject().WinningOverrides()
                 .Where(c => c.CreatedObject.FormKey == w.FormKey &&
                             c.WorkbenchKeyword.FormKey == CraftingSmithingSharpeningWheel.FormKey)
-                .Select(c => _state.PatchMod.ConstructibleObjects.GetOrAddAsOverride(c)))
+                .Select(c => Patch.ConstructibleObjects.GetOrAddAsOverride(c)))
             {
                 c.Conditions.Clear();
                 var perk = bmw.SmithingPerk;
@@ -802,5 +791,7 @@ namespace SynthusMaximus.Patchers
                 }
             }
         }
+
+
     }
 }
