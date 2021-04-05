@@ -16,11 +16,11 @@ namespace SynthusMaximus.Patchers
 {
     public class CraftablePatcher : APatcher<CraftablePatcher>
     {
-        private Eager<List<(IConstructibleObjectGetter Cobj, IConstructibleGetter? Constructable)>> _armorWeaponRecipies;
+        private Eager<List<(IConstructibleObjectGetter Cobj, IConstructibleGetter? Constructable)>> _armorWeaponRecipes;
 
         public CraftablePatcher(ILogger<CraftablePatcher> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state) : base(logger, storage, state)
         {
-            _armorWeaponRecipies = new Eager<List<(IConstructibleObjectGetter Cobj, IConstructibleGetter? Constructable)>>(() =>
+            _armorWeaponRecipes = new Eager<List<(IConstructibleObjectGetter Cobj, IConstructibleGetter? Constructable)>>(() =>
             {
                 return UnpatchedMods.ConstructibleObject().WinningOverrides()
                     .AsParallel()
@@ -32,7 +32,7 @@ namespace SynthusMaximus.Patchers
 
         public override void RunPatcher()
         {
-            foreach (var (c, resolved) in _armorWeaponRecipies.Value)
+            foreach (var (c, resolved) in _armorWeaponRecipes.Value)
             {
                 if (Storage.UseMage && c.WorkbenchKeyword.FormKey == DLC2StaffEnchanter.FormKey 
                                     && resolved is IWeaponGetter wg
