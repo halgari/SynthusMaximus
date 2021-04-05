@@ -9,6 +9,7 @@ using Mutagen.Bethesda.Synthesis;
 using Noggog;
 using SynthusMaximus.Data;
 using SynthusMaximus.Data.Enums;
+using SynthusMaximus.Support;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Weapon;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.MiscItem;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.EquipType;
@@ -23,8 +24,23 @@ namespace SynthusMaximus.Patchers
 {
     public class BookPatcher : APatcher<BookPatcher>
     {
+        
+        private Eager<Dictionary<(ActorValue?, SpellTier?), IEnumerable<IndexedEntry<IBookGetter>>>> _leveledLists;
         public BookPatcher(ILogger<BookPatcher> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state) : base(logger, storage, state)
         {
+            _leveledLists = new Eager<Dictionary<(ActorValue?, SpellTier?), IEnumerable<IndexedEntry<IBookGetter>>>>(() => IndexLeveledLists<IBookGetter, (ActorValue?, SpellTier?)>(b =>
+            {
+                if (!(b.Teaches is IBookSpellGetter spg)) return default;
+
+                var sp = spg.Spell.TryResolve(State.LinkCache);
+                if (sp == null) return default;
+
+                var av = GetSchool(sp);
+                if (av == null) return default;
+                var tier = GetSpellTier(sp);
+
+                return (av, tier);
+            }));
         }
 
         public override void RunPatcher()
@@ -57,7 +73,7 @@ namespace SynthusMaximus.Patchers
                     }
 
                     if (distribute)
-                        DistributeBookOnLeveledLists(distribute);
+                        DistributeBookOnLeveledLists(b, sp);
 
                 }
                 catch (Exception ex)
@@ -68,9 +84,28 @@ namespace SynthusMaximus.Patchers
             }
         }
 
-        private void DistributeBookOnLeveledLists(bool distribute)
+        private void DistributeBookOnLeveledLists(IBookGetter b, ISpellGetter sp)
         {
-            throw new NotImplementedException();
+            var av = GetSchool(sp);
+            var tier = GetSpellTier(sp);
+            if (av == null || tier == null) return;
+
+            if (!_leveledLists.Value.TryGetValue((av, tier), out var found))
+                return;
+            
+            foreach (var f in found)
+            {
+                var lst = Patch.LeveledItems.GetOrAddAsOverride(f.List);
+                lst.Entries!.Add(new LeveledItemEntry()
+                {
+                    Data = new LeveledItemEntryData()
+                    {
+                        Reference = new FormLink<IItemGetter>(b.FormKey),
+                        Count = f.Resolved.Data!.Count,
+                        Level = f.Resolved.Data!.Level
+                    }
+                });
+            }
         }
 
         private IConstructibleObjectGetter? GenerateScrollCraftingRecipe(ISpellGetter sp, IScrollGetter sc)
@@ -141,6 +176,7 @@ namespace SynthusMaximus.Patchers
                 {ActorValue.Illusion, StaffTemplateIIllusion},
                 {ActorValue.Restoration, StaffTemplateRestoration}
             };
+
 
         private IConstructibleObjectGetter? GenerateStaffCraftingRecipe(IWeaponGetter st, ISpellGetter sp, IBookGetter b)
         {

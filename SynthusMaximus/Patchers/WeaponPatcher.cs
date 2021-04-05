@@ -21,6 +21,7 @@ using Noggog;
 using SynthusMaximus.Data.DTOs;
 using SynthusMaximus.Data.DTOs.Weapon;
 using SynthusMaximus.Data.Enums;
+using SynthusMaximus.Support;
 
 namespace SynthusMaximus.Patchers
 {
@@ -31,9 +32,13 @@ namespace SynthusMaximus.Patchers
         private List<(Weapon w, WeaponMaterial wm, WeaponType wt)> _markedForDistribution = new();
         private long _weaponsDistributed = 0;
         private IEnumerable<ILeveledItemGetter> _leveledLists;
-        
+        private Eager<Dictionary<(WeaponMaterial?, WeaponType?, FormKey), IEnumerable<IndexedEntry<IWeaponGetter>>>> _indexedLevelLists;
+
         public WeaponPatcher(ILogger<WeaponPatcher> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state) : base(logger, storage, state)
         {
+            _indexedLevelLists = new Eager<Dictionary<(WeaponMaterial?, WeaponType?, FormKey), IEnumerable<IndexedEntry<IWeaponGetter>>>>
+            (() => IndexLeveledLists<IWeaponGetter, (WeaponMaterial?, WeaponType?, FormKey)>
+                (f => (Storage.GetWeaponMaterial(f), Storage.GetWeaponType(f), f.ObjectEffect.FormKey)));
         }
         
         public override void RunPatcher()
@@ -147,13 +152,12 @@ namespace SynthusMaximus.Patchers
                 .Where(li => !Storage.IsListExcludedWeaponRegular(li))
                 .ToList();
 
-            var indexed = IndexLeveledLists<IWeaponGetter, (WeaponMaterial?, WeaponType?, FormKey)>
-                (f => (Storage.GetWeaponMaterial(f), Storage.GetWeaponType(f), f.ObjectEffect.FormKey));
+
             
             Logger.LogInformation("Ran distribution prep in {MS}", sw.ElapsedMilliseconds);
             foreach (var t in _markedForDistribution)
             {
-                DistributeWeaponOnLeveledList(indexed, t.w, t.wm, t.wt);
+                DistributeWeaponOnLeveledList(_indexedLevelLists.Value, t.w, t.wm, t.wt);
             }
 
             Logger.LogInformation("Finished Distribution in {MS}", sw.ElapsedMilliseconds);

@@ -16,6 +16,7 @@ namespace SynthusMaximus.Patchers
         protected readonly IPatcherState<ISkyrimMod, ISkyrimModGetter> State;
         protected readonly ISkyrimMod Patch;
         protected readonly IEnumerable<IModListing<ISkyrimModGetter>> Mods;
+        protected readonly IEnumerable<IModListing<ISkyrimModGetter>> UnpatchedMods;
 
         protected APatcher(ILogger<TInner> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
@@ -24,8 +25,10 @@ namespace SynthusMaximus.Patchers
             State = state;
             Patch = State.PatchMod;
             Mods = State.LoadOrder.PriorityOrder;
+            UnpatchedMods = State.LoadOrder.PriorityOrder.Skip(1);
             Logger.LogInformation("Initialized");
         }
+
 
 
 
