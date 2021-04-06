@@ -37,7 +37,7 @@ namespace SynthusMaximus.Data
         private readonly IList<ArmorMasqueradeBinding> _armorMasqueradeBindings;
         private readonly IDictionary<string, ArmorMaterial> _armorMaterials;
         private readonly IDictionary<ExclusionType, List<Regex>> _armorReforgeExclusions;
-        private readonly ArmorSettings _armorSettings;
+        public ArmorSettings ArmorSettings { get; };
         private readonly OverlayLoader _loader;
         private readonly IDictionary<string, WeaponOverride> _weaponOverrides;
         private readonly IList<WeaponType> _weaponTypes;
@@ -71,7 +71,7 @@ namespace SynthusMaximus.Data
             _loader.Converters = converters.Cast<JsonConverter>().ToArray();
             
             var sw = Stopwatch.StartNew();
-            _armorSettings = _loader.LoadObject<ArmorSettings>((RelativePath)@"armor\armorSettings.json");
+            ArmorSettings = _loader.LoadObject<ArmorSettings>((RelativePath)@"armor\armorSettings.json");
             _armorModifiers = _loader.LoadList<ArmorModifier>((RelativePath)@"armor\armorModifiers.json");
             _armorMasqueradeBindings = _loader.LoadList<ArmorMasqueradeBinding>((RelativePath)@"armor\armorMasqueradeBindings.json");
             _armorMaterials = _loader.LoadDictionary<string, ArmorMaterial>((RelativePath)@"armor\armorMaterials.json");
@@ -151,6 +151,7 @@ namespace SynthusMaximus.Data
         public bool ShouldRemoveUnspecificSpells => _generalSettings.RemoveUnspecificStartingSpells;
         public bool ShouldAppendWeaponType => _weaponSettings.AppendTypeToName;
 
+
         public static bool IsJewelry(IArmorGetter a)
         {
             return HasKeyword(a.Keywords, Statics.JewelryKeywords);
@@ -169,15 +170,15 @@ namespace SynthusMaximus.Data
         public ushort GetArmorMeltdownOutput(IArmorGetter a)
         {
             if (a.HasAnyKeyword(ArmorBoots, ClothingFeet))
-                return _armorSettings.MeltdownOutputFeet;
+                return ArmorSettings.MeltdownOutputFeet;
             if (a.HasAnyKeyword(ArmorHelmet, ClothingHead))
-                return _armorSettings.MeltdownOutputHead;
+                return ArmorSettings.MeltdownOutputHead;
             if (a.HasAnyKeyword(ArmorGauntlets, ClothingHands))
-                return _armorSettings.MeltdownOutputHands;
+                return ArmorSettings.MeltdownOutputHands;
             if (a.HasAnyKeyword(ArmorCuirass, ClothingBody))
-                return _armorSettings.MeltdownOutputBody;
+                return ArmorSettings.MeltdownOutputBody;
             if (a.HasKeyword(ArmorShield))
-                return _armorSettings.MeltdownOutputShield;
+                return ArmorSettings.MeltdownOutputShield;
             return 0;
         }
 
@@ -209,19 +210,19 @@ namespace SynthusMaximus.Data
         public float GetArmorSlotMultiplier(IArmorGetter a)
         {
             if (a.HasKeyword(ArmorBoots))
-                return _armorSettings.ArmorFactorFeet;
+                return ArmorSettings.ArmorFactorFeet;
             
             if (a.HasKeyword(ArmorCuirass))
-                return _armorSettings.ArmorFactorBody;
+                return ArmorSettings.ArmorFactorBody;
             
             if (a.HasKeyword(ArmorHelmet))
-                return _armorSettings.ArmorFactorHead;
+                return ArmorSettings.ArmorFactorHead;
             
             if (a.HasKeyword(ArmorGauntlets))
-                return _armorSettings.ArmorFactorHands;
+                return ArmorSettings.ArmorFactorHands;
             
             if (a.HasKeyword(ArmorShield))
-                return _armorSettings.ArmorFactorShield;
+                return ArmorSettings.ArmorFactorShield;
 
             _logger.LogWarning("{EditorID}: no armor slot keyword", a.EditorID);
 
