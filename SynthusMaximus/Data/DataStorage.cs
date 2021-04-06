@@ -37,7 +37,7 @@ namespace SynthusMaximus.Data
         private readonly IList<ArmorMasqueradeBinding> _armorMasqueradeBindings;
         private readonly IDictionary<string, ArmorMaterial> _armorMaterials;
         private readonly IDictionary<ExclusionType, List<Regex>> _armorReforgeExclusions;
-        public ArmorSettings ArmorSettings { get; };
+        public ArmorSettings ArmorSettings { get; }
         private readonly OverlayLoader _loader;
         private readonly IDictionary<string, WeaponOverride> _weaponOverrides;
         private readonly IList<WeaponType> _weaponTypes;
@@ -129,12 +129,14 @@ namespace SynthusMaximus.Data
                 _loader.LoadExclusionList<ITranslatedNamedGetter>((RelativePath) @"exclusions\distributionExclusionsSpell.json");
 
             NPCExclusions = _loader.LoadExclusionList<INpcGetter>((RelativePath) @"exclusions\npc.json");
+            RaceExclusions = _loader.LoadExclusionList<IRaceGetter>((RelativePath) @"exclusions\race.json");
 
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
             
         }
 
+        public ExclusionList<IRaceGetter> RaceExclusions { get; }
 
 
         public ExclusionList<ITranslatedNamedGetter> SpellDistributionExclusions { get; }

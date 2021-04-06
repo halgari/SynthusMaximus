@@ -95,6 +95,7 @@ namespace Xml2Json
 
             var npcs = XElement.Load("NPC.xml");
             ExtractExclusionList(npcs, "npc_exclusions", @"exclusions\npcs.json");
+            ExtractExclusionList(npcs, "race_exclusions", @"exclusions\race.json");
 
         }
 

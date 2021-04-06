@@ -130,7 +130,7 @@ namespace SynthusMaximus.Data
         public const string GmstfArmorRatingMax = "fArmorRatingMax";
 
         public static IFormLink<ISkyrimMajorRecordGetter> PlayerRef =
-            new FormLink<ISkyrimMajorRecordGetter>(new FormKey(new ModKey("Skyrim.esm", ModType.Master), 0x000014));
+            new FormLink<ISkyrimMajorRecordGetter>(new FormKey(new ModKey("Skyrim", ModType.Master), 0x000014));
 
     }
 }

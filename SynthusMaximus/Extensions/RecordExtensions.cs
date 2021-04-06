@@ -160,6 +160,16 @@ namespace SynthusMaximus
             shout.VirtualMachineAdapter.Scripts.Add(se);
             return se;
         }
+        
+        public static ScriptEntry GetOrAddScript(this QuestAdapter vm, string script)
+        {
+            var se = vm.Scripts.FirstOrDefault(s => s.Name == script);
+            if (se != null)
+                return se;
+            se = new ScriptEntry {Name = script};
+            vm.Scripts.Add(se);
+            return se;
+        }
 
         public static void SetEditorID(this IMajorRecord rec, string id, IMajorRecordGetter mr)
         {
@@ -180,6 +190,12 @@ namespace SynthusMaximus
         {
             npc.ActorEffect ??= new ExtendedList<IFormLinkGetter<ISpellRecordGetter>>();
             npc.ActorEffect.Add(spell);
+        }
+        
+        public static void AddSpell(this IRace race, IFormLink<ISpellGetter> spell)
+        {
+            race.ActorEffect ??= new ExtendedList<IFormLinkGetter<ISpellRecordGetter>>();
+            race.ActorEffect.Add(spell);
         }
         
         public static void RemoveSpell(this INpc npc, IFormLink<ISpellGetter> spell)
