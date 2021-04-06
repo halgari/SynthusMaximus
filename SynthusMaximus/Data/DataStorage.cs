@@ -56,6 +56,7 @@ namespace SynthusMaximus.Data
         private readonly IList<AmmunitionType> _ammunitionTypes;
         private IList<AmmunitionMaterial> _ammunitionMaterials;
         private IList<AmmunitionModifier> _ammunitionModifer;
+        public ExclusionList<INpcGetter> NPCExclusions { get; }
 
 
         public DataStorage(ILogger<DataStorage> logger, 
@@ -127,10 +128,14 @@ namespace SynthusMaximus.Data
             SpellDistributionExclusions =
                 _loader.LoadExclusionList<ITranslatedNamedGetter>((RelativePath) @"exclusions\distributionExclusionsSpell.json");
 
+            NPCExclusions = _loader.LoadExclusionList<INpcGetter>((RelativePath) @"exclusions\npc.json");
+
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
             
         }
+
+
 
         public ExclusionList<ITranslatedNamedGetter> SpellDistributionExclusions { get; }
 
@@ -142,6 +147,8 @@ namespace SynthusMaximus.Data
         public bool UseWarrior => _generalSettings.UseWarrior;
         public bool UseMage => _generalSettings.UseMage;
         public bool UseThief => _generalSettings.UseThief;
+
+        public bool ShouldRemoveUnspecificSpells => _generalSettings.RemoveUnspecificStartingSpells;
         public bool ShouldAppendWeaponType => _weaponSettings.AppendTypeToName;
 
         public static bool IsJewelry(IArmorGetter a)

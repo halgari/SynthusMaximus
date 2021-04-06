@@ -114,6 +114,9 @@
       <None Update="config\PerkusMaximus_Master\exclusions\distributionExclusionsSpell.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="config\PerkusMaximus_Master\exclusions\npcs.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

@@ -154,5 +154,26 @@ namespace SynthusMaximus
             rec.EditorID = id.Replace(" ", "")+mr.FormKey.ToString().Replace(":", "");
         }
 
+        public static void AddPerk(this INpc npc, IFormLink<IPerkGetter> perk, byte rank = 1)
+        {
+            npc.Perks ??= new ExtendedList<PerkPlacement>();
+            npc.Perks.Add(new PerkPlacement
+            {
+                Perk = perk,
+                Rank = rank
+            });
+        }
+        
+        public static void AddSpell(this INpc npc, IFormLink<ISpellGetter> spell)
+        {
+            npc.ActorEffect ??= new ExtendedList<IFormLinkGetter<ISpellRecordGetter>>();
+            npc.ActorEffect.Add(spell);
+        }
+        
+        public static void RemoveSpell(this INpc npc, IFormLink<ISpellGetter> spell)
+        {
+            npc.ActorEffect?.Remove(spell);
+        }
+
     }
 }
