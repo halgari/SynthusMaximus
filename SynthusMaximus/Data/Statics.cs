@@ -124,5 +124,8 @@ namespace SynthusMaximus.Data
         public const int EnhancementOutSe1 = (int) (EnhancementOut * 1.4);
         public const float TimebombTimer = 4.0f;
 
+        public static IFormLink<ISkyrimMajorRecordGetter> PlayerRef =
+            new FormLink<ISkyrimMajorRecordGetter>(new FormKey(new ModKey("Skyrim.esm", ModType.Master), 0x000014));
+
     }
 }

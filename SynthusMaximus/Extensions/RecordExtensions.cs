@@ -148,6 +148,18 @@ namespace SynthusMaximus
             vm.VirtualMachineAdapter.Scripts.Add(se);
             return se;
         }
+        
+        public static ScriptEntry GetOrAddScript(this IMagicEffect shout, string script)
+        {
+            shout.VirtualMachineAdapter ??= new VirtualMachineAdapter();
+            
+            var se = shout.VirtualMachineAdapter.Scripts.FirstOrDefault(s => s.Name == script);
+            if (se != null)
+                return se;
+            se = new ScriptEntry {Name = script};
+            shout.VirtualMachineAdapter.Scripts.Add(se);
+            return se;
+        }
 
         public static void SetEditorID(this IMajorRecord rec, string id, IMajorRecordGetter mr)
         {
