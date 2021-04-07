@@ -55,7 +55,7 @@ namespace SynthusMaximus.Patchers
 
         private bool ShouldPatch(INpcGetter npc)
         {
-            return Storage.NPCExclusions.IsExcluded(npc);
+            return !Storage.NPCExclusions.IsExcluded(npc);
         }
 
         private void PatchPlayer()
