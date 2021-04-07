@@ -92,11 +92,41 @@ namespace Xml2Json
             ExtractExclusionList(ench, "scroll_crafting_exclusions", @"exclusions\scrollCrafting.json");
             ExtractExclusionList(ench, "staff_crafting_exclusions", @"exclusions\staffCrafting.json");
             ExtractExclusionList(ench, "staff_crafting_disable_crafting_exclusions", @"exclusions\staffCraftingDisableCraftingExclusions.json");
+            ExtractEnchantmentReplacers(ench, "list_enchantment_bindings", @"enchanting\listEnchantmentBindings.json");
 
+            
             var npcs = XElement.Load("NPC.xml");
             ExtractExclusionList(npcs, "npc_exclusions", @"exclusions\npcs.json");
             ExtractExclusionList(npcs, "race_exclusions", @"exclusions\race.json");
 
+        }
+
+        private static void ExtractEnchantmentReplacers(XElement element, string listName, string fileName)
+        {
+            var bindings = element.Descendants().Where(e => e.Name == listName);
+            var results = new List<Dictionary<string, object>>();
+            foreach (var binding in bindings.Descendants().Where(e => e.Name == "list_enchantment_binding"))
+            {
+                var entry = new Dictionary<string, object>();
+                entry["fillListWithSimilars"] =
+                    bool.Parse(binding.Descendants().First(e => e.Name == "fillListWithSimilars").Value);
+                entry["edidList"] = binding.Descendants().First(e => e.Name == "edidList").Value;
+                var list = new List<Dictionary<string, string>>();
+                foreach (var replacement in binding.Descendants().Where(d => d.Name == "enchantment_replacer"))
+                {
+                    var baseId = replacement.Descendants().First(e => e.Name == "edidEnchantmentBase").Value;
+                    var newId = replacement.Descendants().First(e => e.Name == "edidEnchantmentNew").Value;
+                    list.Add(new Dictionary<string, string>()
+                    {
+                        {"edidBase", baseId},
+                        {"edidNew", newId}
+                    });
+                }
+
+                entry["enchantmentReplacers"] = list;
+                results.Add(entry);
+            }
+            WriteFile(fileName, results);
         }
 
         private static void ExtractBindingList(XElement doc, string bindingName, string bindableName, string fileName,

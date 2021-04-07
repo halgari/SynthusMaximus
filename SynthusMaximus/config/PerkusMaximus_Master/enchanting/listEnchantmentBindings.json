@@ -1,0 +1,1514 @@
+[
+  {
+    "fillListWithSimilars": true,
+    "edidList": "LItemEnchRingHealth",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyHealth01",
+        "edidNew": "xMAEnchArmorResistPoisonDisease0"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealth02",
+        "edidNew": "xMAEnchArmorResistPoisonDisease1"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealth03",
+        "edidNew": "xMAEnchArmorResistPoisonDisease2"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": true,
+    "edidList": "LItemEnchRingHealth",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyHealth02",
+        "edidNew": "xMAEnchArmorRegenStaminaMagicka0"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealth03",
+        "edidNew": "xMAEnchArmorRegenStaminaMagicka1"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealth04",
+        "edidNew": "xMAEnchArmorRegenStaminaMagicka2"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": true,
+    "edidList": "SublistEnchIronWarhammerFire",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchWeaponFireDamage01",
+        "edidNew": "xMAEnchWeaponDiseaseDamage0"
+      },
+      {
+        "edidBase": "EnchWeaponFireDamage02",
+        "edidNew": "xMAEnchWeaponDiseaseDamage1"
+      },
+      {
+        "edidBase": "EnchWeaponFireDamage03",
+        "edidNew": "xMAEnchWeaponDiseaseDamage2"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingBlock",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyBlock01",
+        "edidNew": "SCC_Armor_Alt_Ench_Bulwark01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyBlock02",
+        "edidNew": "SCC_Armor_Alt_Ench_Bulwark02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyBlock03",
+        "edidNew": "SCC_Armor_Alt_Ench_Bulwark03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyBlock04",
+        "edidNew": "SCC_Armor_Alt_Ench_Bulwark04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyBlock05",
+        "edidNew": "SCC_Armor_Alt_Ench_Bulwark05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyBlock06",
+        "edidNew": "SCC_Armor_Alt_Ench_Bulwark06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceBlock",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyBlock01",
+        "edidNew": "SCC_Armor_Alt_Ench_Bulwark01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyBlock02",
+        "edidNew": "SCC_Armor_Alt_Ench_Bulwark02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyBlock03",
+        "edidNew": "SCC_Armor_Alt_Ench_Bulwark03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyBlock04",
+        "edidNew": "SCC_Armor_Alt_Ench_Bulwark04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyBlock05",
+        "edidNew": "SCC_Armor_Alt_Ench_Bulwark05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyBlock06",
+        "edidNew": "SCC_Armor_Alt_Ench_Bulwark06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingResistMagic",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorResistMagic01",
+        "edidNew": "SCC_Armor_Ill_Ench_Maze01"
+      },
+      {
+        "edidBase": "EnchArmorResistMagic02",
+        "edidNew": "SCC_Armor_Des_Ench_Rebuke02"
+      },
+      {
+        "edidBase": "EnchArmorResistMagic03",
+        "edidNew": "SCC_Armor_Ill_Ench_Maze03"
+      },
+      {
+        "edidBase": "EnchArmorResistMagic06",
+        "edidNew": "SCC_Armor_Des_Ench_Rebuke04"
+      },
+      {
+        "edidBase": "EnchArmorResistMagic05",
+        "edidNew": "SCC_Armor_Ill_Ench_Maze05"
+      },
+      {
+        "edidBase": "EnchArmorResistMagic06",
+        "edidNew": "SCC_Armor_Des_Ench_Rebuke06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceResistMagic",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorResistMagic01",
+        "edidNew": "SCC_Armor_Ill_Ench_Maze01"
+      },
+      {
+        "edidBase": "EnchArmorResistMagic02",
+        "edidNew": "SCC_Armor_Des_Ench_Rebuke02"
+      },
+      {
+        "edidBase": "EnchArmorResistMagic03",
+        "edidNew": "SCC_Armor_Ill_Ench_Maze03"
+      },
+      {
+        "edidBase": "EnchArmorResistMagic04",
+        "edidNew": "SCC_Armor_Des_Ench_Rebuke04"
+      },
+      {
+        "edidBase": "EnchArmorResistMagic05",
+        "edidNew": "SCC_Armor_Ill_Ench_Maze05"
+      },
+      {
+        "edidBase": "EnchArmorResistMagic06",
+        "edidNew": "SCC_Armor_Des_Ench_Rebuke06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceMisc",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorResistPoison01",
+        "edidNew": "SCC_Armor_Ill_Ench_Explorer01"
+      },
+      {
+        "edidBase": "EnchArmorResistPoison02",
+        "edidNew": "SCC_Armor_Ill_Ench_Explorer02"
+      },
+      {
+        "edidBase": "EnchArmorResistDisease01",
+        "edidNew": "SCC_Armor_Alt_Ench_FoolsGold01"
+      },
+      {
+        "edidBase": "EnchArmorResistDisease02",
+        "edidNew": "SCC_Armor_Alt_Ench_FoolsGold02"
+      },
+      {
+        "edidBase": "EnchArmorWaterbreathing",
+        "edidNew": "SCC_Armor_Alt_Ench_Light01"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceMisc",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorResistPoison01",
+        "edidNew": "SCC_Armor_Con_Ench_Powerbond01"
+      },
+      {
+        "edidBase": "EnchArmorResistPoison02",
+        "edidNew": "SCC_Armor_Con_Ench_Powerbond02"
+      },
+      {
+        "edidBase": "EnchArmorResistDisease01",
+        "edidNew": "SCC_Armor_Res_Ench_RisingMagicka01"
+      },
+      {
+        "edidBase": "EnchArmorResistDisease02",
+        "edidNew": "SCC_Armor_Res_Ench_RisingMagicka02"
+      },
+      {
+        "edidBase": "EnchArmorWaterbreathing",
+        "edidNew": "SCC_Armor_Ill_Ench_Fence01"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceMisc",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorResistPoison01",
+        "edidNew": "SCC_Armor_Res_Ench_CircleOfProtection01"
+      },
+      {
+        "edidBase": "EnchArmorResistPoison02",
+        "edidNew": "SCC_Armor_Res_Ench_CircleOfProtection02"
+      },
+      {
+        "edidBase": "EnchArmorResistDisease01",
+        "edidNew": "SCC_Armor_Des_Ench_BrawnOverBrains01"
+      },
+      {
+        "edidBase": "EnchArmorResistDisease02",
+        "edidNew": "SCC_Armor_Des_Ench_BrawnOverBrains02"
+      },
+      {
+        "edidBase": "EnchArmorWaterbreathing",
+        "edidNew": "SCC_Armor_Ill_Ench_Perception01"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingTwoHanded",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyTwoHanded01",
+        "edidNew": "SCC_Armor_Des_Ench_Execute01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyTwoHanded02",
+        "edidNew": "SCC_Armor_Des_Ench_FortifyPowerAttack02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyTwoHanded03",
+        "edidNew": "SCC_Armor_Des_Ench_Execute03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyTwoHanded04",
+        "edidNew": "SCC_Armor_Des_Ench_FortifyPowerAttack04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyTwoHanded05",
+        "edidNew": "SCC_Armor_Des_Ench_Execute05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyTwoHanded06",
+        "edidNew": "SCC_Armor_Des_Ench_FortifyPowerAttack06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceTwoHanded",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyTwoHanded01",
+        "edidNew": "SCC_Armor_Des_Ench_Execute01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyTwoHanded02",
+        "edidNew": "SCC_Armor_Des_Ench_FortifyPowerAttack02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyTwoHanded03",
+        "edidNew": "SCC_Armor_Des_Ench_Execute03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyTwoHanded04",
+        "edidNew": "SCC_Armor_Des_Ench_FortifyPowerAttack04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyTwoHanded05",
+        "edidNew": "SCC_Armor_Des_Ench_Execute05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyTwoHanded06",
+        "edidNew": "SCC_Armor_Des_Ench_FortifyPowerAttack06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingOneHanded",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyOneHanded01",
+        "edidNew": "SCC_Armor_Res_Ench_Mageward01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyOneHanded02",
+        "edidNew": "SCC_Armor_Ill_Ench_SmokeAndMirrors02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyOneHanded03",
+        "edidNew": "SCC_Armor_Res_Ench_Mageward03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyOneHanded04",
+        "edidNew": "SCC_Armor_Ill_Ench_SmokeAndMirrors04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyOneHanded05",
+        "edidNew": "SCC_Armor_Res_Ench_Mageward05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyOneHanded06",
+        "edidNew": "SCC_Armor_Ill_Ench_SmokeAndMirrors06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceOneHanded",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyOneHanded01",
+        "edidNew": "SCC_Armor_Res_Ench_Mageward01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyOneHanded02",
+        "edidNew": "SCC_Armor_Ill_Ench_SmokeAndMirrors02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyOneHanded03",
+        "edidNew": "SCC_Armor_Res_Ench_Mageward03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyOneHanded04",
+        "edidNew": "SCC_Armor_Ill_Ench_SmokeAndMirrors04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyOneHanded05",
+        "edidNew": "SCC_Armor_Res_Ench_Mageward05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyOneHanded06",
+        "edidNew": "SCC_Armor_Ill_Ench_SmokeAndMirrors06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingMarksman",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyMarksman01",
+        "edidNew": "SCC_Armor_Res_Ench_IncreasedExperience01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMarksman02",
+        "edidNew": "SCC_Armor_Res_Ench_IncreasedExperience02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMarksman03",
+        "edidNew": "SCC_Armor_Res_Ench_IncreasedExperience03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMarksman04",
+        "edidNew": "SCC_Armor_Res_Ench_IncreasedExperience04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMarksman05",
+        "edidNew": "SCC_Armor_Res_Ench_IncreasedExperience05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMarksman06",
+        "edidNew": "SCC_Armor_Res_Ench_IncreasedExperience06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingLightArmor",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyLightArmor01",
+        "edidNew": "SCC_Armor_Con_Ench_PhantomsOfTheWild01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLightArmor02",
+        "edidNew": "SCC_Armor_Con_Ench_PhantomsOfTheWild02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLightArmor03",
+        "edidNew": "SCC_Armor_Con_Ench_PhantomsOfTheWild03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLightArmor04",
+        "edidNew": "SCC_Armor_Con_Ench_PhantomsOfTheWild04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLightArmor05",
+        "edidNew": "SCC_Armor_Con_Ench_PhantomsOfTheWild05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLightArmor06",
+        "edidNew": "SCC_Armor_Con_Ench_PhantomsOfTheWild06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceLightArmor",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyLightArmor01",
+        "edidNew": "SCC_Armor_Con_Ench_PhantomsOfTheWild01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLightArmor02",
+        "edidNew": "SCC_Armor_Con_Ench_PhantomsOfTheWild02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLightArmor03",
+        "edidNew": "SCC_Armor_Con_Ench_PhantomsOfTheWild03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLightArmor04",
+        "edidNew": "SCC_Armor_Con_Ench_PhantomsOfTheWild04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLightArmor05",
+        "edidNew": "SCC_Armor_Con_Ench_PhantomsOfTheWild05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLightArmor06",
+        "edidNew": "SCC_Armor_Con_Ench_PhantomsOfTheWild06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingSneak",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifySneak01",
+        "edidNew": "SCC_Armor_Alt_Ench_FortifySprint01"
+      },
+      {
+        "edidBase": "EnchArmorFortifySneak02",
+        "edidNew": "SCC_Armor_Alt_Ench_FortifySprint02"
+      },
+      {
+        "edidBase": "EnchArmorFortifySneak03",
+        "edidNew": "SCC_Armor_Alt_Ench_FortifySprint03"
+      },
+      {
+        "edidBase": "EnchArmorFortifySneak04",
+        "edidNew": "SCC_Armor_Alt_Ench_FortifySprint04"
+      },
+      {
+        "edidBase": "EnchArmorFortifySneak05",
+        "edidNew": "SCC_Armor_Alt_Ench_FortifySprint05"
+      },
+      {
+        "edidBase": "EnchArmorFortifySneak06",
+        "edidNew": "SCC_Armor_Alt_Ench_FortifySprint06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceSneak",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifySneak01",
+        "edidNew": "SCC_Armor_Alt_Ench_FortifySprint01"
+      },
+      {
+        "edidBase": "EnchArmorFortifySneak02",
+        "edidNew": "SCC_Armor_Alt_Ench_FortifySprint02"
+      },
+      {
+        "edidBase": "EnchArmorFortifySneak03",
+        "edidNew": "SCC_Armor_Alt_Ench_FortifySprint03"
+      },
+      {
+        "edidBase": "EnchArmorFortifySneak04",
+        "edidNew": "SCC_Armor_Alt_Ench_FortifySprint04"
+      },
+      {
+        "edidBase": "EnchArmorFortifySneak05",
+        "edidNew": "SCC_Armor_Alt_Ench_FortifySprint05"
+      },
+      {
+        "edidBase": "EnchArmorFortifySneak06",
+        "edidNew": "SCC_Armor_Alt_Ench_FortifySprint06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingHealth",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyHealth01",
+        "edidNew": "SCC_Armor_Alt_Ench_HardeningArmor01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealth02",
+        "edidNew": "SCC_Armor_Alt_Ench_HardeningArmor02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealth03",
+        "edidNew": "SCC_Armor_Alt_Ench_HardeningArmor03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealth04",
+        "edidNew": "SCC_Armor_Alt_Ench_HardeningArmor04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealth05",
+        "edidNew": "SCC_Armor_Alt_Ench_HardeningArmor05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealth06",
+        "edidNew": "SCC_Armor_Alt_Ench_HardeningArmor06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceHealth",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyHealth01",
+        "edidNew": "SCC_Armor_Alt_Ench_HardeningArmor01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealth02",
+        "edidNew": "SCC_Armor_Alt_Ench_HardeningArmor02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealth03",
+        "edidNew": "SCC_Armor_Alt_Ench_HardeningArmor03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealth04",
+        "edidNew": "SCC_Armor_Alt_Ench_HardeningArmor04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealth05",
+        "edidNew": "SCC_Armor_Alt_Ench_HardeningArmor05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealth06",
+        "edidNew": "SCC_Armor_Alt_Ench_HardeningArmor06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingRestoration",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyRestoration01",
+        "edidNew": "SCC_Armor_Res_Ench_CureDisease01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyRestoration02",
+        "edidNew": "SCC_Armor_Res_Ench_CureDisease02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyRestoration03",
+        "edidNew": "SCC_Armor_Res_Ench_CureDisease03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyRestoration04",
+        "edidNew": "SCC_Armor_Res_Ench_CureDisease04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyRestoration05",
+        "edidNew": "SCC_Armor_Res_Ench_CureDisease05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyRestoration06",
+        "edidNew": "SCC_Armor_Res_Ench_CureDisease06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingDestruction",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyDestruction01",
+        "edidNew": "SCC_Armor_Res_Ench_LinkAttributes01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyDestruction02",
+        "edidNew": "SCC_Armor_Res_Ench_LinkAttributes02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyDestruction03",
+        "edidNew": "SCC_Armor_Res_Ench_LinkAttributes03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyDestruction04",
+        "edidNew": "SCC_Armor_Res_Ench_LinkAttributes04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyDestruction05",
+        "edidNew": "SCC_Armor_Res_Ench_LinkAttributes05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyDestruction06",
+        "edidNew": "SCC_Armor_Res_Ench_LinkAttributes06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingPickPocket",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyPickpocket01",
+        "edidNew": "SCC_Armor_Res_Ench_OptimizeAttributes01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyPickpocket02",
+        "edidNew": "SCC_Armor_Res_Ench_OptimizeAttributes02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyPickpocket03",
+        "edidNew": "SCC_Armor_Res_Ench_OptimizeAttributes03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyPickpocket04",
+        "edidNew": "SCC_Armor_Res_Ench_OptimizeAttributes04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyPickpocket05",
+        "edidNew": "SCC_Armor_Res_Ench_OptimizeAttributes05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyPickpocket06",
+        "edidNew": "SCC_Armor_Res_Ench_OptimizeAttributes06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklacePickpocket",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyPickpocket01",
+        "edidNew": "SCC_Armor_Res_Ench_OptimizeAttributes01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyPickpocket02",
+        "edidNew": "SCC_Armor_Res_Ench_OptimizeAttributes02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyPickpocket03",
+        "edidNew": "SCC_Armor_Res_Ench_OptimizeAttributes03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyPickpocket04",
+        "edidNew": "SCC_Armor_Res_Ench_OptimizeAttributes04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyPickpocket05",
+        "edidNew": "SCC_Armor_Res_Ench_OptimizeAttributes05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyPickpocket06",
+        "edidNew": "SCC_Armor_Res_Ench_OptimizeAttributes06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingMagickaRate",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyMagickaRate03",
+        "edidNew": "SCC_Armor_Res_Ench_BloodOfTheAldmeri03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagickaRate04",
+        "edidNew": "SCC_Armor_Res_Ench_BloodOfTheAldmeri04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagickaRate05",
+        "edidNew": "SCC_Armor_Res_Ench_BloodOfTheAldmeri05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagickaRate06",
+        "edidNew": "SCC_Armor_Res_Ench_BloodOfTheAldmeri06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingSmithing",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifySmithing01",
+        "edidNew": "SCC_Armor_Res_Ench_Channeling01"
+      },
+      {
+        "edidBase": "EnchArmorFortifySmithing02",
+        "edidNew": "SCC_Armor_Con_Ench_KingOfTheLost02"
+      },
+      {
+        "edidBase": "EnchArmorFortifySmithing03",
+        "edidNew": "SCC_Armor_Res_Ench_Channeling03"
+      },
+      {
+        "edidBase": "EnchArmorFortifySmithing04",
+        "edidNew": "SCC_Armor_Con_Ench_KingOfTheLost04"
+      },
+      {
+        "edidBase": "EnchArmorFortifySmithing05",
+        "edidNew": "SCC_Armor_Res_Ench_Channeling05"
+      },
+      {
+        "edidBase": "EnchArmorFortifySmithing06",
+        "edidNew": "SCC_Armor_Con_Ench_KingOfTheLost06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceSmithing",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifySmithing01",
+        "edidNew": "SCC_Armor_Res_Ench_Channeling01"
+      },
+      {
+        "edidBase": "EnchArmorFortifySmithing02",
+        "edidNew": "SCC_Armor_Con_Ench_KingOfTheLost02"
+      },
+      {
+        "edidBase": "EnchArmorFortifySmithing03",
+        "edidNew": "SCC_Armor_Res_Ench_Channeling03"
+      },
+      {
+        "edidBase": "EnchArmorFortifySmithing04",
+        "edidNew": "SCC_Armor_Con_Ench_KingOfTheLost04"
+      },
+      {
+        "edidBase": "EnchArmorFortifySmithing05",
+        "edidNew": "SCC_Armor_Res_Ench_Channeling05"
+      },
+      {
+        "edidBase": "EnchArmorFortifySmithing06",
+        "edidNew": "SCC_Armor_Con_Ench_KingOfTheLost06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceAlchemy",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyAlchemy01",
+        "edidNew": "SCC_Armor_Res_Ench_DeepBreath01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyAlchemy02",
+        "edidNew": "SCC_Armor_Res_Ench_DeepBreath02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyAlchemy03",
+        "edidNew": "SCC_Armor_Res_Ench_DeepBreath03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyAlchemy04",
+        "edidNew": "SCC_Armor_Res_Ench_DeepBreath04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyAlchemy05",
+        "edidNew": "SCC_Armor_Res_Ench_DeepBreath05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyAlchemy06",
+        "edidNew": "SCC_Armor_Res_Ench_DeepBreath06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceSpeechcraft",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifySpeechcraft01",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyAttributes01"
+      },
+      {
+        "edidBase": "EnchArmorFortifySpeechcraft02",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyAttributes02"
+      },
+      {
+        "edidBase": "EnchArmorFortifySpeechcraft03",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyAttributes03"
+      },
+      {
+        "edidBase": "EnchArmorFortifySpeechcraft04",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyAttributes04"
+      },
+      {
+        "edidBase": "EnchArmorFortifySpeechcraft05",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyAttributes05"
+      },
+      {
+        "edidBase": "EnchArmorFortifySpeechcraft06",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyAttributes06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingHealRate",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyHealRate03",
+        "edidNew": "SCC_Armor_Res_Ench_HealingCloak03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealRate04",
+        "edidNew": "SCC_Armor_Res_Ench_HealingCloak04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealRate05",
+        "edidNew": "SCC_Armor_Res_Ench_HealingCloak05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealRate06",
+        "edidNew": "SCC_Armor_Res_Ench_HealingCloak06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceHealRate",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyHealRate03",
+        "edidNew": "SCC_Armor_Res_Ench_HealingCloak03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealRate04",
+        "edidNew": "SCC_Armor_Res_Ench_HealingCloak04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealRate05",
+        "edidNew": "SCC_Armor_Res_Ench_HealingCloak05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealRate06",
+        "edidNew": "SCC_Armor_Res_Ench_HealingCloak06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingStaminaRate",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate03",
+        "edidNew": "SCC_Armor_Res_Ench_BloodOfTheNedes03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate04",
+        "edidNew": "SCC_Armor_Res_Ench_BloodOfTheNedes04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate05",
+        "edidNew": "SCC_Armor_Res_Ench_BloodOfTheNedes05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate06",
+        "edidNew": "SCC_Armor_Res_Ench_BloodOfTheNedes06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceStaminaRate",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate03",
+        "edidNew": "SCC_Armor_Res_Ench_BloodOfTheNedes03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate04",
+        "edidNew": "SCC_Armor_Res_Ench_BloodOfTheNedes04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate05",
+        "edidNew": "SCC_Armor_Res_Ench_BloodOfTheNedes05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate06",
+        "edidNew": "SCC_Armor_Res_Ench_BloodOfTheNedes06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingLockpicking",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyLockpicking01",
+        "edidNew": "SCC_Armor_Alt_Ench_PhilosophersStone01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLockpicking02",
+        "edidNew": "SCC_Armor_Alt_Ench_PhilosophersStone02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLockpicking03",
+        "edidNew": "SCC_Armor_Alt_Ench_PhilosophersStone03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLockpicking04",
+        "edidNew": "SCC_Armor_Alt_Ench_PhilosophersStone04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLockpicking05",
+        "edidNew": "SCC_Armor_Alt_Ench_PhilosophersStone05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLockpicking06",
+        "edidNew": "SCC_Armor_Alt_Ench_PhilosophersStone06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceLockpicking",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyLockpicking01",
+        "edidNew": "SCC_Armor_Alt_Ench_PhilosophersStone01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLockpicking02",
+        "edidNew": "SCC_Armor_Alt_Ench_PhilosophersStone02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLockpicking03",
+        "edidNew": "SCC_Armor_Alt_Ench_PhilosophersStone03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLockpicking04",
+        "edidNew": "SCC_Armor_Alt_Ench_PhilosophersStone04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLockpicking05",
+        "edidNew": "SCC_Armor_Alt_Ench_PhilosophersStone05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyLockpicking06",
+        "edidNew": "SCC_Armor_Alt_Ench_PhilosophersStone06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingHeavyArmor",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyHeavyArmor01",
+        "edidNew": "SCC_Armor_Des_Ench_Nova01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHeavyArmor02",
+        "edidNew": "SCC_Armor_Des_Ench_Nova02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHeavyArmor03",
+        "edidNew": "SCC_Armor_Des_Ench_Nova03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHeavyArmor04",
+        "edidNew": "SCC_Armor_Des_Ench_Nova04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHeavyArmor05",
+        "edidNew": "SCC_Armor_Des_Ench_Nova05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHeavyArmor06",
+        "edidNew": "SCC_Armor_Des_Ench_Nova06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceHeavyArmor",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyHeavyArmor01",
+        "edidNew": "SCC_Armor_Des_Ench_Nova01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHeavyArmor02",
+        "edidNew": "SCC_Armor_Des_Ench_Nova02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHeavyArmor03",
+        "edidNew": "SCC_Armor_Des_Ench_Nova03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHeavyArmor04",
+        "edidNew": "SCC_Armor_Des_Ench_Nova04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHeavyArmor05",
+        "edidNew": "SCC_Armor_Des_Ench_Nova05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHeavyArmor06",
+        "edidNew": "SCC_Armor_Des_Ench_Nova06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingMagicka",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyMagicka01",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagicka02",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagicka03",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagicka04",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagicka05",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagicka06",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceMagicka",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyMagicka01",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagicka02",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagicka03",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagicka04",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagicka05",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagicka06",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceStamina",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyStamina01",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStamina02",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStamina03",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStamina04",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStamina05",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStamina06",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingStamina",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyStamina01",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStamina02",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStamina03",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStamina04",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStamina05",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStamina06",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingIllusion",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyIllusion01",
+        "edidNew": "SCC_Armor_Res_Ench_Weather01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyIllusion02",
+        "edidNew": "SCC_Armor_Res_Ench_Weather02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyIllusion03",
+        "edidNew": "SCC_Armor_Res_Ench_Weather03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyIllusion04",
+        "edidNew": "SCC_Armor_Res_Ench_Weather04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyIllusion05",
+        "edidNew": "SCC_Armor_Res_Ench_Weather05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyIllusion06",
+        "edidNew": "SCC_Armor_Res_Ench_Weather06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingHealRate",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyHealRate03",
+        "edidNew": "SCC_Armor_Alt_Ench_BlinkStep03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealRate04",
+        "edidNew": "SCC_Armor_Alt_Ench_BlinkStep04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealRate05",
+        "edidNew": "SCC_Armor_Alt_Ench_BlinkStep05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealRate06",
+        "edidNew": "SCC_Armor_Alt_Ench_BlinkStep06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceHealRate",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyHealRate03",
+        "edidNew": "SCC_Armor_Alt_Ench_BlinkStep03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealRate04",
+        "edidNew": "SCC_Armor_Alt_Ench_BlinkStep04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealRate05",
+        "edidNew": "SCC_Armor_Alt_Ench_BlinkStep05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyHealRate06",
+        "edidNew": "SCC_Armor_Alt_Ench_BlinkStep06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingConjuration",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyConjuration01",
+        "edidNew": "SCC_Armor_Res_Ench_CheatDeath01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyConjuration02",
+        "edidNew": "SCC_Armor_Res_Ench_CheatDeath02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyConjuration03",
+        "edidNew": "SCC_Armor_Res_Ench_CheatDeath03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyConjuration04",
+        "edidNew": "SCC_Armor_Res_Ench_CheatDeath04"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingAlteration",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyAlteration01",
+        "edidNew": "SCC_Armor_Alt_Ench_GladiatorsGlory01"
+      },
+      {
+        "edidBase": "EnchArmorFortifyAlteration02",
+        "edidNew": "SCC_Armor_Alt_Ench_GladiatorsGlory02"
+      },
+      {
+        "edidBase": "EnchArmorFortifyAlteration03",
+        "edidNew": "SCC_Armor_Alt_Ench_GladiatorsGlory03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyAlteration04",
+        "edidNew": "SCC_Armor_Alt_Ench_GladiatorsGlory04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyAlteration05",
+        "edidNew": "SCC_Armor_Alt_Ench_GladiatorsGlory05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyAlteration06",
+        "edidNew": "SCC_Armor_Alt_Ench_GladiatorsGlory06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingMagickaRate",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyMagickaRate03",
+        "edidNew": "SCC_Armor_Res_Ench_EnchantersTouch03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagickaRate04",
+        "edidNew": "SCC_Armor_Res_Ench_EnchantersTouch04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagickaRate05",
+        "edidNew": "SCC_Armor_Res_Ench_EnchantersTouch05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagickaRate06",
+        "edidNew": "SCC_Armor_Res_Ench_EnchantersTouch06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchRingStaminaRate",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate03",
+        "edidNew": "SCC_Armor_Des_Ench_FortifyLongRange03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate04",
+        "edidNew": "SCC_Armor_Des_Ench_FortifyLongRange04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate05",
+        "edidNew": "SCC_Armor_Des_Ench_FortifyLongRange05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate06",
+        "edidNew": "SCC_Armor_Des_Ench_FortifyLongRange06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LItemEnchNecklaceStaminaRate",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate03",
+        "edidNew": "SCC_Armor_Des_Ench_FortifyLongRange03"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate04",
+        "edidNew": "SCC_Armor_Des_Ench_FortifyLongRange04"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate05",
+        "edidNew": "SCC_Armor_Des_Ench_FortifyLongRange05"
+      },
+      {
+        "edidBase": "EnchArmorFortifyStaminaRate06",
+        "edidNew": "SCC_Armor_Des_Ench_FortifyLongRange06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LitemRobesCollegeMagickaHood",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchArmorFortifyMagicka01",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge01Hood"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagicka02",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge02Hood"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagicka03",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge03Hood"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagicka04",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge04Hood"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagicka05",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge05Hood"
+      },
+      {
+        "edidBase": "EnchArmorFortifyMagicka06",
+        "edidNew": "SCC_Armor_Con_Ench_SoulCharge06Hood"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "DLC2LitemIldariRobesDestruction",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchRobesFortifyDestruction01",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower01"
+      },
+      {
+        "edidBase": "EnchRobesFortifyDestruction02",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower02"
+      },
+      {
+        "edidBase": "EnchRobesFortifyDestruction03",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower03"
+      },
+      {
+        "edidBase": "EnchRobesFortifyDestruction04",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower04"
+      },
+      {
+        "edidBase": "EnchRobesFortifyDestruction05",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower05"
+      },
+      {
+        "edidBase": "EnchRobesFortifyDestruction06",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower06"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LitemRobesDestruction",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchRobesCollegeDestruction01",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower01College"
+      },
+      {
+        "edidBase": "EnchRobesCollegeDestruction02",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower02College"
+      },
+      {
+        "edidBase": "EnchRobesCollegeDestruction03",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower03College"
+      },
+      {
+        "edidBase": "EnchRobesCollegeDestruction04",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower04College"
+      },
+      {
+        "edidBase": "EnchRobesCollegeDestruction05",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower05College"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LitemRobesCollegeDestruction",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchRobesCollegeDestruction01",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower01College"
+      },
+      {
+        "edidBase": "EnchRobesCollegeDestruction02",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower02College"
+      },
+      {
+        "edidBase": "EnchRobesCollegeDestruction03",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower03College"
+      },
+      {
+        "edidBase": "EnchRobesCollegeDestruction04",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower04College"
+      },
+      {
+        "edidBase": "EnchRobesCollegeDestruction05",
+        "edidNew": "SCC_Armor_Res_Ench_FortifyDestructionPower05College"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "LitemVampireRobes",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchRobesCollegeMagickaRate01",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater01Vampire"
+      }
+    ]
+  },
+  {
+    "fillListWithSimilars": false,
+    "edidList": "DLC1EnchClothesVampireRobesDestruction01",
+    "enchantmentReplacers": [
+      {
+        "edidBase": "EnchRobesCollegeDestruction01",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater01Vampire"
+      },
+      {
+        "edidBase": "EnchRobesCollegeDestruction02",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater01Vampire"
+      },
+      {
+        "edidBase": "EnchRobesCollegeDestruction03",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater01Vampire"
+      },
+      {
+        "edidBase": "EnchRobesCollegeDestruction04",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater01Vampire"
+      },
+      {
+        "edidBase": "EnchRobesCollegeDestruction05",
+        "edidNew": "SCC_Armor_Des_Ench_SpellEater01Vampire"
+      }
+    ]
+  }
+]

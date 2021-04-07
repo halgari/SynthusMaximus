@@ -20,6 +20,7 @@ using SynthusMaximus.Data.DTOs;
 using SynthusMaximus.Data.DTOs.Alchemy;
 using SynthusMaximus.Data.DTOs.Ammunition;
 using SynthusMaximus.Data.DTOs.Armor;
+using SynthusMaximus.Data.DTOs.Enchantment;
 using SynthusMaximus.Data.DTOs.Weapon;
 using SynthusMaximus.Data.Enums;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Keyword;
@@ -130,11 +131,15 @@ namespace SynthusMaximus.Data
 
             NPCExclusions = _loader.LoadExclusionList<INpcGetter>((RelativePath) @"exclusions\npc.json");
             RaceExclusions = _loader.LoadExclusionList<IRaceGetter>((RelativePath) @"exclusions\race.json");
+            ListEnchantmentBindings =
+                _loader.LoadList<ListEnchantmentBinding>((RelativePath) @"enchanting\listEnchantmentBindings.json");
 
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
             
         }
+
+        public IList<ListEnchantmentBinding> ListEnchantmentBindings { get; set; }
 
         public ExclusionList<IRaceGetter> RaceExclusions { get; }
 
