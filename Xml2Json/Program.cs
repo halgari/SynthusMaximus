@@ -92,6 +92,7 @@ namespace Xml2Json
             ExtractExclusionList(ench, "scroll_crafting_exclusions", @"exclusions\scrollCrafting.json");
             ExtractExclusionList(ench, "staff_crafting_exclusions", @"exclusions\staffCrafting.json");
             ExtractExclusionList(ench, "staff_crafting_disable_crafting_exclusions", @"exclusions\staffCraftingDisableCraftingExclusions.json");
+            ExtractExclusionList(ench, "enchantment_armor_exclusions", @"exclusions\enchantmentArmorExclusions.json");
             ExtractEnchantmentReplacers(ench, "list_enchantment_bindings", @"enchanting\listEnchantmentBindings.json");
 
             

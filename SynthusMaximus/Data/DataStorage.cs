@@ -77,6 +77,8 @@ namespace SynthusMaximus.Data
             _armorMasqueradeBindings = _loader.LoadList<ArmorMasqueradeBinding>((RelativePath)@"armor\armorMasqueradeBindings.json");
             _armorMaterials = _loader.LoadDictionary<string, ArmorMaterial>((RelativePath)@"armor\armorMaterials.json");
             _armorReforgeExclusions = _loader.LoadValueConcatDictionary<ExclusionType, Regex>((RelativePath)@"exclusions\armorReforge.json");
+            EnchantmentArmorExclusions =
+                _loader.LoadExclusionList<IArmorGetter>((RelativePath) @"exclusions\enchantmentArmorExclusions.json");
 
             _weaponOverrides =
                 _loader.LoadDictionary<string, WeaponOverride>((RelativePath) @"weapons\weaponOverrides.json");
@@ -138,6 +140,8 @@ namespace SynthusMaximus.Data
 
             
         }
+
+        public ExclusionList<IArmorGetter> EnchantmentArmorExclusions { get; }
 
         public IList<ListEnchantmentBinding> ListEnchantmentBindings { get; set; }
 

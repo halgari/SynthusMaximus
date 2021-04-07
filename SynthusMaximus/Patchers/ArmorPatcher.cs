@@ -23,51 +23,47 @@ using Armor = Mutagen.Bethesda.Skyrim.Armor;
 
 namespace SynthusMaximus.Patchers
 {
-    public class ArmorPatcher : IPatcher
+    public class ArmorPatcher : APatcher<ArmorPatcher>
     {
-        private ILogger<ArmorPatcher> _logger;
-        private DataStorage _storage;
-        private IPatcherState<ISkyrimMod, ISkyrimModGetter> _state;
         private ConcurrentHashSet<FormKey> _armorWithNoMaterialOrType = new();  
-
-        public ArmorPatcher(ILogger<ArmorPatcher> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
-        {
-            _logger = logger;
-            _storage = storage;
-            _state = state;
-            _logger.LogInformation("ArmorPatcher initialized");
-        }
         
-        public void RunPatcher()
+        
+        public ArmorPatcher(ILogger<ArmorPatcher> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state) : base(logger, storage, state)
+        {
+        }
+
+
+        
+        public override void RunPatcher()
         {
             var addRecord = false;
 
-            var armors = _state.LoadOrder.PriorityOrder.Armor().WinningOverrides().ToArray();
+            var armors = State.LoadOrder.PriorityOrder.Armor().WinningOverrides().ToArray();
 
-            _logger.LogInformation("num armors: {Length}", armors.Length);
+            Logger.LogInformation("num armors: {Length}", armors.Length);
 
             foreach (var a in armors)
             {
-                _logger.LogTrace("{Name}: started patching", a.EditorID);
+                Logger.LogTrace("{Name}: started patching", a.EditorID);
                 try
                 {
                     if (!ShouldPatch(a))
                     { 
-                        _logger.LogInformation("{Name}: Ingored", a.EditorID);
+                        Logger.LogInformation("{Name}: Ingored", a.EditorID);
                         continue;
                     }
                     
                     // do clothing specific stuff, then skip to next armor
                     if (DataStorage.IsClothing(a))
                     {
-                        if (_storage.UseWarrior)
+                        if (Storage.UseWarrior)
                         {
                             AddClothingMeltdownRecipe(a);
                             continue;
                         }
 
                         
-                        if (_storage.UseThief)
+                        if (Storage.UseThief)
                         {
                             if (MakeClothingMoreExpensive(a))
                             {
@@ -76,36 +72,36 @@ namespace SynthusMaximus.Patchers
                         }
                     }
                     
-                    var am = _storage.GetArmorMaterial(a);
+                    var am = Storage.GetArmorMaterial(a);
                     if (am?.Type.Data == null)
                     {
                         if (!DataStorage.IsJewelry(a))
                         {
                             _armorWithNoMaterialOrType.Add(a.FormKey);
-                            _logger.LogInformation("{Name}: no material", a.EditorID);
+                            Logger.LogInformation("{Name}: no material", a.EditorID);
                         }
                         continue;
                     }
                     
-                    _logger.LogInformation("{EditorID} - material Found", a.EditorID);
+                    Logger.LogInformation("{EditorID} - material Found", a.EditorID);
                     
                     // General changes
                     addRecord |= AddSpecificKeyword(a, am);
 
                     // changes only used when running the warrior module
-                    if (_storage.UseWarrior)
+                    if (Storage.UseWarrior)
                     {
                         addRecord |= addRecord | SetArmorValue(a, am);
 
-                        if (!_storage.IsArmorExcludedReforged(a))
+                        if (!Storage.IsArmorExcludedReforged(a))
                         {
                             AddMeltdownRecipe(a, am);
                         }
 
-                        if (!_storage.IsArmorExcludedReforged(a) && !DataStorage.IsClothing(a) &&
+                        if (!Storage.IsArmorExcludedReforged(a) && !DataStorage.IsClothing(a) &&
                             !DataStorage.IsJewelry(a))
                         {
-                            var patched = _state.PatchMod.Armors.GetOrAddAsOverride(a);
+                            var patched = State.PatchMod.Armors.GetOrAddAsOverride(a);
                             var reforged = CreateReforgedArmor(patched, am);
                             ApplyArmorModifiers(reforged);
                             AddTemperingRecipe(reforged, am);
@@ -126,13 +122,13 @@ namespace SynthusMaximus.Patchers
 
                     }
 
-                    if (_storage.UseThief)
+                    if (Storage.UseThief)
                     {
                         addRecord |= AddMasqueradeKeyword(a);
                         DoQualityLeather(a, am);
                     }
 
-                    if (_storage.UseWarrior)
+                    if (Storage.UseWarrior)
                     {
                         ApplyArmorModifiers(a);
                     }
@@ -140,12 +136,44 @@ namespace SynthusMaximus.Patchers
                 }
                 catch (Exception ex)
                 {
-                    _logger.LogError(ex, "{Name}: error", a.EditorID);
+                    Logger.LogError(ex, "{Name}: error", a.EditorID);
                 }
             }
-            
+
+            ProcessListEnchantmentBindings();
+
         }
-        
+
+        private void ProcessListEnchantmentBindings()
+        {
+            var lists = Storage.ListEnchantmentBindings
+                .SelectMany(l => l.Replacers.Select(r => (l.EdidList, l.FillListWithSimilars, r.EdidBase, r.EdidNew)))
+                .GroupBy(t => (t.EdidList, t.FillListWithSimilars))
+                .ToDictionary(t => t.Key)
+                .ToHashSet();
+            
+            foreach (var list in lists)
+            {
+                var listResolved = list.Key.EdidList.Resolve(State.LinkCache);
+                if (list.Key.FillListWithSimilars)
+                {
+                    foreach (var entry in listResolved.Entries ?? new List<ILeveledItemEntryGetter>())
+                    {
+                        var resolved = entry.Data!.Reference.TryResolve<IArmorGetter>(State.LinkCache);
+                        if (resolved == null || 
+                            resolved.ObjectEffect.IsNull || 
+                            Storage.EnchantmentArmorExclusions.IsExcluded(resolved))
+                            continue;
+                        
+                        if (resolved.TemplateArmor.IsNull)
+                            continue;
+
+
+                    }
+                }
+            }
+        }
+
 
         private bool DoQualityLeather(IArmorGetter a, ArmorMaterial am)
         {
@@ -155,7 +183,7 @@ namespace SynthusMaximus.Patchers
             var craftingRecipies = GetCraftingRecipes(a);
             if (!craftingRecipies.Any())
             {
-                _logger.LogInformation("{EditorID} : Leather material, but no crafting recipe. No quality leather variant created", a.EditorID);
+                Logger.LogInformation("{EditorID} : Leather material, but no crafting recipe. No quality leather variant created", a.EditorID);
                 return false;
             }
 
@@ -168,7 +196,7 @@ namespace SynthusMaximus.Patchers
             AddTemperingRecipe(qa, am);
             AddMeltdownRecipe(qa, am);
 
-            if (_storage.UseWarrior)
+            if (Storage.UseWarrior)
             {
                 DoCopycat(qa, am);
 
@@ -190,7 +218,7 @@ namespace SynthusMaximus.Patchers
         {
             foreach (var c in recipes)
             {
-                var newRecipe = _state.PatchMod.ConstructibleObjects.DuplicateInAsNewRecord(c);
+                var newRecipe = State.PatchMod.ConstructibleObjects.DuplicateInAsNewRecord(c);
                 newRecipe.EditorID = SPrefixPatcher + a.EditorID + a.FormKey;
                 newRecipe.CreatedObject.SetTo(a);
                 
@@ -228,9 +256,9 @@ namespace SynthusMaximus.Patchers
             if (!a.Name!.TryLookup(Language.English, out var name))
                 throw new InvalidDataException("Could not get English name");
 
-            var newName = name + " [" + _storage.GetOutputString(SQuality) + "]";
+            var newName = name + " [" + Storage.GetOutputString(SQuality) + "]";
 
-            var newArmor = _state.PatchMod.Armors.DuplicateInAsNewRecord(a);
+            var newArmor = State.PatchMod.Armors.DuplicateInAsNewRecord(a);
             newArmor.Name = newName;
             ApplyArmorModifiers(newArmor);
             return newArmor;
@@ -238,7 +266,7 @@ namespace SynthusMaximus.Patchers
 
         private IEnumerable<IConstructibleObjectGetter> GetCraftingRecipes(IArmorGetter armorGetter)
         {
-            return _state.LoadOrder.PriorityOrder
+            return State.LoadOrder.PriorityOrder
                 .ConstructibleObject()
                 .WinningOverrides()
                 .Where(c => c.CreatedObject.FormKey == armorGetter.FormKey)
@@ -247,7 +275,7 @@ namespace SynthusMaximus.Patchers
         
         private IEnumerable<IConstructibleObjectGetter> GetTempreingRecipes(IArmorGetter armorGetter)
         {
-            return _state.LoadOrder.PriorityOrder
+            return State.LoadOrder.PriorityOrder
                 .ConstructibleObject()
                 .WinningOverrides()
                 .Where(c => c.CreatedObject.FormKey == armorGetter.FormKey)
@@ -256,9 +284,9 @@ namespace SynthusMaximus.Patchers
 
         private bool AddMasqueradeKeyword(IArmorGetter a)
         {
-            var ar = _state.PatchMod.Armors.GetOrAddAsOverride(a);
+            var ar = State.PatchMod.Armors.GetOrAddAsOverride(a);
             ar.Keywords ??= new ExtendedList<IFormLinkGetter<IKeywordGetter>>();
-            ar.Keywords.AddRange(_storage.GetArmorMasqueradeKeywords(a));
+            ar.Keywords.AddRange(Storage.GetArmorMasqueradeKeywords(a));
             return true;
         }
 
@@ -270,7 +298,7 @@ namespace SynthusMaximus.Patchers
             var newArmor = CreateCopycatArmor(a);
             CreateCopycatCraftingRecipe(newArmor, a, am);
             
-            if (_storage.UseWarrior && !DataStorage.IsJewelry(a) && !DataStorage.IsClothing(a))
+            if (Storage.UseWarrior && !DataStorage.IsJewelry(a) && !DataStorage.IsClothing(a))
             {
                 AddMeltdownRecipe(newArmor, am);
                 var ar = CreateReforgedArmor(newArmor, am);
@@ -287,7 +315,7 @@ namespace SynthusMaximus.Patchers
 
         private IConstructibleObjectGetter CreateCopycatCraftingRecipe(IArmorGetter newArmor, IArmorGetter oldArmor, ArmorMaterial am)
         {
-            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            var cobj = State.PatchMod.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixArmor + newArmor.EditorID + oldArmor.FormKey;
 
             var matdesc = am.Type.Data;
@@ -312,8 +340,8 @@ namespace SynthusMaximus.Patchers
 
         private IArmor CreateCopycatArmor(IArmorGetter a)
         {
-            var newName = a.NameOrThrow() + " [" + _storage.GetOutputString(SReplica) + "]";
-            var newArmor = _state.PatchMod.Armors.DuplicateInAsNewRecord(a);
+            var newName = a.NameOrThrow() + " [" + Storage.GetOutputString(SReplica) + "]";
+            var newArmor = State.PatchMod.Armors.DuplicateInAsNewRecord(a);
             newArmor.SetEditorID(SPrefixPatcher + SPrefixArmor + newName, a);
             newArmor.Name = newName;
             newArmor.ObjectEffect.SetToNull();
@@ -326,9 +354,9 @@ namespace SynthusMaximus.Patchers
             if (!a.Name!.TryLookup(Language.English, out var name))
                 throw new InvalidDataException("Can't get english name");
 
-            var newname = _storage.GetOutputString(SReforged) + " " + name;
+            var newname = Storage.GetOutputString(SReforged) + " " + name;
 
-            var newArmor = _state.PatchMod.Armors.DuplicateInAsNewRecord(a);
+            var newArmor = State.PatchMod.Armors.DuplicateInAsNewRecord(a);
             newArmor.Name = newname;
             newArmor.SetEditorID(SPrefixPatcher + SPrefixArmor + newname, a);
 
@@ -341,9 +369,9 @@ namespace SynthusMaximus.Patchers
             if (!a.Name!.TryLookup(Language.English, out var name))
                 throw new InvalidDataException("Can't get english name");
 
-            var newname = _storage.GetOutputString(SWarforged) + " " + name;
+            var newname = Storage.GetOutputString(SWarforged) + " " + name;
 
-            var newArmor = _state.PatchMod.Armors.DuplicateInAsNewRecord(a);
+            var newArmor = State.PatchMod.Armors.DuplicateInAsNewRecord(a);
             newArmor.Name = newname;
             newArmor.EditorID = SPrefixPatcher + SPrefixArmor + newname + a.FormKey;
 
@@ -359,7 +387,7 @@ namespace SynthusMaximus.Patchers
 
         private void CreateWarforgedCraftingRecipe(IArmorGetter newArmor, IArmorGetter oldArmor, ArmorMaterial am)
         {
-            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            var cobj = State.PatchMod.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixArmor + newArmor.EditorID + oldArmor.FormKey;
 
             var matdesc = am.Type.Data;
@@ -385,7 +413,7 @@ namespace SynthusMaximus.Patchers
 
         private void CreateReforgedCraftingRecipe(IArmorGetter newArmor, IArmorGetter oldArmor, ArmorMaterial am)
         {
-            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            var cobj = State.PatchMod.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixArmor + newArmor.EditorID + oldArmor.FormKey;
 
             var matdesc = am.Type.Data;
@@ -408,7 +436,7 @@ namespace SynthusMaximus.Patchers
 
         private void AddTemperingRecipe(IArmorGetter a, ArmorMaterial am)
         {
-            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            var cobj = State.PatchMod.ConstructibleObjects.AddNew();
             cobj.EditorID = SPrefixPatcher + SPrefixArmor + SPrefixTemper + a.EditorID +
                             a.FormKey;
 
@@ -429,10 +457,10 @@ namespace SynthusMaximus.Patchers
 
         private void ApplyArmorModifiers(IArmorGetter a)
         {
-            var ar = _state.PatchMod.Armors.GetOrAddAsOverride(a);
+            var ar = State.PatchMod.Armors.GetOrAddAsOverride(a);
 
             float value = a.Value;
-            foreach (var m in _storage.GetArmorModifiers(a))
+            foreach (var m in Storage.GetArmorModifiers(a))
             {
                 ar.Weight *= m.FactorWeight;
                 value *= m.FactorValue;
@@ -451,16 +479,16 @@ namespace SynthusMaximus.Patchers
             var benchKW = meltdownDefintion.BreakdownStation;
 
             var inputNum = 1;
-            var outputNum = _storage.GetArmorMeltdownOutput(a);
+            var outputNum = Storage.GetArmorMeltdownOutput(a);
 
 
             if (output == default || outputNum <= 0 || benchKW == default)
             {
-                _logger.LogInformation("{EditorID}: no meltdown recipe generated", a.EditorID);
+                Logger.LogInformation("{EditorID}: no meltdown recipe generated", a.EditorID);
                 return;
             }
             
-            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            var cobj = State.PatchMod.ConstructibleObjects.AddNew();
             cobj.EditorID =
                 $"{SPrefixPatcher}{SPrefixArmor}{SPrefixMeltdown}{a.EditorID}{a.FormKey.ToString()}";
             cobj.AddCraftingRequirement(new FormLink<IItemGetter>(a), inputNum);
@@ -478,15 +506,15 @@ namespace SynthusMaximus.Patchers
         private bool SetArmorValue(IArmorGetter a, ArmorMaterial am)
         {
             var original = a.ArmorRating;
-            var newArmorValue = (am.ArmorBase * _storage.GetArmorSlotMultiplier(a));
+            var newArmorValue = (am.ArmorBase * Storage.GetArmorSlotMultiplier(a));
             if (original != newArmorValue && newArmorValue > 0)
             {
-                var newRecord = _state.PatchMod.Armors.GetOrAddAsOverride(a);
+                var newRecord = State.PatchMod.Armors.GetOrAddAsOverride(a);
                 newRecord.ArmorRating = newArmorValue;
             }
             else if (newArmorValue < 0)
             {
-                _logger.LogWarning("{EditorID}: Failed ot patch armor rating", a.EditorID);
+                Logger.LogWarning("{EditorID}: Failed ot patch armor rating", a.EditorID);
             }
 
             return false;
@@ -494,7 +522,7 @@ namespace SynthusMaximus.Patchers
 
         private bool AddSpecificKeyword(IArmorGetter a, ArmorMaterial am)
         {
-            var mod = _state.PatchMod.Armors.GetOrAddAsOverride(a);
+            var mod = State.PatchMod.Armors.GetOrAddAsOverride(a);
             var kws = mod.Keywords?.ToHashSet() ?? new HashSet<IFormLinkGetter<IKeywordGetter>>();
             
             if (kws.Contains(ArmorHeavy))
@@ -570,7 +598,7 @@ namespace SynthusMaximus.Patchers
                 && a.HasKeyword(ClothingBody)
                 && !a.HasKeyword(ClothingRich))
             {
-                var armor = _state.PatchMod.Armors.GetOrAddAsOverride(a);
+                var armor = State.PatchMod.Armors.GetOrAddAsOverride(a);
                 armor.Keywords!.Add(ClothingRich);
                 return true;
             }
@@ -584,9 +612,9 @@ namespace SynthusMaximus.Patchers
             var benchKW = CraftingTanningRack;
 
             var inputNum = 1;
-            var outputNum = _storage.GetArmorMeltdownOutput(a);
+            var outputNum = Storage.GetArmorMeltdownOutput(a);
             
-            var cobj = _state.PatchMod.ConstructibleObjects.AddNew();
+            var cobj = State.PatchMod.ConstructibleObjects.AddNew();
             cobj.EditorID =
                 $"{SPrefixPatcher}{SPrefixClothing}{SPrefixMeltdown}{a.EditorID}{a.FormKey.ToString()}";
             
@@ -596,30 +624,29 @@ namespace SynthusMaximus.Patchers
             cobj.CreatedObject.SetTo(output);
             cobj.CreatedObjectCount = outputNum;
             cobj.WorkbenchKeyword.SetTo(benchKW);
-            _logger.LogInformation("{EditorID}: Finished adding meltdown recipe", a.EditorID);
+            Logger.LogInformation("{EditorID}: Finished adding meltdown recipe", a.EditorID);
         }
 
         private bool ShouldPatch(IArmorGetter a)
         {
             if (!a.TemplateArmor.IsNull)
             {
-                _logger.LogTrace("{Name}: Has template", a.EditorID);
+                Logger.LogTrace("{Name}: Has template", a.EditorID);
                 return false;
             }
             else if (DataStorage.IsJewelry(a))
             {
-                _logger.LogTrace("{Name}: Is Jewelery", a.EditorID);
+                Logger.LogTrace("{Name}: Is Jewelery", a.EditorID);
                 return false;
             }
             else if (_armorWithNoMaterialOrType.Contains(a.FormKey))
             {
-                _logger.LogTrace("{Name}: previously excluded", a.EditorID);
+                Logger.LogTrace("{Name}: previously excluded", a.EditorID);
                 return false;
             }
-
-            var am = _storage.GetArmorMaterial(a);
-
+            
             return true;
         }
+
     }
 }

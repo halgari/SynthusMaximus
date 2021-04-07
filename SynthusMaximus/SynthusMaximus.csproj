@@ -123,6 +123,9 @@
       <None Update="config\PerkusMaximus_Master\enchanting\listEnchantmentBindings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="config\PerkusMaximus_Master\exclusions\enchantmentArmorExclusions.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>
