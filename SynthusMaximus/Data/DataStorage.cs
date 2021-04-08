@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
@@ -70,7 +71,7 @@ namespace SynthusMaximus.Data
             _loader = loader;
             
             _loader.Converters = converters.Cast<JsonConverter>().ToArray();
-            
+
             var sw = Stopwatch.StartNew();
             ArmorSettings = _loader.LoadObject<ArmorSettings>((RelativePath)@"armor\armorSettings.json");
             _armorModifiers = _loader.LoadList<ArmorModifier>((RelativePath)@"armor\armorModifiers.json");
@@ -133,13 +134,34 @@ namespace SynthusMaximus.Data
 
             NPCExclusions = _loader.LoadExclusionList<INpcGetter>((RelativePath) @"exclusions\npc.json");
             RaceExclusions = _loader.LoadExclusionList<IRaceGetter>((RelativePath) @"exclusions\race.json");
+            DistributionExclusionsArmor =
+                _loader.LoadMajorRecordExclusionList<ILeveledItemGetter>(
+                    (RelativePath) @"exclusions\distributionExclusionsArmor.json");
             ListEnchantmentBindings =
                 _loader.LoadList<ListEnchantmentBinding>((RelativePath) @"enchanting\listEnchantmentBindings.json");
+            DirectEnchantmentBindings =
+                _loader.LoadList<DirectEnchantmentBinding>((RelativePath) @"enchanting\directEnchantmentBindings.json")
+                    .ToLookup(b => b.Base);
+            EnchantmentNames =
+                _loader.LoadList<EnchantmentNameBinding>(
+                    (RelativePath) @"enchanting\nameBindings.json")
+                    .GroupBy(e => e.Enchantment)
+                    .ToDictionary(e => e.Key, e => e.Last());
 
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
             
         }
+
+        public Dictionary<IFormLink<IObjectEffectGetter>, EnchantmentNameBinding> EnchantmentNames { get; set; }
+
+        public ILookup<IFormLink<IObjectEffectGetter>, DirectEnchantmentBinding> DirectEnchantmentBindings { get; }
+
+        public MajorRecordExclusionList<ILeveledItemGetter> DistributionExclusionsArmor { get; }
+
+
+
+
 
         public ExclusionList<IArmorGetter> EnchantmentArmorExclusions { get; }
 
@@ -419,6 +441,12 @@ namespace SynthusMaximus.Data
         public IEnumerable<AmmunitionModifier> GetAmmunitionModifiers(IAmmunitionGetter a)
         {
             return AllMatchingBindings(_ammunitionModifer, a.NameOrThrow(), a => a.NameSubstrings);
+        }
+
+        public string GetLocalizedEnchantmentNameArmor(IArmorGetter template, IFormLink<IObjectEffectGetter> formLink)
+        {
+            if (!EnchantmentNames.TryGetValue(formLink, out var fstr)) return template.NameOrEmpty();
+            return string.Format(fstr.NameTemplate, template.NameOrEmpty());
         }
     }
 }

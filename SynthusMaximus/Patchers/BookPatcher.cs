@@ -41,8 +41,7 @@ namespace SynthusMaximus.Patchers
 
                 return (av, tier);
             }));
-
-            var dist = LeveledListDistributorFactory.Create(state.LoadOrder.PriorityOrder.Armor().WinningOverrides(), a => a.Description);
+            
         }
 
         public override void RunPatcher()

@@ -7,14 +7,14 @@ using SynthusMaximus.Data.Enums;
 
 namespace SynthusMaximus.Data.DTOs
 {
-    public class ExclusionList<T> : MajorRecordExclusionList<T>
-    where T : ITranslatedNamedGetter, IMajorRecordGetter
+    public class ExclusionList<T> : MajorRecordExclusionList<IMajorRecordGetter>
+    where T : ITranslatedNamedGetter
     {
         public ExclusionList(IDictionary<ExclusionType, List<Regex>> data) : base(data)
         {
         }
         
-        public override bool IsExcluded(T record)
+        public bool IsExcluded(T record)
         {
             return List.Any(ex => CheckExclusion(ex.Key, ex.Value, record));
         }

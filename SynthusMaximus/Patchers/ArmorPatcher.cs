@@ -49,7 +49,7 @@ namespace SynthusMaximus.Patchers
                 {
                     if (!ShouldPatch(a))
                     { 
-                        Logger.LogInformation("{Name}: Ingored", a.EditorID);
+                        Logger.LogTrace("{Name}: Ingored", a.EditorID);
                         continue;
                     }
                     
@@ -78,12 +78,12 @@ namespace SynthusMaximus.Patchers
                         if (!DataStorage.IsJewelry(a))
                         {
                             _armorWithNoMaterialOrType.Add(a.FormKey);
-                            Logger.LogInformation("{Name}: no material", a.EditorID);
+                            Logger.LogTrace("{Name}: no material", a.EditorID);
                         }
                         continue;
                     }
                     
-                    Logger.LogInformation("{EditorID} - material Found", a.EditorID);
+                    Logger.LogTrace("{EditorID} - material Found", a.EditorID);
                     
                     // General changes
                     addRecord |= AddSpecificKeyword(a, am);
@@ -140,40 +140,8 @@ namespace SynthusMaximus.Patchers
                 }
             }
 
-            ProcessListEnchantmentBindings();
 
         }
-
-        private void ProcessListEnchantmentBindings()
-        {
-            var lists = Storage.ListEnchantmentBindings
-                .SelectMany(l => l.Replacers.Select(r => (l.EdidList, l.FillListWithSimilars, r.EdidBase, r.EdidNew)))
-                .GroupBy(t => (t.EdidList, t.FillListWithSimilars))
-                .ToDictionary(t => t.Key)
-                .ToHashSet();
-            
-            foreach (var list in lists)
-            {
-                var listResolved = list.Key.EdidList.Resolve(State.LinkCache);
-                if (list.Key.FillListWithSimilars)
-                {
-                    foreach (var entry in listResolved.Entries ?? new List<ILeveledItemEntryGetter>())
-                    {
-                        var resolved = entry.Data!.Reference.TryResolve<IArmorGetter>(State.LinkCache);
-                        if (resolved == null || 
-                            resolved.ObjectEffect.IsNull || 
-                            Storage.EnchantmentArmorExclusions.IsExcluded(resolved))
-                            continue;
-                        
-                        if (resolved.TemplateArmor.IsNull)
-                            continue;
-
-
-                    }
-                }
-            }
-        }
-
 
         private bool DoQualityLeather(IArmorGetter a, ArmorMaterial am)
         {
@@ -624,7 +592,7 @@ namespace SynthusMaximus.Patchers
             cobj.CreatedObject.SetTo(output);
             cobj.CreatedObjectCount = outputNum;
             cobj.WorkbenchKeyword.SetTo(benchKW);
-            Logger.LogInformation("{EditorID}: Finished adding meltdown recipe", a.EditorID);
+            Logger.LogTrace("{EditorID}: Finished adding meltdown recipe", a.EditorID);
         }
 
         private bool ShouldPatch(IArmorGetter a)

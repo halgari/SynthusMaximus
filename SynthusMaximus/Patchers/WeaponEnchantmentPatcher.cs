@@ -17,7 +17,7 @@ namespace SynthusMaximus.Patchers
 
         public override void RunPatcher()
         {
-            throw new System.NotImplementedException();
+            //throw new System.NotImplementedException();
         }
     }
 }

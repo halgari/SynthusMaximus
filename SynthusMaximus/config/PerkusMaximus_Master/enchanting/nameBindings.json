@@ -1,33 +1,78 @@
-{
-  "EnchWeaponFear01": "{0} Dismay",
-  "EnchWeaponFear02": "{0} Panic",
-  "EnchWeaponFear03": "{0} Hysteria",
-  "EnchWeaponFireDamage01": "{0} Fire",
-  "EnchWeaponFireDamage02": "Burning {0}",
-  "EnchWeaponFireDamage03": "{0} Cinder",
-  "EnchWeaponFireDamage04": "{0} Blisters",
-  "EnchWeaponFireDamage05": "{0} Eruption",
-  "EnchWeaponFireDamage06": "Infernal {0}",
-  "EnchWeaponFrostDamage02": "Cool {0}",
-  "EnchWeaponFrostDamage03": "{0} Chills",
-  "EnchWeaponFrostDamage04": "{0} Blisters",
-  "EnchWeaponFrostDamage05": "{0} Freezing",
-  "EnchWeaponFrostDamage06": "{0} Frozon",
-  "EnchWeaponShockDamage02": "Tingling {0}",
-  "EnchWeaponShockDamage03": "{0} Cinder",
-  "EnchWeaponShockDamage04": "{0} Blisters",
-  "EnchWeaponShockDamage05": "{0} Eruption",
-  "EnchWeaponShockDamage06": "{0} Jolts",
-  "EnchWeaponWindDamage01": "{0} Drafts",
-  "EnchWeaponWindDamage02": "{0} Breezes",
-  "EnchWeaponWindDamage03": "{0} Flurries",
-  "EnchWeaponWindDamage04": "{0} Wind",
-  "EnchWeaponWindDamage05": "{0} Typhoons",
-  "EnchWeaponWindDamage06": "{0} Hurricanes",
-  "StaffEnchGust": "{0} Gust",
-  "StaffEnchTempest": "{0} Tempest",
-  "StaffEnchTornado": "{0} Tornado",
-  "StaffEnchWallOfWind": "{0} Wall Of Wind",
-  "StaffEnchWhirlwind": "{0} Whirlwind",
-  "StaffEnchWindRune": "{0} Wind Rune"
-}
+[
+  {
+    "name": "{0} Dismay",
+    "edid": "EnchWeaponFear01"
+  },
+  {
+    "name": "{0} Panic",
+    "edid": "EnchWeaponFear02"
+  },
+  {
+    "name": "{0} Hysteria",
+    "edid": "EnchWeaponFear03"
+  },
+  {
+    "name": "{0} Fire",
+    "edid": "EnchWeaponFireDamage01"
+  },
+  {
+    "name": "Burning {0}",
+    "edid": "EnchWeaponFireDamage02"
+  },
+  {
+    "name": "{0} Cinder",
+    "edid": "EnchWeaponFireDamage03"
+  },
+  {
+    "name": "{0} Blisters",
+    "edid": "EnchWeaponFireDamage04"
+  },
+  {
+    "name": "{0} Eruption",
+    "edid": "EnchWeaponFireDamage05"
+  },
+  {
+    "name": "Infernal {0}",
+    "edid": "EnchWeaponFireDamage06"
+  },
+  {
+    "name": "Cool {0}",
+    "edid": "EnchWeaponFrostDamage02"
+  },
+  {
+    "name": "{0} Chills",
+    "edid": "EnchWeaponFrostDamage03"
+  },
+  {
+    "name": "{0} Blisters",
+    "edid": "EnchWeaponFrostDamage04"
+  },
+  {
+    "name": "{0} Freezing",
+    "edid": "EnchWeaponFrostDamage05"
+  },
+  {
+    "name": "{0} Frozon",
+    "edid": "EnchWeaponFrostDamage06"
+  },
+  {
+    "name": "Tingling {0}",
+    "edid": "EnchWeaponShockDamage02"
+  },
+  {
+    "name": "{0} Cinder",
+    "edid": "EnchWeaponShockDamage03"
+  },
+  {
+    "name": "{0} Blisters",
+    "edid": "EnchWeaponShockDamage04"
+  },
+  {
+    "name": "{0} Eruption",
+    "edid": "EnchWeaponShockDamage05"
+  },
+  {
+    "name": "{0} Jolts",
+    "edid": "EnchWeaponShockDamage06"
+  }
+]

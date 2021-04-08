@@ -20,6 +20,7 @@ namespace Xml2Json
             var leveledLists = XElement.Load("LeveledLists.xml");
 
             ExtractExclusionList(leveledLists, "distribution_exclusions_weapon_regular", @"exclusions\distributionExclusionsWeaponRegular.json");
+            ExtractExclusionList(leveledLists, "distribution_exclusions_armor", @"exclusions\distributionExclusionsArmor.json");
             ExtractExclusionList(leveledLists, "distribution_exclusions_list_regular", @"exclusions\distributionExclusionsWeaponListRegular.json");
             ExtractExclusionList(leveledLists, "distribution_exclusions_spell", @"exclusions\distributionExclusionsSpell.json");
             
@@ -77,7 +78,7 @@ namespace Xml2Json
             ExtractExclusionList(ammo, "ammunition_exclusions_multiplication", @"ammunition\ammunitionExclusionsMultiplication.json");
             
             ExtractBindingList(ammo, "ammunition_material_bindings", "ammunition_materials", @"ammunition\ammunitionMaterials.json",
-            new () {
+                new () {
                     {"identifier", typeof(string)},
                     {"damageModifier", typeof(float)},
                     {"rangeModifier", typeof(float)},
@@ -95,6 +96,7 @@ namespace Xml2Json
             ExtractExclusionList(ench, "enchantment_armor_exclusions", @"exclusions\enchantmentArmorExclusions.json");
             ExtractEnchantmentReplacers(ench, "list_enchantment_bindings", @"enchanting\listEnchantmentBindings.json");
             ExtractEnchantmentDirectBindings(ench, "direct_enchantment_bindings", @"enchanting\directEnchantmentBindings.json");
+            ExtractEnchantmentNameBindings(ench, "enchantment_name_bindings", @"enchanting\nameBindings.json");
 
             
             var npcs = XElement.Load("NPC.xml");
@@ -103,19 +105,47 @@ namespace Xml2Json
 
         }
 
+        private static void ExtractEnchantmentNameBindings(XElement element, string listName, string fileName)
+        {
+            var bindings = element.Descendants().Where(e => e.Name == listName);
+            var results = new List<Dictionary<string, string>>();
+            foreach (var binding in bindings.Descendants().Where(e => e.Name == "enchantment_name_binding"))
+            {
+                var edid = binding.Descendants().First(d => d.Name == "edidEnchantment").Value;
+                var name = binding.Descendants().First(d => d.Name == "name").Value;
+                var type = binding.Descendants().First(d => d.Name == "type").Value;
+
+                name = type switch
+                {
+                    "SUFFIX" => "{0} " + name,
+                    "PREFIX" => name + " {0}",
+                    "NONE" => "{0}",
+                    _ => throw new NotImplementedException($"{type} not implemented")
+                };
+                results.Add(new Dictionary<string, string>()
+                {
+                    {"name", name},
+                    {"edid", edid}
+                });
+            }
+            WriteFile(fileName, results);
+        }
+
         private static void ExtractEnchantmentDirectBindings(XElement element, string listName, string fileName)
         {
             var bindings = element.Descendants().Where(e => e.Name == listName);
-            var lindings = new List<(string Old, string New)>();
+            var results = new List<Dictionary<string, string>>();
             foreach (var binding in bindings.Descendants().Where(e => e.Name == "direct_enchantment_binding"))
             {
                 var oldName = binding.Descendants().First(d => d.Name == "edidEnchantmentBase").Value;
                 var newName = binding.Descendants().First(d => d.Name == "edidEnchantmentNew").Value;
-                lindings.Add((oldName, newName));
+                results.Add(new Dictionary<string, string>()
+                {
+                    {"base", oldName},
+                    {"new", newName}
+                });
             }
-
-            var results = lindings.GroupBy(b => b.Old)
-                .ToDictionary(b => b.Key, b => b.Select(e => e.New).ToArray());
+            
             WriteFile(fileName, results);
         }
 

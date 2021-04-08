@@ -107,10 +107,18 @@ namespace SynthusMaximus.Data
         }
 
         public ExclusionList<T> LoadExclusionList<T>(RelativePath name)
-        where T : ITranslatedNamedGetter
+            where T : ITranslatedNamedGetter
         {
             var data = LoadValueConcatDictionary<ExclusionType, Regex>(name);
             return new ExclusionList<T>(data);
+
+        }
+        
+        public MajorRecordExclusionList<T> LoadMajorRecordExclusionList<T>(RelativePath name)
+            where T : IMajorRecordGetter
+        {
+            var data = LoadValueConcatDictionary<ExclusionType, Regex>(name);
+            return new MajorRecordExclusionList<T>(data);
 
         }
 
