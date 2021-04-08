@@ -94,12 +94,29 @@ namespace Xml2Json
             ExtractExclusionList(ench, "staff_crafting_disable_crafting_exclusions", @"exclusions\staffCraftingDisableCraftingExclusions.json");
             ExtractExclusionList(ench, "enchantment_armor_exclusions", @"exclusions\enchantmentArmorExclusions.json");
             ExtractEnchantmentReplacers(ench, "list_enchantment_bindings", @"enchanting\listEnchantmentBindings.json");
+            ExtractEnchantmentDirectBindings(ench, "direct_enchantment_bindings", @"enchanting\directEnchantmentBindings.json");
 
             
             var npcs = XElement.Load("NPC.xml");
             ExtractExclusionList(npcs, "npc_exclusions", @"exclusions\npcs.json");
             ExtractExclusionList(npcs, "race_exclusions", @"exclusions\race.json");
 
+        }
+
+        private static void ExtractEnchantmentDirectBindings(XElement element, string listName, string fileName)
+        {
+            var bindings = element.Descendants().Where(e => e.Name == listName);
+            var lindings = new List<(string Old, string New)>();
+            foreach (var binding in bindings.Descendants().Where(e => e.Name == "direct_enchantment_binding"))
+            {
+                var oldName = binding.Descendants().First(d => d.Name == "edidEnchantmentBase").Value;
+                var newName = binding.Descendants().First(d => d.Name == "edidEnchantmentNew").Value;
+                lindings.Add((oldName, newName));
+            }
+
+            var results = lindings.GroupBy(b => b.Old)
+                .ToDictionary(b => b.Key, b => b.Select(e => e.New).ToArray());
+            WriteFile(fileName, results);
         }
 
         private static void ExtractEnchantmentReplacers(XElement element, string listName, string fileName)

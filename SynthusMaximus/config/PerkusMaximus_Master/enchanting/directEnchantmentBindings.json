@@ -1,0 +1,1129 @@
+{
+  "EnchWeaponFireDamage01": [
+    "EnchWeaponFireDamage01",
+    "SCC_Weapon_Des_Ench_LingeringFireDamage01"
+  ],
+  "EnchWeaponFireDamage02": [
+    "EnchWeaponFireDamage02",
+    "SCC_Weapon_Des_Ench_LingeringFireDamage02"
+  ],
+  "EnchWeaponFireDamage03": [
+    "EnchWeaponFireDamage03",
+    "SCC_Weapon_Des_Ench_FireBlast03",
+    "SCC_Weapon_Des_Ench_LingeringFireDamage03"
+  ],
+  "EnchWeaponFireDamage04": [
+    "EnchWeaponFireDamage04",
+    "SCC_Weapon_Des_Ench_FireBlast04",
+    "SCC_Weapon_Des_Ench_LingeringFireDamage04"
+  ],
+  "EnchWeaponFireDamage05": [
+    "EnchWeaponFireDamage05",
+    "SCC_Weapon_Des_Ench_FireBlast05",
+    "SCC_Weapon_Des_Ench_LingeringFireDamage05"
+  ],
+  "EnchWeaponFireDamage06": [
+    "EnchWeaponFireDamage06",
+    "SCC_Weapon_Des_Ench_FireBlast06",
+    "SCC_Weapon_Des_Ench_LingeringFireDamage06"
+  ],
+  "EnchWeaponFear01": [
+    "EnchWeaponFear01",
+    "xMAEnchWeaponDiseaseDamage0",
+    "SCC_Weapon_Ill_Ench_PhantomStrike01",
+    "SCC_Weapon_Des_Ench_Breach01",
+    "SCC_Weapon_Alt_Ench_Throw01",
+    "SCC_Weapon_Des_Ench_Fratricide01"
+  ],
+  "EnchWeaponFear02": [
+    "EnchWeaponFear02",
+    "xMAEnchWeaponDiseaseDamage1",
+    "SCC_Weapon_Ill_Ench_PhantomStrike02",
+    "SCC_Weapon_Des_Ench_Breach02",
+    "SCC_Weapon_Alt_Ench_Throw02",
+    "SCC_Weapon_Des_Ench_Fratricide02"
+  ],
+  "EnchWeaponFear03": [
+    "EnchWeaponFear03",
+    "xMAEnchWeaponDiseaseDamage2",
+    "SCC_Weapon_Ill_Ench_PhantomStrike03",
+    "SCC_Weapon_Des_Ench_Breach03",
+    "SCC_Weapon_Alt_Ench_Throw03",
+    "SCC_Weapon_Des_Ench_Fratricide03"
+  ],
+  "EnchArmorFortifyAlchemy03": [
+    "xMAEnchArmorResistPoisonDisease0",
+    "SCC_Armor_Res_Ench_DeepBreath03"
+  ],
+  "EnchArmorFortifyAlchemy04": [
+    "xMAEnchArmorResistPoisonDisease1",
+    "SCC_Armor_Res_Ench_DeepBreath04"
+  ],
+  "EnchArmorFortifyAlchemy05": [
+    "xMAEnchArmorResistPoisonDisease2",
+    "SCC_Armor_Res_Ench_DeepBreath05"
+  ],
+  "EnchWeaponWindDamage01": [
+    "EnchWeaponWindDamage01"
+  ],
+  "EnchWeaponWindDamage02": [
+    "EnchWeaponWindDamage02"
+  ],
+  "EnchWeaponWindDamage03": [
+    "EnchWeaponWindDamage03"
+  ],
+  "EnchWeaponWindDamage04": [
+    "EnchWeaponWindDamage04"
+  ],
+  "EnchWeaponWindDamage05": [
+    "EnchWeaponWindDamage05"
+  ],
+  "EnchWeaponWindDamage06": [
+    "EnchWeaponWindDamage06"
+  ],
+  "StaffEnchGust": [
+    "StaffEnchGust"
+  ],
+  "StaffEnchTempest": [
+    "StaffEnchTempest"
+  ],
+  "StaffEnchTornado": [
+    "StaffEnchTornado"
+  ],
+  "StaffEnchWallOfWind": [
+    "StaffEnchWallOfWind"
+  ],
+  "StaffEnchWhirlwind": [
+    "StaffEnchWhirlwind"
+  ],
+  "StaffEnchWindRune": [
+    "StaffEnchWindRune"
+  ],
+  "EnchArmorFortifyBlock01": [
+    "SCC_Armor_Alt_Ench_Bulwark01"
+  ],
+  "EnchArmorFortifyBlock02": [
+    "SCC_Armor_Alt_Ench_Bulwark02"
+  ],
+  "EnchArmorFortifyBlock03": [
+    "SCC_Armor_Alt_Ench_Bulwark03"
+  ],
+  "EnchArmorFortifyBlock04": [
+    "SCC_Armor_Alt_Ench_Bulwark04"
+  ],
+  "EnchArmorFortifyBlock05": [
+    "SCC_Armor_Alt_Ench_Bulwark05"
+  ],
+  "EnchArmorFortifyBlock06": [
+    "SCC_Armor_Alt_Ench_Bulwark06"
+  ],
+  "EnchArmorResistMagic01": [
+    "SCC_Armor_Ill_Ench_Maze01"
+  ],
+  "EnchArmorResistMagic02": [
+    "SCC_Armor_Des_Ench_Rebuke02"
+  ],
+  "EnchArmorResistMagic03": [
+    "SCC_Armor_Ill_Ench_Maze03"
+  ],
+  "EnchArmorResistMagic04": [
+    "SCC_Armor_Des_Ench_Rebuke04"
+  ],
+  "EnchArmorResistMagic05": [
+    "SCC_Armor_Ill_Ench_Maze05"
+  ],
+  "EnchArmorResistMagic06": [
+    "SCC_Armor_Des_Ench_Rebuke06"
+  ],
+  "EnchArmorMuffle": [
+    "SCC_Armor_Alt_Ench_Spurs01"
+  ],
+  "EnchArmorWaterbreathing": [
+    "SCC_Armor_Alt_Ench_Light01",
+    "SCC_Armor_Ill_Ench_Fence01",
+    "SCC_Armor_Ill_Ench_Perception01",
+    "SCC_Armor_Alt_Ench_Light01"
+  ],
+  "EnchArmorFortifyTwoHanded01": [
+    "SCC_Armor_Des_Ench_Execute01"
+  ],
+  "EnchArmorFortifyTwoHanded02": [
+    "SCC_Armor_Des_Ench_FortifyPowerAttack02"
+  ],
+  "EnchArmorFortifyTwoHanded03": [
+    "SCC_Armor_Des_Ench_Execute03"
+  ],
+  "EnchArmorFortifyTwoHanded04": [
+    "SCC_Armor_Des_Ench_FortifyPowerAttack04"
+  ],
+  "EnchArmorFortifyTwoHanded05": [
+    "SCC_Armor_Des_Ench_Execute05"
+  ],
+  "EnchArmorFortifyTwoHanded06": [
+    "SCC_Armor_Des_Ench_FortifyPowerAttack06"
+  ],
+  "EnchArmorFortifyOneHanded01": [
+    "SCC_Armor_Res_Ench_Mageward01"
+  ],
+  "EnchArmorFortifyOneHanded02": [
+    "SCC_Armor_Ill_Ench_SmokeAndMirrors02"
+  ],
+  "EnchArmorFortifyOneHanded03": [
+    "SCC_Armor_Res_Ench_Mageward03"
+  ],
+  "EnchArmorFortifyOneHanded04": [
+    "SCC_Armor_Ill_Ench_SmokeAndMirrors04"
+  ],
+  "EnchArmorFortifyOneHanded05": [
+    "SCC_Armor_Res_Ench_Mageward05"
+  ],
+  "EnchArmorFortifyOneHanded06": [
+    "SCC_Armor_Ill_Ench_SmokeAndMirrors04"
+  ],
+  "EnchArmorFortifyMarksman01": [
+    "SCC_Armor_Res_Ench_IncreasedExperience01"
+  ],
+  "EnchArmorFortifyMarksman02": [
+    "SCC_Armor_Res_Ench_IncreasedExperience02"
+  ],
+  "EnchArmorFortifyMarksman03": [
+    "SCC_Armor_Res_Ench_IncreasedExperience03"
+  ],
+  "EnchArmorFortifyMarksman04": [
+    "SCC_Armor_Res_Ench_IncreasedExperience04"
+  ],
+  "EnchArmorFortifyMarksman05": [
+    "SCC_Armor_Res_Ench_IncreasedExperience05"
+  ],
+  "EnchArmorFortifyMarksman06": [
+    "SCC_Armor_Res_Ench_IncreasedExperience06"
+  ],
+  "EnchArmorFortifyLightArmor01": [
+    "SCC_Armor_Con_Ench_PhantomsOfTheWild01"
+  ],
+  "EnchArmorFortifyLightArmor02": [
+    "SCC_Armor_Con_Ench_PhantomsOfTheWild02"
+  ],
+  "EnchArmorFortifyLightArmor03": [
+    "SCC_Armor_Con_Ench_PhantomsOfTheWild03"
+  ],
+  "EnchArmorFortifyLightArmor04": [
+    "SCC_Armor_Con_Ench_PhantomsOfTheWild04"
+  ],
+  "EnchArmorFortifyLightArmor05": [
+    "SCC_Armor_Con_Ench_PhantomsOfTheWild05"
+  ],
+  "EnchArmorFortifyLightArmor06": [
+    "SCC_Armor_Con_Ench_PhantomsOfTheWild06"
+  ],
+  "EnchArmorFortifySneak01": [
+    "SCC_Armor_Alt_Ench_FortifySprint01"
+  ],
+  "EnchArmorFortifySneak02": [
+    "SCC_Armor_Alt_Ench_FortifySprint02"
+  ],
+  "EnchArmorFortifySneak03": [
+    "SCC_Armor_Alt_Ench_FortifySprint03"
+  ],
+  "EnchArmorFortifySneak04": [
+    "SCC_Armor_Alt_Ench_FortifySprint04"
+  ],
+  "EnchArmorFortifySneak05": [
+    "SCC_Armor_Alt_Ench_FortifySprint05"
+  ],
+  "EnchArmorFortifySneak06": [
+    "SCC_Armor_Alt_Ench_FortifySprint06"
+  ],
+  "EnchArmorFortifyCarry01": [
+    "SCC_Armor_Alt_Ench_FortifySwimSpeed01",
+    "SCC_Armor_Alt_Ench_Tremor01"
+  ],
+  "EnchArmorFortifyCarry02": [
+    "SCC_Armor_Alt_Ench_FortifySwimSpeed02",
+    "SCC_Armor_Alt_Ench_Tremor02"
+  ],
+  "EnchArmorFortifyCarry03": [
+    "SCC_Armor_Alt_Ench_FortifySwimSpeed03",
+    "SCC_Armor_Alt_Ench_Tremor03"
+  ],
+  "EnchArmorFortifyCarry04": [
+    "SCC_Armor_Alt_Ench_FortifySwimSpeed04",
+    "SCC_Armor_Alt_Ench_Tremor04"
+  ],
+  "EnchArmorFortifyCarry05": [
+    "SCC_Armor_Alt_Ench_FortifySwimSpeed05",
+    "SCC_Armor_Alt_Ench_Tremor05"
+  ],
+  "EnchArmorFortifyCarry06": [
+    "SCC_Armor_Alt_Ench_FortifySwimSpeed06",
+    "SCC_Armor_Alt_Ench_Tremor06"
+  ],
+  "EnchArmorFortifyHealth01": [
+    "SCC_Armor_Alt_Ench_HardeningArmor01"
+  ],
+  "EnchArmorFortifyHealth02": [
+    "SCC_Armor_Alt_Ench_HardeningArmor02"
+  ],
+  "EnchArmorFortifyHealth03": [
+    "SCC_Armor_Alt_Ench_HardeningArmor03"
+  ],
+  "EnchArmorFortifyHealth04": [
+    "SCC_Armor_Alt_Ench_HardeningArmor04"
+  ],
+  "EnchArmorFortifyHealth05": [
+    "SCC_Armor_Alt_Ench_HardeningArmor05"
+  ],
+  "EnchArmorFortifyHealth06": [
+    "SCC_Armor_Alt_Ench_HardeningArmor06"
+  ],
+  "EnchArmorFortifyRestoration01": [
+    "SCC_Armor_Res_Ench_CureDisease01"
+  ],
+  "EnchArmorFortifyRestoration02": [
+    "SCC_Armor_Res_Ench_CureDisease02"
+  ],
+  "EnchArmorFortifyRestoration03": [
+    "SCC_Armor_Res_Ench_CureDisease03"
+  ],
+  "EnchArmorFortifyRestoration04": [
+    "SCC_Armor_Res_Ench_CureDisease04"
+  ],
+  "EnchArmorFortifyRestoration05": [
+    "SCC_Armor_Res_Ench_CureDisease05"
+  ],
+  "EnchArmorFortifyRestoration06": [
+    "SCC_Armor_Res_Ench_CureDisease06"
+  ],
+  "EnchArmorFortifyDestruction01": [
+    "SCC_Armor_Res_Ench_LinkAttributes01"
+  ],
+  "EnchArmorFortifyDestruction02": [
+    "SCC_Armor_Res_Ench_LinkAttributes02"
+  ],
+  "EnchArmorFortifyDestruction03": [
+    "SCC_Armor_Res_Ench_LinkAttributes03"
+  ],
+  "EnchArmorFortifyDestruction04": [
+    "SCC_Armor_Res_Ench_LinkAttributes04"
+  ],
+  "EnchArmorFortifyDestruction05": [
+    "SCC_Armor_Res_Ench_LinkAttributes05"
+  ],
+  "EnchArmorFortifyDestruction06": [
+    "SCC_Armor_Res_Ench_LinkAttributes06"
+  ],
+  "EnchArmorFortifyPickpocket01": [
+    "SCC_Armor_Res_Ench_OptimizeAttributes01"
+  ],
+  "EnchArmorFortifyPickpocket02": [
+    "SCC_Armor_Res_Ench_OptimizeAttributes02"
+  ],
+  "EnchArmorFortifyPickpocket03": [
+    "SCC_Armor_Res_Ench_OptimizeAttributes03"
+  ],
+  "EnchArmorFortifyPickpocket04": [
+    "SCC_Armor_Res_Ench_OptimizeAttributes04"
+  ],
+  "EnchArmorFortifyPickpocket05": [
+    "SCC_Armor_Res_Ench_OptimizeAttributes05"
+  ],
+  "EnchArmorFortifyPickpocket06": [
+    "SCC_Armor_Res_Ench_OptimizeAttributes06"
+  ],
+  "EnchArmorFortifyMagickaRate03": [
+    "SCC_Armor_Res_Ench_BloodOfTheAldmeri03",
+    "SCC_Armor_Res_Ench_EnchantersTouch03"
+  ],
+  "EnchArmorFortifyMagickaRate04": [
+    "SCC_Armor_Res_Ench_BloodOfTheAldmeri04",
+    "SCC_Armor_Res_Ench_EnchantersTouch04"
+  ],
+  "EnchArmorFortifyMagickaRate05": [
+    "SCC_Armor_Res_Ench_BloodOfTheAldmeri05",
+    "SCC_Armor_Res_Ench_EnchantersTouch05"
+  ],
+  "EnchArmorFortifyMagickaRate06": [
+    "SCC_Armor_Res_Ench_BloodOfTheAldmeri06",
+    "SCC_Armor_Res_Ench_EnchantersTouch06"
+  ],
+  "EnchArmorFortifySmithing01": [
+    "SCC_Armor_Res_Ench_Channeling01"
+  ],
+  "EnchArmorFortifySmithing02": [
+    "SCC_Armor_Con_Ench_KingOfTheLost02"
+  ],
+  "EnchArmorFortifySmithing03": [
+    "SCC_Armor_Res_Ench_Channeling03"
+  ],
+  "EnchArmorFortifySmithing04": [
+    "SCC_Armor_Con_Ench_KingOfTheLost04"
+  ],
+  "EnchArmorFortifySmithing05": [
+    "SCC_Armor_Res_Ench_Channeling05"
+  ],
+  "EnchArmorFortifySmithing06": [
+    "SCC_Armor_Con_Ench_KingOfTheLost06"
+  ],
+  "EnchArmorFortifyAlchemy01": [
+    "SCC_Armor_Res_Ench_DeepBreath01"
+  ],
+  "EnchArmorFortifyAlchemy02": [
+    "SCC_Armor_Res_Ench_DeepBreath02"
+  ],
+  "EnchArmorFortifyAlchemy06": [
+    "SCC_Armor_Res_Ench_DeepBreath06"
+  ],
+  "EnchArmorFortifyHealRate03": [
+    "SCC_Armor_Res_Ench_HealingCloak03",
+    "SCC_Armor_Alt_Ench_BlinkStep03"
+  ],
+  "EnchArmorFortifyHealRate04": [
+    "SCC_Armor_Res_Ench_HealingCloak04",
+    "SCC_Armor_Alt_Ench_BlinkStep04"
+  ],
+  "EnchArmorFortifyHealRate05": [
+    "SCC_Armor_Res_Ench_HealingCloak05",
+    "SCC_Armor_Alt_Ench_BlinkStep05"
+  ],
+  "EnchArmorFortifyHealRate06": [
+    "SCC_Armor_Res_Ench_HealingCloak06",
+    "SCC_Armor_Alt_Ench_BlinkStep06"
+  ],
+  "EnchArmorFortifyStaminaRate03": [
+    "SCC_Armor_Res_Ench_BloodOfTheNedes03",
+    "SCC_Armor_Des_Ench_FortifyLongRange03"
+  ],
+  "EnchArmorFortifyStaminaRate04": [
+    "SCC_Armor_Res_Ench_BloodOfTheNedes04",
+    "SCC_Armor_Des_Ench_FortifyLongRange04"
+  ],
+  "EnchArmorFortifyStaminaRate05": [
+    "SCC_Armor_Res_Ench_BloodOfTheNedes05",
+    "SCC_Armor_Des_Ench_FortifyLongRange05"
+  ],
+  "EnchArmorFortifyStaminaRate06": [
+    "SCC_Armor_Res_Ench_BloodOfTheNedes06",
+    "SCC_Armor_Des_Ench_FortifyLongRange06"
+  ],
+  "EnchRobesCollegeAlteration01": [
+    "SCC_Armor_Res_Ench_FortifyAlterationDuration01College"
+  ],
+  "EnchRobesCollegeAlteration02": [
+    "SCC_Armor_Res_Ench_FortifyAlterationDuration02College"
+  ],
+  "EnchRobesCollegeAlteration03": [
+    "SCC_Armor_Res_Ench_FortifyAlterationDuration03College"
+  ],
+  "EnchRobesCollegeAlteration04": [
+    "SCC_Armor_Res_Ench_FortifyAlterationDuration04College"
+  ],
+  "EnchRobesCollegeAlteration05": [
+    "SCC_Armor_Res_Ench_FortifyAlterationDuration05College"
+  ],
+  "EnchRobesFortifyAlteration01": [
+    "SCC_Armor_Res_Ench_FortifyAlterationDuration01"
+  ],
+  "EnchRobesFortifyAlteration02": [
+    "SCC_Armor_Res_Ench_FortifyAlterationDuration02"
+  ],
+  "EnchRobesFortifyAlteration03": [
+    "SCC_Armor_Res_Ench_FortifyAlterationDuration03"
+  ],
+  "EnchRobesFortifyAlteration04": [
+    "SCC_Armor_Res_Ench_FortifyAlterationDuration04"
+  ],
+  "EnchRobesFortifyAlteration05": [
+    "SCC_Armor_Res_Ench_FortifyAlterationDuration05"
+  ],
+  "EnchRobesFortifyAlteration06": [
+    "SCC_Armor_Res_Ench_FortifyAlterationDuration06"
+  ],
+  "EnchRobesCollegeConjuration01": [
+    "SCC_Armor_Res_Ench_FortifyConjurationDuration01College"
+  ],
+  "EnchRobesCollegeConjuration02": [
+    "SCC_Armor_Res_Ench_FortifyConjurationDuration02College"
+  ],
+  "EnchRobesCollegeConjuration03": [
+    "SCC_Armor_Res_Ench_FortifyConjurationDuration03College"
+  ],
+  "EnchRobesCollegeConjuration04": [
+    "SCC_Armor_Res_Ench_FortifyConjurationDuration04College"
+  ],
+  "EnchRobesCollegeConjuration05": [
+    "SCC_Armor_Res_Ench_FortifyConjurationDuration05College"
+  ],
+  "EnchRobesFortifyConjuration01": [
+    "SCC_Armor_Res_Ench_FortifyConjurationDuration01"
+  ],
+  "EnchRobesFortifyConjuration02": [
+    "SCC_Armor_Res_Ench_FortifyConjurationDuration02"
+  ],
+  "EnchRobesFortifyConjuration03": [
+    "SCC_Armor_Res_Ench_FortifyConjurationDuration03"
+  ],
+  "EnchRobesFortifyConjuration04": [
+    "SCC_Armor_Res_Ench_FortifyConjurationDuration04"
+  ],
+  "EnchRobesFortifyConjuration05": [
+    "SCC_Armor_Res_Ench_FortifyConjurationDuration05"
+  ],
+  "EnchRobesFortifyConjuration06": [
+    "SCC_Armor_Res_Ench_FortifyConjurationDuration06"
+  ],
+  "EnchRobesCollegeDestruction01": [
+    "SCC_Armor_Res_Ench_FortifyDestructionPower01College"
+  ],
+  "EnchRobesCollegeDestruction02": [
+    "SCC_Armor_Res_Ench_FortifyDestructionPower02College"
+  ],
+  "EnchRobesCollegeDestruction03": [
+    "SCC_Armor_Res_Ench_FortifyDestructionPower03College"
+  ],
+  "EnchRobesCollegeDestruction04": [
+    "SCC_Armor_Res_Ench_FortifyDestructionPower04College"
+  ],
+  "EnchRobesCollegeDestruction05": [
+    "SCC_Armor_Res_Ench_FortifyDestructionPower05College"
+  ],
+  "EnchRobesFortifyDestruction01": [
+    "SCC_Armor_Res_Ench_FortifyDestructionPower01"
+  ],
+  "EnchRobesFortifyDestruction02": [
+    "SCC_Armor_Res_Ench_FortifyDestructionPower02"
+  ],
+  "EnchRobesFortifyDestruction03": [
+    "SCC_Armor_Res_Ench_FortifyDestructionPower03"
+  ],
+  "EnchRobesFortifyDestruction04": [
+    "SCC_Armor_Res_Ench_FortifyDestructionPower04"
+  ],
+  "EnchRobesFortifyDestruction05": [
+    "SCC_Armor_Res_Ench_FortifyDestructionPower05"
+  ],
+  "EnchRobesFortifyDestruction06": [
+    "SCC_Armor_Res_Ench_FortifyDestructionPower06"
+  ],
+  "EnchRobesCollegeIllusion01": [
+    "SCC_Armor_Res_Ench_FortifyIllusionPower01College"
+  ],
+  "EnchRobesCollegeIllusion02": [
+    "SCC_Armor_Res_Ench_FortifyIllusionPower02College"
+  ],
+  "EnchRobesCollegeIllusion03": [
+    "SCC_Armor_Res_Ench_FortifyIllusionPower03College"
+  ],
+  "EnchRobesCollegeIllusion04": [
+    "SCC_Armor_Res_Ench_FortifyIllusionPower04College"
+  ],
+  "EnchRobesCollegeIllusion05": [
+    "SCC_Armor_Res_Ench_FortifyIllusionPower05College"
+  ],
+  "EnchRobesFortifyIllusion01": [
+    "SCC_Armor_Res_Ench_FortifyIllusionPower01"
+  ],
+  "EnchRobesFortifyIllusion02": [
+    "SCC_Armor_Res_Ench_FortifyIllusionPower02"
+  ],
+  "EnchRobesFortifyIllusion03": [
+    "SCC_Armor_Res_Ench_FortifyIllusionPower03"
+  ],
+  "EnchRobesFortifyIllusion04": [
+    "SCC_Armor_Res_Ench_FortifyIllusionPower04"
+  ],
+  "EnchRobesFortifyIllusion05": [
+    "SCC_Armor_Res_Ench_FortifyIllusionPower05"
+  ],
+  "EnchRobesFortifyIllusion06": [
+    "SCC_Armor_Res_Ench_FortifyIllusionPower06"
+  ],
+  "EnchRobesCollegeRestoration01": [
+    "SCC_Armor_Res_Ench_FortifyRestorationPower01College"
+  ],
+  "EnchRobesCollegeRestoration02": [
+    "SCC_Armor_Res_Ench_FortifyRestorationPower02College"
+  ],
+  "EnchRobesCollegeRestoration03": [
+    "SCC_Armor_Res_Ench_FortifyRestorationPower03College"
+  ],
+  "EnchRobesCollegeRestoration04": [
+    "SCC_Armor_Res_Ench_FortifyRestorationPower04College"
+  ],
+  "EnchRobesCollegeRestoration05": [
+    "SCC_Armor_Res_Ench_FortifyRestorationPower05College"
+  ],
+  "EnchRobesFortifyRestoration01": [
+    "SCC_Armor_Res_Ench_FortifyRestorationPower01"
+  ],
+  "EnchRobesFortifyRestoration02": [
+    "SCC_Armor_Res_Ench_FortifyRestorationPower02"
+  ],
+  "EnchRobesFortifyRestoration03": [
+    "SCC_Armor_Res_Ench_FortifyRestorationPower03"
+  ],
+  "EnchRobesFortifyRestoration04": [
+    "SCC_Armor_Res_Ench_FortifyRestorationPower04"
+  ],
+  "EnchRobesFortifyRestoration05": [
+    "SCC_Armor_Res_Ench_FortifyRestorationPower05"
+  ],
+  "EnchRobesFortifyRestoration06": [
+    "SCC_Armor_Res_Ench_FortifyRestorationPower06"
+  ],
+  "EnchRobesCollegeMagickaRate01": [
+    "SCC_Armor_Alt_Ench_ShalidorsShield01College"
+  ],
+  "EnchRobesCollegeMagickaRate02": [
+    "SCC_Armor_Alt_Ench_ShalidorsShield02College"
+  ],
+  "EnchRobesCollegeMagickaRate03": [
+    "SCC_Armor_Alt_Ench_ShalidorsShield03College"
+  ],
+  "EnchRobesCollegeMagickaRate04": [
+    "SCC_Armor_Alt_Ench_ShalidorsShield04College"
+  ],
+  "EnchRobesCollegeMagickaRate05": [
+    "SCC_Armor_Alt_Ench_ShalidorsShield05College"
+  ],
+  "EnchRobesFortifyMagickaRate02": [
+    "SCC_Armor_Alt_Ench_ShalidorsShield02"
+  ],
+  "EnchRobesFortifyMagickaRate03": [
+    "SCC_Armor_Alt_Ench_ShalidorsShield03"
+  ],
+  "EnchRobesFortifyMagickaRate04": [
+    "SCC_Armor_Alt_Ench_ShalidorsShield04"
+  ],
+  "EnchRobesFortifyMagickaRate05": [
+    "SCC_Armor_Alt_Ench_ShalidorsShield05"
+  ],
+  "EnchArmorFortifyLockpicking01": [
+    "SCC_Armor_Alt_Ench_PhilosophersStone01"
+  ],
+  "EnchArmorFortifyLockpicking02": [
+    "SCC_Armor_Alt_Ench_PhilosophersStone02"
+  ],
+  "EnchArmorFortifyLockpicking03": [
+    "SCC_Armor_Alt_Ench_PhilosophersStone03"
+  ],
+  "EnchArmorFortifyLockpicking04": [
+    "SCC_Armor_Alt_Ench_PhilosophersStone04"
+  ],
+  "EnchArmorFortifyLockpicking05": [
+    "SCC_Armor_Alt_Ench_PhilosophersStone05"
+  ],
+  "EnchArmorFortifyLockpicking06": [
+    "SCC_Armor_Alt_Ench_PhilosophersStone06"
+  ],
+  "EnchArmorFortifyHeavyArmor01": [
+    "SCC_Armor_Des_Ench_Nova01"
+  ],
+  "EnchArmorFortifyHeavyArmor02": [
+    "SCC_Armor_Des_Ench_Nova02"
+  ],
+  "EnchArmorFortifyHeavyArmor03": [
+    "SCC_Armor_Des_Ench_Nova03"
+  ],
+  "EnchArmorFortifyHeavyArmor04": [
+    "SCC_Armor_Des_Ench_Nova04"
+  ],
+  "EnchArmorFortifyHeavyArmor05": [
+    "SCC_Armor_Des_Ench_Nova05"
+  ],
+  "EnchArmorFortifyHeavyArmor06": [
+    "SCC_Armor_Des_Ench_Nova06"
+  ],
+  "EnchArmorFortifyMagicka01": [
+    "SCC_Armor_Con_Ench_SoulCharge01"
+  ],
+  "EnchArmorFortifyMagicka02": [
+    "SCC_Armor_Con_Ench_SoulCharge02"
+  ],
+  "EnchArmorFortifyMagicka03": [
+    "SCC_Armor_Con_Ench_SoulCharge03"
+  ],
+  "EnchArmorFortifyMagicka04": [
+    "SCC_Armor_Con_Ench_SoulCharge04"
+  ],
+  "EnchArmorFortifyMagicka05": [
+    "SCC_Armor_Con_Ench_SoulCharge05"
+  ],
+  "EnchArmorFortifyMagicka06": [
+    "SCC_Armor_Con_Ench_SoulCharge06"
+  ],
+  "EnchArmorFortifyStamina01": [
+    "SCC_Armor_Des_Ench_SpellEater01"
+  ],
+  "EnchArmorFortifyStamina02": [
+    "SCC_Armor_Des_Ench_SpellEater02"
+  ],
+  "EnchArmorFortifyStamina03": [
+    "SCC_Armor_Des_Ench_SpellEater03"
+  ],
+  "EnchArmorFortifyStamina04": [
+    "SCC_Armor_Des_Ench_SpellEater04"
+  ],
+  "EnchArmorFortifyStamina05": [
+    "SCC_Armor_Des_Ench_SpellEater05"
+  ],
+  "EnchArmorFortifyStamina06": [
+    "SCC_Armor_Des_Ench_SpellEater06"
+  ],
+  "EnchArmorFortifyIllusion01": [
+    "SCC_Armor_Res_Ench_Weather01"
+  ],
+  "EnchArmorFortifyIllusion02": [
+    "SCC_Armor_Res_Ench_Weather02"
+  ],
+  "EnchArmorFortifyIllusion03": [
+    "SCC_Armor_Res_Ench_Weather03"
+  ],
+  "EnchArmorFortifyIllusion04": [
+    "SCC_Armor_Res_Ench_Weather04"
+  ],
+  "EnchArmorFortifyIllusion05": [
+    "SCC_Armor_Res_Ench_Weather05"
+  ],
+  "EnchArmorFortifyIllusion06": [
+    "SCC_Armor_Res_Ench_Weather06"
+  ],
+  "EnchArmorFortifyConjuration01": [
+    "SCC_Armor_Res_Ench_CheatDeath01"
+  ],
+  "EnchArmorFortifyConjuration02": [
+    "SCC_Armor_Res_Ench_CheatDeath02"
+  ],
+  "EnchArmorFortifyConjuration03": [
+    "SCC_Armor_Res_Ench_CheatDeath03"
+  ],
+  "EnchArmorFortifyConjuration04": [
+    "SCC_Armor_Res_Ench_CheatDeath04"
+  ],
+  "EnchArmorFortifyConjuration05": [
+    "SCC_Armor_Res_Ench_CheatDeath05"
+  ],
+  "EnchArmorFortifyConjuration06": [
+    "SCC_Armor_Res_Ench_CheatDeath06"
+  ],
+  "EnchArmorFortifyAlteration01": [
+    "SCC_Armor_Alt_Ench_GladiatorsGlory01"
+  ],
+  "EnchArmorFortifyAlteration02": [
+    "SCC_Armor_Alt_Ench_GladiatorsGlory02"
+  ],
+  "EnchArmorFortifyAlteration03": [
+    "SCC_Armor_Alt_Ench_GladiatorsGlory03"
+  ],
+  "EnchArmorFortifyAlteration04": [
+    "SCC_Armor_Alt_Ench_GladiatorsGlory04"
+  ],
+  "EnchArmorFortifyAlteration05": [
+    "SCC_Armor_Alt_Ench_GladiatorsGlory05"
+  ],
+  "EnchArmorFortifyAlteration06": [
+    "SCC_Armor_Alt_Ench_GladiatorsGlory06"
+  ],
+  "EnchArmorResistFire01": [
+    "SCC_Armor_Des_Ench_FortifyMountedCombat01"
+  ],
+  "EnchArmorResistFire02": [
+    "SCC_Armor_Des_Ench_FortifyMountedCombat02"
+  ],
+  "EnchArmorResistFire03": [
+    "SCC_Armor_Des_Ench_FortifyMountedCombat03"
+  ],
+  "EnchArmorResistFire04": [
+    "SCC_Armor_Des_Ench_FortifyMountedCombat04"
+  ],
+  "EnchArmorResistFire05": [
+    "SCC_Armor_Des_Ench_FortifyMountedCombat05"
+  ],
+  "EnchArmorResistFire06": [
+    "SCC_Armor_Des_Ench_FortifyMountedCombat06"
+  ],
+  "EnchArmorResistFrost01": [
+    "SCC_Armor_Res_Ench_Desperate01"
+  ],
+  "EnchArmorResistFrost02": [
+    "SCC_Armor_Res_Ench_Desperate02"
+  ],
+  "EnchArmorResistFrost03": [
+    "SCC_Armor_Res_Ench_Desperate03"
+  ],
+  "EnchArmorResistFrost04": [
+    "SCC_Armor_Res_Ench_Desperate04"
+  ],
+  "EnchArmorResistFrost05": [
+    "SCC_Armor_Res_Ench_Desperate05"
+  ],
+  "EnchArmorResistFrost06": [
+    "SCC_Armor_Res_Ench_Desperate06"
+  ],
+  "EnchArmorResistShock01": [
+    "SCC_Armor_Res_Ench_Cornucopia01"
+  ],
+  "EnchArmorResistShock02": [
+    "SCC_Armor_Res_Ench_Cornucopia02"
+  ],
+  "EnchArmorResistShock03": [
+    "SCC_Armor_Res_Ench_Cornucopia03"
+  ],
+  "EnchArmorResistShock04": [
+    "SCC_Armor_Res_Ench_Cornucopia04"
+  ],
+  "EnchArmorResistShock05": [
+    "SCC_Armor_Res_Ench_Cornucopia05"
+  ],
+  "EnchArmorResistShock06": [
+    "SCC_Armor_Res_Ench_Cornucopia06"
+  ],
+  "EnchWeaponParalysis04": [
+    "SCC_Weapon_Alt_Ench_AbsorbArmor04",
+    "SCC_Weapon_Alt_Ench_AbsorbCarryWeight04",
+    "SCC_Weapon_Alt_Ench_StealWeapons04",
+    "SCC_Weapon_Ill_Ench_HiddenSerpent04",
+    "SCC_Weapon_Res_Ench_Heal04"
+  ],
+  "EnchWeaponParalysis05": [
+    "SCC_Weapon_Alt_Ench_AbsorbArmor05",
+    "SCC_Weapon_Alt_Ench_AbsorbCarryWeight05",
+    "SCC_Weapon_Alt_Ench_StealWeapons05",
+    "SCC_Weapon_Ill_Ench_HiddenSerpent05",
+    "SCC_Weapon_Res_Ench_Heal05"
+  ],
+  "EnchWeaponParalysis06": [
+    "SCC_Weapon_Alt_Ench_AbsorbArmor06",
+    "SCC_Weapon_Alt_Ench_AbsorbCarryWeight06",
+    "SCC_Weapon_Alt_Ench_StealWeapons06",
+    "SCC_Weapon_Ill_Ench_HiddenSerpent06",
+    "SCC_Weapon_Res_Ench_Heal06"
+  ],
+  "EnchWeaponAbsorbStamina02": [
+    "SCC_Weapon_Alt_Ench_AbsorbSpeed02",
+    "SCC_Weapon_Ill_Ench_IllusoryBurden02",
+    "SCC_Weapon_Des_Ench_Riposte02",
+    "SCC_Weapon_Des_Ench_Beaconbound02"
+  ],
+  "EnchWeaponAbsorbStamina03": [
+    "SCC_Weapon_Alt_Ench_AbsorbSpeed03",
+    "SCC_Weapon_Ill_Ench_IllusoryBurden03",
+    "SCC_Weapon_Des_Ench_Riposte03",
+    "SCC_Weapon_Des_Ench_Beaconbound03"
+  ],
+  "EnchWeaponAbsorbStamina04": [
+    "SCC_Weapon_Alt_Ench_AbsorbSpeed04",
+    "SCC_Weapon_Ill_Ench_IllusoryBurden04",
+    "SCC_Weapon_Des_Ench_Riposte04",
+    "SCC_Weapon_Des_Ench_Beaconbound04"
+  ],
+  "EnchWeaponAbsorbStamina05": [
+    "SCC_Weapon_Alt_Ench_AbsorbSpeed05",
+    "SCC_Weapon_Ill_Ench_IllusoryBurden05",
+    "SCC_Weapon_Des_Ench_Riposte05",
+    "SCC_Weapon_Des_Ench_Beaconbound05"
+  ],
+  "EnchWeaponAbsorbStamina06": [
+    "SCC_Weapon_Alt_Ench_AbsorbSpeed06",
+    "SCC_Weapon_Ill_Ench_IllusoryBurden06",
+    "SCC_Weapon_Des_Ench_Riposte06",
+    "SCC_Weapon_Des_Ench_Beaconbound06"
+  ],
+  "EnchWeaponSoulTrap01": [
+    "SCC_Weapon_Alt_Ench_BountifulHunt01",
+    "SCC_Weapon_Des_Ench_Killstreak01",
+    "SCC_Weapon_Res_Ench_SlayLiving01",
+    "SCC_Weapon_Alt_Ench_Pushback01"
+  ],
+  "EnchWeaponSoulTrap02": [
+    "SCC_Weapon_Alt_Ench_BountifulHunt02",
+    "SCC_Weapon_Des_Ench_Killstreak02",
+    "SCC_Weapon_Res_Ench_SlayLiving02",
+    "SCC_Weapon_Alt_Ench_Pushback02"
+  ],
+  "EnchWeaponSoulTrap03": [
+    "SCC_Weapon_Alt_Ench_BountifulHunt03",
+    "SCC_Weapon_Des_Ench_Killstreak03",
+    "SCC_Weapon_Res_Ench_SlayLiving03",
+    "SCC_Weapon_Alt_Ench_Pushback03"
+  ],
+  "EnchWeaponSoulTrap04": [
+    "SCC_Weapon_Alt_Ench_BountifulHunt04",
+    "SCC_Weapon_Des_Ench_Killstreak04",
+    "SCC_Weapon_Res_Ench_SlayLiving04",
+    "SCC_Weapon_Alt_Ench_Pushback04"
+  ],
+  "EnchWeaponSoulTrap05": [
+    "SCC_Weapon_Alt_Ench_BountifulHunt05",
+    "SCC_Weapon_Des_Ench_Killstreak05",
+    "SCC_Weapon_Res_Ench_SlayLiving05",
+    "SCC_Weapon_Alt_Ench_Pushback05"
+  ],
+  "EnchWeaponSoulTrap06": [
+    "SCC_Weapon_Alt_Ench_BountifulHunt06",
+    "SCC_Weapon_Des_Ench_Killstreak06",
+    "SCC_Weapon_Res_Ench_SlayLiving06",
+    "SCC_Weapon_Alt_Ench_Pushback06"
+  ],
+  "EnchWeaponStaminaDamage01": [
+    "SCC_Weapon_Alt_Ench_DrainArmor01",
+    "SCC_Weapon_Des_Ench_Leprosy01",
+    "SCC_Weapon_Des_Ench_OverbearingStrike01",
+    "SCC_Weapon_Res_Ench_StuntedVitals01"
+  ],
+  "EnchWeaponStaminaDamage02": [
+    "SCC_Weapon_Alt_Ench_DrainArmor02",
+    "SCC_Weapon_Des_Ench_Leprosy02",
+    "SCC_Weapon_Des_Ench_OverbearingStrike02",
+    "SCC_Weapon_Res_Ench_StuntedVitals02"
+  ],
+  "EnchWeaponStaminaDamage03": [
+    "SCC_Weapon_Alt_Ench_DrainArmor03",
+    "SCC_Weapon_Des_Ench_Leprosy03",
+    "SCC_Weapon_Des_Ench_OverbearingStrike03",
+    "SCC_Weapon_Res_Ench_StuntedVitals03"
+  ],
+  "EnchWeaponStaminaDamage04": [
+    "SCC_Weapon_Alt_Ench_DrainArmor04",
+    "SCC_Weapon_Des_Ench_Leprosy04",
+    "SCC_Weapon_Des_Ench_OverbearingStrike04",
+    "SCC_Weapon_Res_Ench_StuntedVitals04"
+  ],
+  "EnchWeaponStaminaDamage05": [
+    "SCC_Weapon_Alt_Ench_DrainArmor05",
+    "SCC_Weapon_Des_Ench_Leprosy05",
+    "SCC_Weapon_Des_Ench_OverbearingStrike05",
+    "SCC_Weapon_Res_Ench_StuntedVitals05"
+  ],
+  "EnchWeaponStaminaDamage06": [
+    "SCC_Weapon_Alt_Ench_DrainArmor06",
+    "SCC_Weapon_Des_Ench_DrainResistance06",
+    "SCC_Weapon_Des_Ench_Leprosy06",
+    "SCC_Weapon_Des_Ench_OverbearingStrike06",
+    "SCC_Weapon_Res_Ench_StuntedVitals06"
+  ],
+  "EnchWeaponAbsorbHealth02": [
+    "SCC_Weapon_Alt_Ench_Enfeeble02",
+    "SCC_Weapon_Ill_Ench_Wailing02",
+    "SCC_Weapon_Res_Ench_DrainSkill02",
+    "SCC_Weapon_Des_Ench_HarmonicPain02"
+  ],
+  "EnchWeaponAbsorbHealth03": [
+    "SCC_Weapon_Alt_Ench_Enfeeble03",
+    "SCC_Weapon_Ill_Ench_Wailing03",
+    "SCC_Weapon_Res_Ench_DrainSkill03",
+    "SCC_Weapon_Des_Ench_HarmonicPain03"
+  ],
+  "EnchWeaponAbsorbHealth04": [
+    "SCC_Weapon_Alt_Ench_Enfeeble04",
+    "SCC_Weapon_Ill_Ench_Wailing04",
+    "SCC_Weapon_Res_Ench_DrainSkill04",
+    "SCC_Weapon_Des_Ench_HarmonicPain04"
+  ],
+  "EnchWeaponAbsorbHealth05": [
+    "SCC_Weapon_Alt_Ench_Enfeeble05",
+    "SCC_Weapon_Ill_Ench_Wailing05",
+    "SCC_Weapon_Res_Ench_DrainSkill05",
+    "SCC_Weapon_Des_Ench_HarmonicPain05"
+  ],
+  "EnchWeaponAbsorbHealth06": [
+    "SCC_Weapon_Alt_Ench_Enfeeble06",
+    "SCC_Weapon_Ill_Ench_Wailing06",
+    "SCC_Weapon_Res_Ench_DrainSkill06",
+    "SCC_Weapon_Des_Ench_HarmonicPain06"
+  ],
+  "EnchWeaponAbsorbMagicka02": [
+    "SCC_Weapon_Alt_Ench_Mug02",
+    "SCC_Weapon_Ill_Ench_Counterspell02",
+    "SCC_Weapon_Ill_Ench_Sound02",
+    "SCC_Weapon_Ill_Ench_Dispel02"
+  ],
+  "EnchWeaponAbsorbMagicka03": [
+    "SCC_Weapon_Alt_Ench_Mug03",
+    "SCC_Weapon_Ill_Ench_Counterspell03",
+    "SCC_Weapon_Ill_Ench_Sound03",
+    "SCC_Weapon_Ill_Ench_Dispel03"
+  ],
+  "EnchWeaponAbsorbMagicka04": [
+    "SCC_Weapon_Alt_Ench_Mug04",
+    "SCC_Weapon_Ill_Ench_Counterspell04",
+    "SCC_Weapon_Ill_Ench_Sound04",
+    "SCC_Weapon_Ill_Ench_Dispel04"
+  ],
+  "EnchWeaponAbsorbMagicka05": [
+    "SCC_Weapon_Alt_Ench_Mug05",
+    "SCC_Weapon_Ill_Ench_Counterspell05",
+    "SCC_Weapon_Ill_Ench_Sound05",
+    "SCC_Weapon_Ill_Ench_Dispel05"
+  ],
+  "EnchWeaponAbsorbMagicka06": [
+    "SCC_Weapon_Alt_Ench_Mug06",
+    "SCC_Weapon_Ill_Ench_Counterspell06",
+    "SCC_Weapon_Ill_Ench_Sound06",
+    "SCC_Weapon_Ill_Ench_Dispel06"
+  ],
+  "EnchWeaponBanish04": [
+    "SCC_Weapon_Alt_Ench_PowerSurge04",
+    "SCC_Weapon_Res_Ench_Exemplar04",
+    "SCC_Weapon_Res_Ench_QuickenShouts04"
+  ],
+  "EnchWeaponBanish05": [
+    "SCC_Weapon_Alt_Ench_PowerSurge05",
+    "SCC_Weapon_Res_Ench_Exemplar05",
+    "SCC_Weapon_Res_Ench_QuickenShouts05"
+  ],
+  "EnchWeaponBanish06": [
+    "SCC_Weapon_Alt_Ench_PowerSurge06",
+    "SCC_Weapon_Alt_Ench_StormSurge04",
+    "SCC_Weapon_Alt_Ench_StormSurge05",
+    "SCC_Weapon_Alt_Ench_StormSurge06",
+    "SCC_Weapon_Res_Ench_Exemplar06",
+    "SCC_Weapon_Res_Ench_QuickenShouts06"
+  ],
+  "EnchWeaponTurnUndead01": [
+    "SCC_Weapon_Con_Ench_CommandDaedra01",
+    "SCC_Weapon_Des_Ench_WizardRend01",
+    "SCC_Weapon_Des_Ench_WarriorRend01",
+    "SCC_Weapon_Res_Ench_Sunlight01"
+  ],
+  "EnchWeaponTurnUndead02": [
+    "SCC_Weapon_Con_Ench_CommandDaedra02",
+    "SCC_Weapon_Des_Ench_WizardRend02",
+    "SCC_Weapon_Des_Ench_WarriorRend02",
+    "SCC_Weapon_Res_Ench_Sunlight02"
+  ],
+  "EnchWeaponTurnUndead03": [
+    "SCC_Weapon_Con_Ench_CommandDaedra03",
+    "SCC_Weapon_Des_Ench_WizardRend03",
+    "SCC_Weapon_Des_Ench_WarriorRend03",
+    "SCC_Weapon_Res_Ench_Sunlight03"
+  ],
+  "EnchWeaponTurnUndead04": [
+    "SCC_Weapon_Con_Ench_CommandDaedra04",
+    "SCC_Weapon_Des_Ench_WizardRend04",
+    "SCC_Weapon_Des_Ench_WarriorRend04",
+    "SCC_Weapon_Res_Ench_Sunlight04"
+  ],
+  "EnchWeaponTurnUndead05": [
+    "SCC_Weapon_Con_Ench_CommandDaedra05",
+    "SCC_Weapon_Des_Ench_WizardRend05",
+    "SCC_Weapon_Des_Ench_WarriorRend05",
+    "SCC_Weapon_Res_Ench_Sunlight05"
+  ],
+  "EnchWeaponTurnUndead06": [
+    "SCC_Weapon_Con_Ench_CommandDaedra06",
+    "SCC_Weapon_Des_Ench_WizardRend06",
+    "SCC_Weapon_Des_Ench_WarriorRend06",
+    "SCC_Weapon_Res_Ench_Sunlight06"
+  ],
+  "SCC_Weapon_Des_Ench_DrainResistance01": [
+    "SCC_Weapon_Des_Ench_Leprosy01"
+  ],
+  "SCC_Weapon_Des_Ench_DrainResistance02": [
+    "SCC_Weapon_Des_Ench_Leprosy02"
+  ],
+  "SCC_Weapon_Des_Ench_DrainResistance03": [
+    "SCC_Weapon_Des_Ench_Leprosy03"
+  ],
+  "SCC_Weapon_Des_Ench_DrainResistance04": [
+    "SCC_Weapon_Des_Ench_Leprosy04"
+  ],
+  "SCC_Weapon_Des_Ench_DrainResistance05": [
+    "SCC_Weapon_Des_Ench_Leprosy05"
+  ],
+  "EnchWeaponMagickaDamage01": [
+    "SCC_Weapon_Des_Ench_DeadlyStrike01",
+    "SCC_Weapon_Des_Ench_PoisonDamage01",
+    "SCC_Weapon_Des_Ench_DelayedPoisonDamage01"
+  ],
+  "EnchWeaponMagickaDamage02": [
+    "SCC_Weapon_Des_Ench_DeadlyStrike02",
+    "SCC_Weapon_Des_Ench_PoisonDamage02",
+    "SCC_Weapon_Des_Ench_DelayedPoisonDamage02"
+  ],
+  "EnchWeaponMagickaDamage03": [
+    "SCC_Weapon_Des_Ench_DeadlyStrike03",
+    "SCC_Weapon_Des_Ench_PoisonDamage03",
+    "SCC_Weapon_Des_Ench_PoisonBlast03",
+    "SCC_Weapon_Des_Ench_DelayedPoisonDamage03"
+  ],
+  "EnchWeaponMagickaDamage04": [
+    "SCC_Weapon_Des_Ench_DeadlyStrike04",
+    "SCC_Weapon_Des_Ench_PoisonDamage04",
+    "SCC_Weapon_Des_Ench_PoisonBlast04",
+    "SCC_Weapon_Des_Ench_DelayedPoisonDamage04"
+  ],
+  "EnchWeaponMagickaDamage05": [
+    "SCC_Weapon_Des_Ench_DeadlyStrike05",
+    "SCC_Weapon_Des_Ench_PoisonDamage05",
+    "SCC_Weapon_Des_Ench_PoisonBlast05",
+    "SCC_Weapon_Des_Ench_DelayedPoisonDamage05"
+  ],
+  "EnchWeaponMagickaDamage06": [
+    "SCC_Weapon_Des_Ench_DeadlyStrike06",
+    "SCC_Weapon_Des_Ench_PoisonDamage06",
+    "SCC_Weapon_Des_Ench_PoisonBlast06",
+    "SCC_Weapon_Des_Ench_DelayedPoisonDamage06"
+  ],
+  "EnchWeaponFrostDamage03": [
+    "SCC_Weapon_Des_Ench_FrostBlast03",
+    "SCC_Weapon_Des_Ench_PiercingFrostDamage03"
+  ],
+  "EnchWeaponFrostDamage04": [
+    "SCC_Weapon_Des_Ench_FrostBlast04",
+    "SCC_Weapon_Des_Ench_PiercingFrostDamage04"
+  ],
+  "EnchWeaponFrostDamage05": [
+    "SCC_Weapon_Des_Ench_FrostBlast05",
+    "SCC_Weapon_Des_Ench_PiercingFrostDamage05"
+  ],
+  "EnchWeaponFrostDamage06": [
+    "SCC_Weapon_Des_Ench_FrostBlast06",
+    "SCC_Weapon_Des_Ench_PiercingFrostDamage06"
+  ],
+  "EnchWeaponFrostDamage01": [
+    "SCC_Weapon_Des_Ench_PiercingFrostDamage01"
+  ],
+  "EnchWeaponFrostDamage02": [
+    "SCC_Weapon_Des_Ench_PiercingFrostDamage02"
+  ],
+  "EnchWeaponShockDamage03": [
+    "SCC_Weapon_Des_Ench_ShockBlast03",
+    "SCC_Weapon_Des_Ench_PercentageShockDamage03"
+  ],
+  "EnchWeaponShockDamage04": [
+    "SCC_Weapon_Des_Ench_ShockBlast04",
+    "SCC_Weapon_Des_Ench_PercentageShockDamage04"
+  ],
+  "EnchWeaponShockDamage05": [
+    "SCC_Weapon_Des_Ench_ShockBlast05",
+    "SCC_Weapon_Des_Ench_PercentageShockDamage05"
+  ],
+  "EnchWeaponShockDamage06": [
+    "SCC_Weapon_Des_Ench_ShockBlast06",
+    "SCC_Weapon_Des_Ench_PercentageShockDamage06"
+  ],
+  "EnchWeaponShockDamage01": [
+    "SCC_Weapon_Des_Ench_PercentageShockDamage01"
+  ],
+  "EnchWeaponShockDamage02": [
+    "SCC_Weapon_Des_Ench_PercentageShockDamage02"
+  ],
+  "EnchWeaponFear04": [
+    "SCC_Weapon_Ill_Ench_PhantomStrike04",
+    "SCC_Weapon_Des_Ench_Breach04",
+    "SCC_Weapon_Alt_Ench_Throw04",
+    "SCC_Weapon_Des_Ench_Fratricide04"
+  ],
+  "EnchWeaponFear05": [
+    "SCC_Weapon_Ill_Ench_PhantomStrike05",
+    "SCC_Weapon_Des_Ench_Breach05",
+    "SCC_Weapon_Alt_Ench_Throw05",
+    "SCC_Weapon_Des_Ench_Fratricide05"
+  ],
+  "EnchWeaponFear06": [
+    "SCC_Weapon_Ill_Ench_PhantomStrike06",
+    "SCC_Weapon_Des_Ench_Breach06",
+    "SCC_Weapon_Alt_Ench_Throw06",
+    "SCC_Weapon_Des_Ench_Fratricide06"
+  ]
+}
