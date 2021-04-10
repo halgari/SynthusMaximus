@@ -8,6 +8,7 @@ using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
 using Noggog;
 using SynthusMaximus.Data;
+using SynthusMaximus.Data.DTOs;
 using SynthusMaximus.Support.RunSorting;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Keyword;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.PerkusMaximus_Master.Keyword;
@@ -18,115 +19,39 @@ namespace SynthusMaximus.Patchers
     
     [RunAfter(typeof(ArmorPatcher))]
     [RunAfter(typeof(FillArmorListsWithSimilars))]
-    public class DistributeArmorEnchantments : APatcher<DistributeArmorEnchantments>
+    public class DistributeArmorEnchantments : ADistributeItemEnchantments<DistributeArmorEnchantments, IArmorGetter>
     {
         public DistributeArmorEnchantments(ILogger<DistributeArmorEnchantments> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state) : base(logger, storage, state)
         {
         }
 
-        public override void RunPatcher()
+        protected override IFormLinkNullableGetter<IArmorGetter> GetTemplate(IArmorGetter i)
         {
-            RunListEnchantmentBindings();
-            RunDirectMatch();
+            return i.TemplateArmor;
         }
 
-        private void RunListEnchantmentBindings()
+        protected override IFormLinkNullableGetter<IEffectRecordGetter> GetEnchantment(IArmorGetter i)
         {
-            var query = from binding in Storage.ListEnchantmentBindings.AsParallel()
-                let resolvedList = binding.EdidList.Resolve(LinkCache)
-                from entry in resolvedList.Entries.EmptyIfNull()
-                let resolvedEntry = entry.Data!.Reference.TryResolve<IArmorGetter>(LinkCache)
-                where resolvedEntry != null
-                where !resolvedEntry.ObjectEffect.IsNull
-                where !resolvedEntry.TemplateArmor.IsNull
-                where !Storage.EnchantmentArmorExclusions.IsExcluded(resolvedEntry)
-                let template = resolvedEntry.TemplateArmor.Resolve(LinkCache)
-                where template.ObjectEffect.IsNull
-                from replacer in binding.Replacers
-                where resolvedEntry.ObjectEffect.FormKey == replacer.EdidBase.FormKey
-                group (replacer.EdidNew, template, resolvedEntry, entry, resolvedList) by resolvedList;
-
-            var results = query.ToList();
-
-            foreach (var listGroup in results)
-            {
-                var lo = Patch.LeveledItems.GetOrAddAsOverride(listGroup.Key);
-                foreach (var entry in listGroup)
-                {
-                    var newArmor = CreateEnchantedArmorFromTemplate(entry.template, entry.resolvedEntry!,
-                        new FormLink<IObjectEffectGetter>(entry.EdidNew.FormKey));
-                    lo.Entries!.Add(new LeveledItemEntry
-                    {
-                        Data = new LeveledItemEntryData
-                        {
-                            Reference = new FormLink<IItemGetter>(newArmor),
-                            Count = entry.entry.Data!.Count,
-                            Level = entry.entry.Data!.Level
-                        }
-                    });
-                }
-            }
-            Logger.LogInformation("Added {count} variants of enchanted armors", results.Count);
+            return i.ObjectEffect;
+        }
+        
+        protected override MajorRecordExclusionList<ILeveledItemGetter> GetDistributionExclusionList()
+        {
+            return Storage.DistributionExclusionsArmor;
         }
 
-
-        private void RunDirectMatch()
+        protected override ParallelQuery<IArmorGetter> AllItems()
         {
-            var query = from armor in Mods.Armor().WinningOverrides().AsParallel()
-                let material = Storage.GetArmorMaterial(armor)
-                where material != null
-                where !armor.ObjectEffect.IsNull
-                where !Storage.EnchantmentArmorExclusions.IsExcluded(armor)
-                where !armor.TemplateArmor.IsNull
-                let template = armor.TemplateArmor.Resolve(LinkCache)
-                where !Storage.EnchantmentArmorExclusions.IsExcluded(template)
-                from other in Storage.DirectEnchantmentBindings[
-                    new FormLink<IObjectEffectGetter>(armor.ObjectEffect.FormKey)]
-                from list in Mods.LeveledItem().WinningOverrides()
-                where !Storage.DistributionExclusionsArmor.IsExcluded(list)
-                where !list.Flags.HasFlag(LeveledItem.Flag.UseAll)
-                where list.Entries != null
-                from entry in list.Entries
-                where entry.Data.Reference.FormKey == armor.FormKey
-                select (list, template, armor, other.New, entry);
-
-            var results = query.ToList();
-
-            var newArmors = results.GroupBy(a => (a.template, a.armor, a.New))
-                .ToDictionary(a => a.Key, a =>
-                {
-                    var f = a.First();
-                    return CreateEnchantedArmorFromTemplate(f.template, f.armor, f.New);
-                });
-
-            foreach (var listGroup in results.GroupBy(g => g.list))
-            {
-                var lo = Patch.LeveledItems.GetOrAddAsOverride(listGroup.Key);
-                foreach (var e in listGroup)
-                {
-                    var newArmor = newArmors[(e.template, e.armor, e.New)];
-                    lo.Entries!.Add(new LeveledItemEntry
-                    {
-                        Data = new LeveledItemEntryData()
-                        {
-                            Reference = new FormLink<IItemGetter>(newArmor.FormKey),
-                            Count = e.entry.Data!.Count,
-                            Level = e.entry.Data.Level
-                        }
-                    });
-
-                }
-            }
-            
-            Logger.LogInformation("Added {count} new enchanted armor variants from direct bindings", results.Count);
+            return Mods.Armor().WinningOverrides().AsParallel().Where(a => Storage.GetArmorMaterial(a) != null);
         }
 
-        private Dictionary<(FormKey Template, FormKey Like, FormKey Effect), IArmorGetter> _cachedArmor = new();
-        private IArmorGetter CreateEnchantedArmorFromTemplate(IArmorGetter template, IArmorGetter like, IFormLink<IObjectEffectGetter> e)
+        protected override ExclusionList<IArmorGetter> GetEnchantmentExclusionList()
         {
-            if (_cachedArmor.TryGetValue((template.FormKey, like.FormKey, e.FormKey), out var found))
-                return found;
-            
+            return Storage.EnchantmentArmorExclusions;
+        }
+
+        protected override IArmorGetter CreateItemFromTemplate(IArmorGetter template, IArmorGetter like, IFormLink<IObjectEffectGetter> e)
+        {
             var resolved = e.Resolve(State.LinkCache);
             var newArmor = Patch.Armors.DuplicateInAsNewRecord(template);
             newArmor.SetEditorID(
@@ -135,8 +60,6 @@ namespace SynthusMaximus.Patchers
             newArmor.ObjectEffect.SetTo(e);
             newArmor.Value = like.Value;
             newArmor.Name = Storage.GetLocalizedEnchantmentNameArmor(template, e);
-
-            _cachedArmor[(template.FormKey, like.FormKey, e.FormKey)] = newArmor;
             return newArmor;
         }
     }

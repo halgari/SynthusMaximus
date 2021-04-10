@@ -7,6 +7,7 @@ using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
 using Noggog;
 using SynthusMaximus.Data;
+using SynthusMaximus.Data.DTOs;
 using SynthusMaximus.Support;
 using SynthusMaximus.Support.RunSorting;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Keyword;
@@ -16,61 +17,13 @@ using static SynthusMaximus.Data.Statics;
 namespace SynthusMaximus.Patchers
 {
     [RunAfter(typeof(ArmorPatcher))]
-    public class FillArmorListsWithSimilars : APatcher<FillArmorListsWithSimilars>
+    public class FillArmorListsWithSimilars : AFillWithSimilars<FillArmorListsWithSimilars, IArmorGetter>
     {
-        private Eager<ILookup<IArmorGetter, List<IArmorGetter>>> _similars;
-        
         public FillArmorListsWithSimilars(ILogger<FillArmorListsWithSimilars> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state) : base(logger, storage, state)
         {
         }
         
-        public override void RunPatcher()
-        {
-            var query =
-                from binding in Storage.ListEnchantmentBindings
-                where binding.FillListWithSimilars
-                let list = binding.EdidList.Resolve(LinkCache)
-                from listEntry in list.Entries.EmptyIfNull()
-                let resolved = listEntry.Data.Reference.TryResolve<IArmorGetter>(LinkCache)
-                where resolved != null
-                where !resolved.ObjectEffect.IsNull
-                where !resolved.TemplateArmor.IsNull
-                where Storage.EnchantmentArmorExclusions.IsExcluded(resolved)
-                let parentTemplate = resolved.TemplateArmor.Resolve(LinkCache)
-                where parentTemplate.ObjectEffect.IsNull
-                where binding.Replacers.Any(r => r.EdidBase.FormKey == resolved.ObjectEffect.FormKey) 
-                from similar in GetSimilarArmors(parentTemplate)
-                group (list, similar, resolved, parentTemplate) by (list, similar, listEntry.Data.Level, listEntry.Data.Count)
-                into grouped
-                    select (grouped.Key.list, grouped.Key.similar, grouped.Key.Count, grouped.Key.Level, grouped.First().resolved, grouped.First().parentTemplate);
-
-            var results = query.ToList();
-
-            foreach (var t in results.GroupBy(t => t.list))
-            {
-                var lo = Patch.LeveledItems.GetOrAddAsOverride(t.Key);
-                foreach (var entry in t)
-                {
-                    var newArmor = CreateEnchantedArmorFromTemplate(entry.parentTemplate, entry.similar,
-                        new FormLink<IObjectEffectGetter>(entry.resolved!.ObjectEffect.FormKey));
-
-                    lo.Entries!.Add(new LeveledItemEntry
-                    {
-                        Data = new LeveledItemEntryData
-                        {
-                            Reference = new FormLink<IItemGetter>(newArmor),
-                            Count = entry.Count,
-                            Level = entry.Level
-                        }
-                    });
-                }
-            }
-            Logger.LogInformation("Found {results} similar armors to insert", results.Count());
-            
-        }
-        
-
-        private IArmorGetter CreateEnchantedArmorFromTemplate(IArmorGetter template, IArmorGetter like, IFormLink<IObjectEffectGetter> e)
+        protected override IArmorGetter CreateItemFromTemplate(IArmorGetter template, IArmorGetter like, IFormLink<IObjectEffectGetter> e)
         {
 
             var resolved = e.Resolve(State.LinkCache);
@@ -83,8 +36,23 @@ namespace SynthusMaximus.Patchers
             newArmor.Name = Storage.GetLocalizedEnchantmentNameArmor(template, e);
             return newArmor;
         }
-        
-        public IEnumerable<IArmorGetter> GetSimilarArmors(IArmorGetter a)
+
+        protected override ExclusionList<IArmorGetter> GetEnchantmentExclusionList()
+        {
+            return Storage.EnchantmentArmorExclusions;
+        }
+
+        protected override IFormLinkNullableGetter<IEffectRecordGetter> GetEnchantment(IArmorGetter i)
+        {
+            return i.ObjectEffect;
+        }
+
+        protected override IFormLinkNullableGetter<IArmorGetter> GetTemplate(IArmorGetter i)
+        {
+            return i.TemplateArmor;
+        }
+
+        protected override IEnumerable<IArmorGetter> GetSimilars(IArmorGetter a)
         {
             if (Storage.IsClothing(a))
             {
