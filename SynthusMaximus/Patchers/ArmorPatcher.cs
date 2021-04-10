@@ -54,7 +54,7 @@ namespace SynthusMaximus.Patchers
                     }
                     
                     // do clothing specific stuff, then skip to next armor
-                    if (DataStorage.IsClothing(a))
+                    if (Storage.IsClothing(a))
                     {
                         if (Storage.UseWarrior)
                         {
@@ -75,7 +75,7 @@ namespace SynthusMaximus.Patchers
                     var am = Storage.GetArmorMaterial(a);
                     if (am?.Type.Data == null)
                     {
-                        if (!DataStorage.IsJewelry(a))
+                        if (!Storage.IsJewelry(a))
                         {
                             _armorWithNoMaterialOrType.Add(a.FormKey);
                             Logger.LogTrace("{Name}: no material", a.EditorID);
@@ -98,8 +98,8 @@ namespace SynthusMaximus.Patchers
                             AddMeltdownRecipe(a, am);
                         }
 
-                        if (!Storage.IsArmorExcludedReforged(a) && !DataStorage.IsClothing(a) &&
-                            !DataStorage.IsJewelry(a))
+                        if (!Storage.IsArmorExcludedReforged(a) && !Storage.IsClothing(a) &&
+                            !Storage.IsJewelry(a))
                         {
                             var patched = State.PatchMod.Armors.GetOrAddAsOverride(a);
                             var reforged = CreateReforgedArmor(patched, am);
@@ -266,7 +266,7 @@ namespace SynthusMaximus.Patchers
             var newArmor = CreateCopycatArmor(a);
             CreateCopycatCraftingRecipe(newArmor, a, am);
             
-            if (Storage.UseWarrior && !DataStorage.IsJewelry(a) && !DataStorage.IsClothing(a))
+            if (Storage.UseWarrior && !Storage.IsJewelry(a) && !Storage.IsClothing(a))
             {
                 AddMeltdownRecipe(newArmor, am);
                 var ar = CreateReforgedArmor(newArmor, am);
@@ -602,7 +602,7 @@ namespace SynthusMaximus.Patchers
                 Logger.LogTrace("{Name}: Has template", a.EditorID);
                 return false;
             }
-            else if (DataStorage.IsJewelry(a))
+            else if (Storage.IsJewelry(a))
             {
                 Logger.LogTrace("{Name}: Is Jewelery", a.EditorID);
                 return false;

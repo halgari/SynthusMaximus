@@ -70,7 +70,7 @@ namespace SynthusMaximus.Data
             _logger = logger;
             _loader = loader;
             
-            _loader.Converters = converters.Cast<JsonConverter>().ToArray();
+            _loader.Converters = converters.Cast<JsonConverter>().SortConverters().ToArray();
 
             var sw = Stopwatch.StartNew();
             ArmorSettings = _loader.LoadObject<ArmorSettings>((RelativePath)@"armor\armorSettings.json");
@@ -148,10 +148,21 @@ namespace SynthusMaximus.Data
                     .GroupBy(e => e.Enchantment)
                     .ToDictionary(e => e.Key, e => e.Last());
 
+            EnchantingSimilarityExclusionsArmor =
+                _loader.LoadList<ComplexExclusion>((RelativePath) @"enchanting\similaritesExclusionsArmor.json");
+            
+            EnchantingSimilarityExclusionsWeapon =
+                _loader.LoadList<ComplexExclusion>((RelativePath) @"enchanting\similaritesExclusionsWeapon.json");
+            
+            
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
             
         }
+
+        public IList<ComplexExclusion> EnchantingSimilarityExclusionsWeapon { get; }
+
+        public IList<ComplexExclusion> EnchantingSimilarityExclusionsArmor { get; }
 
         public Dictionary<IFormLink<IObjectEffectGetter>, EnchantmentNameBinding> EnchantmentNames { get; set; }
 
@@ -185,17 +196,17 @@ namespace SynthusMaximus.Data
         public bool ShouldAppendWeaponType => _weaponSettings.AppendTypeToName;
 
 
-        public static bool IsJewelry(IArmorGetter a)
+        public bool IsJewelry(IArmorGetter a)
         {
             return HasKeyword(a.Keywords, Statics.JewelryKeywords);
         }
 
-        public static bool IsClothing(IArmorGetter a)
+        public bool IsClothing(IArmorGetter a)
         {
             return HasKeyword(a.Keywords, Statics.ClothingKeywords);
         }
 
-        public static bool HasKeyword(IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? coll, IEnumerable<IFormLink<IKeywordGetter>> keywords)
+        public bool HasKeyword(IReadOnlyList<IFormLinkGetter<IKeywordGetter>>? coll, IEnumerable<IFormLink<IKeywordGetter>> keywords)
         {
             return coll?.Any(keywords.Contains) ?? false;
         }
@@ -448,5 +459,22 @@ namespace SynthusMaximus.Data
             if (!EnchantmentNames.TryGetValue(formLink, out var fstr)) return template.NameOrEmpty();
             return string.Format(fstr.NameTemplate, template.NameOrEmpty());
         }
+
+        public bool CanArmorNotBeSimilar(IArmorGetter a, IArmorGetter b)
+        {
+            return EnchantingSimilarityExclusionsArmor.Any(exclusion => CheckComplexExclusions(exclusion, a, b));
+        }
+        
+        public bool CanWeaponsNotBeSimilar(IWeaponGetter a, IWeaponGetter b)
+        {
+            return EnchantingSimilarityExclusionsWeapon.Any(exclusion => CheckComplexExclusions(exclusion, a, b));
+        }
+
+        private bool CheckComplexExclusions(ComplexExclusion ex, ITranslatedNamedGetter a, ITranslatedNamedGetter b)
+        {
+            return CheckExclusion(ex.TargetA, new[] {ex.TextA}, a) && CheckExclusion(ex.TargetB, new[] {ex.TextB}, b) ||
+                   CheckExclusion(ex.TargetB, new[] {ex.TextB}, a) && CheckExclusion(ex.TargetA, new[] {ex.TextA}, b);
+        }
+        
     }
 }

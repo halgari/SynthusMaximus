@@ -3,7 +3,7 @@ using Mutagen.Bethesda.Synthesis;
 
 namespace SynthusMaximus.Data.Converters
 {
-    public class ItemConverter : GenericFormLinkConverter<IItemGetter>
+    public class ItemConverter : GenericFormLinkConverter<IItemGetter>, ITryAfter<LeveledItemConverter>
     {
         public ItemConverter(IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
             : base(state.LoadOrder.PriorityOrder.IItem().WinningOverrides())

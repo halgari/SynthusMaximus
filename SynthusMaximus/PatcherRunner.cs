@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using SynthusMaximus.Patchers;
+using SynthusMaximus.Support.RunSorting;
 
 namespace SynthusMaximus
 {
@@ -14,7 +15,7 @@ namespace SynthusMaximus
         public PatcherRunner(ILogger<PatcherRunner> logger, IEnumerable<IPatcher> patchers)
         {
             _logger = logger;
-            _patchers = patchers;
+            _patchers = patchers.SortByRunOrder();
 
         }
 

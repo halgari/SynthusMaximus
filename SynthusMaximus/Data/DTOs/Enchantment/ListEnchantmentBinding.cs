@@ -8,7 +8,7 @@ namespace SynthusMaximus.Data.DTOs.Enchantment
     public class ListEnchantmentBinding
     {
         [JsonProperty("fillListWithSimilars")] public bool FillListWithSimilars { get; set; }
-        [JsonProperty("eidList")] public IFormLink<ILeveledItemGetter> EdidList { get; set; } = new FormLink<ILeveledItemGetter>();
+        [JsonProperty("edidList")] public IFormLink<ILeveledItemGetter> EdidList { get; set; } = new FormLink<ILeveledItemGetter>();
         [JsonProperty("enchantmentReplacers")] public List<EnchantmentReplacer> Replacers { get; set; } = new();
 
     }

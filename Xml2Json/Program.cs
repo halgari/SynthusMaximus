@@ -97,12 +97,38 @@ namespace Xml2Json
             ExtractEnchantmentReplacers(ench, "list_enchantment_bindings", @"enchanting\listEnchantmentBindings.json");
             ExtractEnchantmentDirectBindings(ench, "direct_enchantment_bindings", @"enchanting\directEnchantmentBindings.json");
             ExtractEnchantmentNameBindings(ench, "enchantment_name_bindings", @"enchanting\nameBindings.json");
+            ExtractCompilexExclusionList(ench, "similarity_exclusions_armor",
+                @"enchanting\similaritiesExclusionsArmor.json");
+            ExtractCompilexExclusionList(ench, "similarity_exclusions_armor",
+                @"enchanting\similaritiesExclusionsWeapon.json");
 
             
             var npcs = XElement.Load("NPC.xml");
             ExtractExclusionList(npcs, "npc_exclusions", @"exclusions\npcs.json");
             ExtractExclusionList(npcs, "race_exclusions", @"exclusions\race.json");
 
+        }
+
+        private static void ExtractCompilexExclusionList(XElement element, string listName, string fileName)
+        {
+            var bindings = element.Descendants().Where(e => e.Name == listName);
+            var results = new List<Dictionary<string, string>>();
+            foreach (var binding in bindings.Descendants().Where(e => e.Name == "complex_exclusion"))
+            {
+                var ex0 = binding.Descendants().First(d => d.Name == "exclusion_0");
+                var ex1 = binding.Descendants().First(d => d.Name == "exclusion_1");
+                
+                ParseExclusion(ex0, out var text0, out var target0);
+                ParseExclusion(ex1, out var text1, out var target1);
+                results.Add(new Dictionary<string, string>()
+                {
+                    {"textA", text0},
+                    {"targetA", target0},
+                    {"textB", text1},
+                    {"targetB", target1},
+                });
+            }
+            WriteFile(fileName, results);
         }
 
         private static void ExtractEnchantmentNameBindings(XElement element, string listName, string fileName)
@@ -270,38 +296,38 @@ namespace Xml2Json
             
             foreach (var e in n.Descendants().Where(d => d.Name == "exclusion"))
             {
-                var text = e.Descendants().First(d => d.Name == "text").Value;
-                var target = e.Descendants().First(d => d.Name == "target").Value;
-                var type = e.Descendants().First(d => d.Name == "type").Value;
-
-                text = Regex.Escape(text);
-
-                switch (type)
-                {
-                    case "CONTAINS":
-                        break;
-                    case "STARTSWITH":
-                        text = "^" + text;
-                        break;
-                    case "ENDSWITH":
-                        text += "$";
-                        break;
-                    case "EQUALS":
-                        text = "^" + text + "$";
-                        break;
-                    default:
-                        throw new NotImplementedException($"No operator {type}");
-
-
-                }
-
-                
+                ParseExclusion(e, out var text, out var target);
                 outData[target].Add(text);
-
             }
 
             return outData;
 
+        }
+
+        private static void ParseExclusion(XElement e, out string text, out string target)
+        {
+            text = e.Descendants().First(d => d.Name == "text").Value;
+            target = e.Descendants().First(d => d.Name == "target").Value;
+            var type = e.Descendants().First(d => d.Name == "type").Value;
+
+            text = Regex.Escape(text);
+
+            switch (type)
+            {
+                case "CONTAINS":
+                    break;
+                case "STARTSWITH":
+                    text = "^" + text;
+                    break;
+                case "ENDSWITH":
+                    text += "$";
+                    break;
+                case "EQUALS":
+                    text = "^" + text + "$";
+                    break;
+                default:
+                    throw new NotImplementedException($"No operator {type}");
+            }
         }
     }
 }
