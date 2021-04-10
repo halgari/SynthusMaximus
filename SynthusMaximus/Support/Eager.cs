@@ -27,6 +27,11 @@ namespace SynthusMaximus.Support
             _t.Start();
         }
         public T Value => _source.Task.Result;
+
+        public static Eager<T> Create(Func<T> f)
+        {
+            return new(f);
+        }
     }
     
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -353,7 +354,7 @@ namespace SynthusMaximus.Data
             return found;
         }
 
-        private static Dictionary<string, WeaponMaterial?> _weaponMaterialCache = new();
+        private static ConcurrentDictionary<string, WeaponMaterial?> _weaponMaterialCache = new();
 
 
         public WeaponMaterial? GetWeaponMaterial(IWeaponGetter weaponGetter)
@@ -362,7 +363,7 @@ namespace SynthusMaximus.Data
             if (_weaponMaterialCache.TryGetValue(name, out var type))
                 return type;
             var found = FindSingleBiggestSubstringMatch(_weaponMaterials.Values, name, wt => wt.NameSubstrings);
-            _weaponMaterialCache.Add(name, found);
+            _weaponMaterialCache.TryAdd(name, found);
             return found;
         }
 

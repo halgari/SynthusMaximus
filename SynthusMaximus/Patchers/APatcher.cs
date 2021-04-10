@@ -25,11 +25,12 @@ namespace SynthusMaximus.Patchers
             State = state;
             Patch = State.PatchMod;
             Mods = State.LoadOrder.PriorityOrder;
+            LinkCache = State.LinkCache;
             UnpatchedMods = State.LoadOrder.PriorityOrder.Skip(1);
             Logger.LogInformation("Initialized");
         }
 
-
+        public ILinkCache<ISkyrimMod, ISkyrimModGetter> LinkCache { get; set; }
 
 
         public abstract void RunPatcher();
