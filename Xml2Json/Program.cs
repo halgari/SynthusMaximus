@@ -23,6 +23,7 @@ namespace Xml2Json
             ExtractExclusionList(leveledLists, "distribution_exclusions_armor", @"exclusions\distributionExclusionsArmor.json");
             ExtractExclusionList(leveledLists, "distribution_exclusions_list_regular", @"exclusions\distributionExclusionsWeaponListRegular.json");
             ExtractExclusionList(leveledLists, "distribution_exclusions_spell", @"exclusions\distributionExclusionsSpell.json");
+            ExtractExclusionList(leveledLists, "distribution_exclusions_weapon_enchanted", @"exclusions\distributionExclusionsWeaponEnchanted.json");
             
             var alchemy = XElement.Load("Alchemy.xml");
             ExtractExclusionList(alchemy, "potion_exclusions", @"exclusions\potionExclusions.json");
@@ -94,6 +95,7 @@ namespace Xml2Json
             ExtractExclusionList(ench, "staff_crafting_exclusions", @"exclusions\staffCrafting.json");
             ExtractExclusionList(ench, "staff_crafting_disable_crafting_exclusions", @"exclusions\staffCraftingDisableCraftingExclusions.json");
             ExtractExclusionList(ench, "enchantment_armor_exclusions", @"exclusions\enchantmentArmorExclusions.json");
+            ExtractExclusionList(ench, "enchantment_weapon_exclusions", @"exclusions\enchantmentWeaponExclusions.json");
             ExtractEnchantmentReplacers(ench, "list_enchantment_bindings", @"enchanting\listEnchantmentBindings.json");
             ExtractEnchantmentDirectBindings(ench, "direct_enchantment_bindings", @"enchanting\directEnchantmentBindings.json");
             ExtractEnchantmentNameBindings(ench, "enchantment_name_bindings", @"enchanting\nameBindings.json");

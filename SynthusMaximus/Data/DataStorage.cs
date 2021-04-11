@@ -49,7 +49,7 @@ namespace SynthusMaximus.Data
         private readonly WeaponSettings _weaponSettings;
         private readonly IDictionary<ExclusionType, List<Regex>> _weaponReforgeExclusions;
         private readonly IDictionary<ExclusionType, List<Regex>> _distributionExclusionsWeaponRegular;
-        private readonly IDictionary<ExclusionType, List<Regex>> _distributionExclusionsWeaponListRegular;
+        public readonly IDictionary<ExclusionType, List<Regex>> DistributionExclusionsWeaponListRegular;
         private readonly IDictionary<ExclusionType, List<Regex>> _potionExclusions;
         private readonly IList<AlchemyEffect> _alchemyEffect;
         private readonly IList<PotionMultiplier> _potionMultipliers;
@@ -97,9 +97,11 @@ namespace SynthusMaximus.Data
             _distributionExclusionsWeaponRegular =
                 _loader.LoadValueConcatDictionary<ExclusionType, Regex>(
                     (RelativePath) @"exclusions\distributionExclusionsWeaponRegular.json");
-            _distributionExclusionsWeaponListRegular =
+            DistributionExclusionsWeaponListRegular =
                 _loader.LoadValueConcatDictionary<ExclusionType, Regex>(
                 (RelativePath) @"exclusions\distributionExclusionsWeaponListRegular.json");
+            EnchantmentWeaponExclusions =
+                _loader.LoadExclusionList<IWeaponGetter>((RelativePath) @"exclusions\enchantmentWeaponExclusions.json");
 
             // Alchemy
             _potionExclusions =
@@ -138,6 +140,12 @@ namespace SynthusMaximus.Data
             DistributionExclusionsArmor =
                 _loader.LoadMajorRecordExclusionList<ILeveledItemGetter>(
                     (RelativePath) @"exclusions\distributionExclusionsArmor.json");
+
+            
+            DistributionExclusionsWeaponsEnchanted =
+                _loader.LoadMajorRecordExclusionList<ILeveledItemGetter>(
+                    (RelativePath) @"exclusions\distributionExclusionsWeaponsEnchanted.json");
+
             ListEnchantmentBindings =
                 _loader.LoadList<ListEnchantmentBinding>((RelativePath) @"enchanting\listEnchantmentBindings.json");
             DirectEnchantmentBindings =
@@ -160,6 +168,10 @@ namespace SynthusMaximus.Data
 
             
         }
+
+        public MajorRecordExclusionList<ILeveledItemGetter> DistributionExclusionsWeaponsEnchanted { get; set; }
+
+        public ExclusionList<IWeaponGetter> EnchantmentWeaponExclusions { get; }
 
         public IList<ComplexExclusion> EnchantingSimilarityExclusionsWeapon { get; }
 
@@ -412,7 +424,7 @@ namespace SynthusMaximus.Data
 
         public bool IsListExcludedWeaponRegular(ILeveledItemGetter li)
         {
-            return _distributionExclusionsWeaponListRegular.Any(ex => CheckExclusionMajorRecord(ex.Key, ex.Value, li));
+            return DistributionExclusionsWeaponListRegular.Any(ex => CheckExclusionMajorRecord(ex.Key, ex.Value, li));
         }
 
         public bool IsAlchemyExcluded(ITranslatedNamedGetter a)
@@ -455,7 +467,7 @@ namespace SynthusMaximus.Data
             return AllMatchingBindings(_ammunitionModifer, a.NameOrThrow(), a => a.NameSubstrings);
         }
 
-        public string GetLocalizedEnchantmentNameArmor(IArmorGetter template, IFormLink<IObjectEffectGetter> formLink)
+        public string GetLocalizedEnchantmentName(ITranslatedNamedGetter template, IFormLink<IObjectEffectGetter> formLink)
         {
             if (!EnchantmentNames.TryGetValue(formLink, out var fstr)) return template.NameOrEmpty();
             return string.Format(fstr.NameTemplate, template.NameOrEmpty());

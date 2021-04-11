@@ -33,7 +33,7 @@ namespace SynthusMaximus.Patchers
             newArmor.TemplateArmor.SetTo(template);
             newArmor.ObjectEffect.SetTo(e);
             newArmor.Value = like.Value;
-            newArmor.Name = Storage.GetLocalizedEnchantmentNameArmor(template, e);
+            newArmor.Name = Storage.GetLocalizedEnchantmentName(template, e);
             return newArmor;
         }
 

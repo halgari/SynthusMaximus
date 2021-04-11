@@ -118,7 +118,7 @@ namespace SynthusMaximus.Patchers
 
             var results = query.ToList();
 
-            var newArmors = results.GroupBy(a => (a.template, a.item, a.New))
+            var newItems = results.GroupBy(a => (a.template.FormKey, a.item.FormKey, a.New.FormKey))
                 .ToDictionary(a => a.Key, a =>
                 {
                     var f = a.First();
@@ -130,12 +130,12 @@ namespace SynthusMaximus.Patchers
                 var lo = Patch.LeveledItems.GetOrAddAsOverride(listGroup.Key);
                 foreach (var e in listGroup)
                 {
-                    var newArmor = newArmors[(e.template, e.item, e.New)];
+                    var newItem = newItems[(e.template.FormKey, e.item.FormKey, e.New.FormKey)];
                     lo.Entries!.Add(new LeveledItemEntry
                     {
                         Data = new LeveledItemEntryData()
                         {
-                            Reference = new FormLink<IItemGetter>(newArmor.FormKey),
+                            Reference = new FormLink<IItemGetter>(newItem.FormKey),
                             Count = e.entry.Data!.Count,
                             Level = e.entry.Data.Level
                         }

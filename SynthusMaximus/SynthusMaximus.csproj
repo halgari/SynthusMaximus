@@ -133,8 +133,6 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
       <Compile Remove="Patchers\ArmorEnchantmentPatcher.cs" />
-      <Compile Remove="Patchers\WeaponPatcher.cs" />
-      <None Include="Patchers\WeaponPatcher.cs" />
     </ItemGroup>
 
     <ItemGroup>

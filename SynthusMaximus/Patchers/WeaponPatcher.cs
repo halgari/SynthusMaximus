@@ -445,7 +445,7 @@ namespace SynthusMaximus.Patchers
 
         }
 
-        private bool DoWeaponsContainClasses(IWeaponGetter w1, IWeaponGetter w2)
+        public static bool DoWeaponsContainClasses(IWeaponGetter w1, IWeaponGetter w2)
         {
             if (w1.HasKeyword(xMAWeapClassBlade) && !w2.HasKeyword(xMAWeapClassBlade))
                 return false;
