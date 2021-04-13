@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using ICSharpCode.SharpZipLib.Core;
+using Microsoft.Extensions.Logging;
 using Mutagen.Bethesda;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
 using Newtonsoft.Json;
+using Noggog;
 
 namespace SynthusMaximus.Data.Converters
 {
@@ -15,11 +17,19 @@ namespace SynthusMaximus.Data.Converters
     {
         private Dictionary<string, FormLink<T>> _links;
 
-        protected GenericFormLinkConverter(IEnumerable<T> records)
+        protected GenericFormLinkConverter(IEnumerable<T> records, ILogger logger)
         {
             _links = records
                 .Where(r => r.EditorID != null)
-                .ToDictionary(t => t.EditorID!, t => new FormLink<T>(t.FormKey));
+                .GroupBy(r => r.EditorID!)
+                .ToDictionary(t => t.Key, t =>
+                {
+                    if (t.CountGreaterThan(1))
+                    {
+                        logger.LogWarning("Editor Id: {EditorID} key is ambiguous between {Options}", t.Key, string.Join(", ", t.Select(f => f.FormKey)));
+                    }
+                    return new FormLink<T>(t.First());
+                });
         }
 
         public override void WriteJson(JsonWriter writer, IFormLink<T>? value, JsonSerializer serializer)
