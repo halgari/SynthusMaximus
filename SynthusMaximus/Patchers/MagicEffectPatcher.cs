@@ -60,16 +60,19 @@ namespace SynthusMaximus.Patchers
             script.Properties.Add(new ScriptObjectProperty()
             {
                 Name = SScriptShoutexpProperty0,
+                Flags = ScriptProperty.Flag.Edited,
                 Object = xMATHIShoutExpBase
             });
             script.Properties.Add(new ScriptObjectProperty
             {
                 Name = SScriptShoutexpProperty1,
+                Flags = ScriptProperty.Flag.Edited,
                 Object = PlayerRef
             });
             script.Properties.Add(new ScriptFloatProperty()
             {
                 Name = SScriptShoutexpProperty2,
+                Flags = ScriptProperty.Flag.Edited,
                 Data = GetShoutExpFactor(m)
             });
             

@@ -343,6 +343,7 @@ namespace SynthusMaximus.Patchers
             script.Properties.Add(new ScriptObjectProperty()
             {
                 Name = SScriptApplyperkProperty,
+                Flags = ScriptProperty.Flag.Edited,
                 Object = xMAWeapMaterialSilverRefined
             });
 
