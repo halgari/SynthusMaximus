@@ -93,12 +93,12 @@ namespace SynthusMaximus.Patchers
                     {
                         addRecord |= addRecord | SetArmorValue(a, am);
 
-                        if (!Storage.IsArmorExcludedReforged(a))
+                        if (!Storage.ArmorReforgeExclusions.IsExcluded(a))
                         {
                             AddMeltdownRecipe(a, am);
                         }
 
-                        if (!Storage.IsArmorExcludedReforged(a) && !Storage.IsClothing(a) &&
+                        if (!Storage.ArmorReforgeExclusions.IsExcluded(a) && !Storage.IsClothing(a) &&
                             !Storage.IsJewelry(a))
                         {
                             var patched = State.PatchMod.Armors.GetOrAddAsOverride(a);

@@ -18,7 +18,12 @@ namespace SynthusMaximus.Data.DTOs
         {
             return List.Any(ex => CheckExclusion(ex.Key, ex.Value, record));
         }
-        
+
+        public override bool IsExcluded(IMajorRecordGetter r)
+        {
+            return IsExcluded((T) r) || base.IsExcluded(r);
+        }
+
         private bool CheckExclusion(ExclusionType ex, IReadOnlyCollection<Regex> patterns, ITranslatedNamedGetter a)
         {
             if (ex == ExclusionType.Name || ex == ExclusionType.Full)

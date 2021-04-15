@@ -39,7 +39,6 @@ namespace SynthusMaximus.Data
         private readonly IList<ArmorModifier> _armorModifiers;
         private readonly IList<ArmorMasqueradeBinding> _armorMasqueradeBindings;
         private readonly IDictionary<string, ArmorMaterial> _armorMaterials;
-        private readonly IDictionary<ExclusionType, List<Regex>> _armorReforgeExclusions;
         public ArmorSettings ArmorSettings { get; }
         private readonly OverlayLoader _loader;
         private readonly IDictionary<string, WeaponOverride> _weaponOverrides;
@@ -47,15 +46,9 @@ namespace SynthusMaximus.Data
         private readonly IDictionary<string,WeaponMaterial> _weaponMaterials;
         private readonly IList<WeaponModifier> _weaponModifiers;
         private readonly WeaponSettings _weaponSettings;
-        private readonly IDictionary<ExclusionType, List<Regex>> _weaponReforgeExclusions;
-        private readonly IDictionary<ExclusionType, List<Regex>> _distributionExclusionsWeaponRegular;
-        public readonly IDictionary<ExclusionType, List<Regex>> DistributionExclusionsWeaponListRegular;
-        private readonly IDictionary<ExclusionType, List<Regex>> _potionExclusions;
         private readonly IList<AlchemyEffect> _alchemyEffect;
         private readonly IList<PotionMultiplier> _potionMultipliers;
         private readonly IList<IngredientVariation> _ingredientVariations;
-        private readonly IDictionary<ExclusionType, List<Regex>> _ingredientExclusions;
-        private IDictionary<ExclusionType, List<Regex>> _ammunitionExclusionsMultiplication;
         private readonly IList<AmmunitionType> _ammunitionTypes;
         private IList<AmmunitionMaterial> _ammunitionMaterials;
         private IList<AmmunitionModifier> _ammunitionModifer;
@@ -78,7 +71,7 @@ namespace SynthusMaximus.Data
             _armorModifiers = _loader.LoadList<ArmorModifier>((RelativePath)@"armor\armorModifiers.json");
             _armorMasqueradeBindings = _loader.LoadList<ArmorMasqueradeBinding>((RelativePath)@"armor\armorMasqueradeBindings.json");
             _armorMaterials = _loader.LoadDictionary<string, ArmorMaterial>((RelativePath)@"armor\armorMaterials.json");
-            _armorReforgeExclusions = _loader.LoadValueConcatDictionary<ExclusionType, Regex>((RelativePath)@"exclusions\armorReforge.json");
+            ArmorReforgeExclusions = _loader.LoadExclusionList<IArmorGetter>((RelativePath)@"exclusions\armorReforge.json");
             EnchantmentArmorExclusions =
                 _loader.LoadExclusionList<IArmorGetter>((RelativePath) @"exclusions\enchantmentArmorExclusions.json");
 
@@ -91,23 +84,23 @@ namespace SynthusMaximus.Data
                 _loader.LoadList<WeaponModifier>((RelativePath) @"weapons\weaponModifiers.json");
             _weaponSettings =
                 _loader.LoadObject<WeaponSettings>((RelativePath) @"weapons\weaponSettings.json");
-            _weaponReforgeExclusions =
-                _loader.LoadValueConcatDictionary<ExclusionType, Regex>(
+            WeaponReforgeExclusions =
+                _loader.LoadExclusionList<IWeaponGetter>(
                     (RelativePath) @"exclusions\weaponReforge.json");
-            _distributionExclusionsWeaponRegular =
-                _loader.LoadValueConcatDictionary<ExclusionType, Regex>(
+            DistributionExclusionsWeaponRegular =
+                _loader.LoadExclusionList<IWeaponGetter>(
                     (RelativePath) @"exclusions\distributionExclusionsWeaponRegular.json");
             DistributionExclusionsWeaponListRegular =
-                _loader.LoadValueConcatDictionary<ExclusionType, Regex>(
+                _loader.LoadMajorRecordExclusionList<ILeveledItemGetter>(
                 (RelativePath) @"exclusions\distributionExclusionsWeaponListRegular.json");
             EnchantmentWeaponExclusions =
                 _loader.LoadExclusionList<IWeaponGetter>((RelativePath) @"exclusions\enchantmentWeaponExclusions.json");
 
             // Alchemy
-            _potionExclusions =
-                _loader.LoadValueConcatDictionary<ExclusionType, Regex>((RelativePath) @"exclusions\potionExclusions");
-            _ingredientExclusions =
-                _loader.LoadValueConcatDictionary<ExclusionType, Regex>((RelativePath) @"exclusions\ingredientExclusions");
+            PotionExclusions =
+                _loader.LoadExclusionList<IIngestibleGetter>((RelativePath) @"exclusions\potionExclusions.json");
+            IngredientExclusions =
+                _loader.LoadExclusionList<IIngredientGetter>((RelativePath) @"exclusions\ingredientExclusions.json");
             _alchemyEffect =
                 _loader.LoadList<AlchemyEffect>((RelativePath) @"alchemy\alchemyEffects.json");
             _potionMultipliers =
@@ -116,8 +109,8 @@ namespace SynthusMaximus.Data
                 _loader.LoadList<IngredientVariation>((RelativePath) @"alchemy\ingredientVariations.json");
             
             // Ammunition
-            _ammunitionExclusionsMultiplication =
-            _loader.LoadValueConcatDictionary<ExclusionType, Regex>(
+            AmmunitionExclusionsMultiplication =
+            _loader.LoadExclusionList<IAmmunitionGetter>(
                 (RelativePath) @"ammunition\ammunitionExclusionsMultiplication.json");
 
             _ammunitionTypes = _loader.LoadList<AmmunitionType>((RelativePath) @"ammunition\ammunitionTypes.json");
@@ -158,10 +151,10 @@ namespace SynthusMaximus.Data
                     .ToDictionary(e => e.Key, e => e.Last());
 
             EnchantingSimilarityExclusionsArmor =
-                _loader.LoadList<ComplexExclusion>((RelativePath) @"enchanting\similaritesExclusionsArmor.json");
+                _loader.LoadComplexExclusionList<IArmorGetter>((RelativePath) @"enchanting\similaritesExclusionsArmor.json");
             
             EnchantingSimilarityExclusionsWeapon =
-                _loader.LoadList<ComplexExclusion>((RelativePath) @"enchanting\similaritesExclusionsWeapon.json");
+                _loader.LoadComplexExclusionList<IWeaponGetter>((RelativePath) @"enchanting\similaritesExclusionsWeapon.json");
             
             
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
@@ -169,15 +162,29 @@ namespace SynthusMaximus.Data
             
         }
 
-        public MajorRecordExclusionList<ILeveledItemGetter> DistributionExclusionsWeaponsEnchanted { get; set; }
+        public ExclusionList<IIngredientGetter> IngredientExclusions { get; }
+
+        public MajorRecordExclusionList<ILeveledItemGetter> DistributionExclusionsWeaponListRegular { get; }
+
+        public ExclusionList<IAmmunitionGetter> AmmunitionExclusionsMultiplication { get; }
+
+        public ExclusionList<IIngestibleGetter> PotionExclusions { get; }
+
+        public ExclusionList<IWeaponGetter> WeaponReforgeExclusions { get; }
+
+        public ExclusionList<IArmorGetter> ArmorReforgeExclusions { get; }
+
+        public ExclusionList<IWeaponGetter> DistributionExclusionsWeaponRegular { get; }
+
+        public MajorRecordExclusionList<ILeveledItemGetter> DistributionExclusionsWeaponsEnchanted { get; }
 
         public ExclusionList<IWeaponGetter> EnchantmentWeaponExclusions { get; }
 
-        public IList<ComplexExclusion> EnchantingSimilarityExclusionsWeapon { get; }
+        public ComplexExclusionList<IWeaponGetter> EnchantingSimilarityExclusionsWeapon { get; }
 
-        public IList<ComplexExclusion> EnchantingSimilarityExclusionsArmor { get; }
+        public ComplexExclusionList<IArmorGetter> EnchantingSimilarityExclusionsArmor { get; }
 
-        public Dictionary<IFormLink<IObjectEffectGetter>, EnchantmentNameBinding> EnchantmentNames { get; set; }
+        public Dictionary<IFormLink<IObjectEffectGetter>, EnchantmentNameBinding> EnchantmentNames { get; }
 
         public ILookup<IFormLink<IObjectEffectGetter>, DirectEnchantmentBinding> DirectEnchantmentBindings { get; }
 
@@ -189,7 +196,7 @@ namespace SynthusMaximus.Data
 
         public ExclusionList<IArmorGetter> EnchantmentArmorExclusions { get; }
 
-        public IList<ListEnchantmentBinding> ListEnchantmentBindings { get; set; }
+        public IList<ListEnchantmentBinding> ListEnchantmentBindings { get; }
 
         public ExclusionList<IRaceGetter> RaceExclusions { get; }
 
@@ -286,44 +293,6 @@ namespace SynthusMaximus.Data
             return -1;
         }
 
-        public bool IsArmorExcludedReforged(IArmorGetter a)
-        {
-            return _armorReforgeExclusions.Any(ex => CheckExclusion(ex.Key, ex.Value, a));
-        }
-
-        private bool CheckExclusion(ExclusionType ex, IReadOnlyCollection<Regex> patterns, ITranslatedNamedGetter a)
-        {
-            if (ex == ExclusionType.Name || ex == ExclusionType.Full)
-            {
-                if (a.Name == null || !a.Name!.TryLookup(Language.English, out var name))
-                    return false;
-                return CheckExclusionName(patterns, name);
-            }
-
-            return CheckExclusionMajorRecord(ex, patterns, (IMajorRecordGetter)a);
-        }
-
-        private bool CheckExclusionMajorRecord(ExclusionType e, IReadOnlyCollection<Regex> patterns, IMajorRecordGetter m)
-        {
-            var fis = m.FormKey.ID.ToString("X8");
-            if (!patterns.Any())
-                return false;
-            
-            return e switch
-            {
-                ExclusionType.Name => throw new NotImplementedException("Should have been handled elsewhere"),
-                ExclusionType.EDID => m.EditorID != null && patterns.Any(p => p.IsMatch(m.EditorID!)),
-                ExclusionType.Full => throw new NotImplementedException("Should have been handled elsewhere"),
-                ExclusionType.FormID => patterns.Any(p => p.IsMatch(fis)),
-                _ => throw new ArgumentOutOfRangeException(nameof(e), e, null)
-            };
-        }
-
-        private bool CheckExclusionName(IEnumerable<Regex> patterns, string name)
-        {
-            return patterns.Any(p => p.IsMatch(name));
-        }
-
         public string GetOutputString(string sReforged)
         {
             return sReforged;
@@ -405,31 +374,11 @@ namespace SynthusMaximus.Data
             return null;
         }
 
-        public bool IsWeaponExcludedReforged(IWeaponGetter w)
-        {
-            return _weaponReforgeExclusions.Any(ex => CheckExclusion(ex.Key, ex.Value, w));
-        }
-
         public IEnumerable<WeaponModifier> GetAllModifiers(Weapon w)
         {
             var name = w.NameOrThrow();
 
             return AllMatchingBindings(_weaponModifiers, name, m => m.NameSubstrings);
-        }
-
-        public bool IsWeaponExcludedDistribution(IWeaponGetter w)
-        {
-            return _distributionExclusionsWeaponRegular.Any(ex => CheckExclusion(ex.Key, ex.Value, w));
-        }
-
-        public bool IsListExcludedWeaponRegular(ILeveledItemGetter li)
-        {
-            return DistributionExclusionsWeaponListRegular.Any(ex => CheckExclusionMajorRecord(ex.Key, ex.Value, li));
-        }
-
-        public bool IsAlchemyExcluded(ITranslatedNamedGetter a)
-        {
-            return _potionExclusions.Any(ex => CheckExclusion(ex.Key, ex.Value, a));
         }
 
         public AlchemyEffect? GetAlchemyEffect(IMagicEffectGetter m)
@@ -440,11 +389,6 @@ namespace SynthusMaximus.Data
         public PotionMultiplier? GetPotionMultipiler(IIngestibleGetter i)
         {
             return FindSingleBiggestSubstringMatch(_potionMultipliers, i.NameOrThrow(), e => e.NameSubstrings);
-        }
-
-        public bool IsIngredientExcluded(IIngredientGetter i)
-        {
-            return _ingredientExclusions.Any(ex => CheckExclusion(ex.Key, ex.Value, i));
         }
 
         public IngredientVariation? GetIngredientVariation(IIngredientGetter ig)
@@ -472,22 +416,5 @@ namespace SynthusMaximus.Data
             if (!EnchantmentNames.TryGetValue(formLink, out var fstr)) return template.NameOrEmpty();
             return string.Format(fstr.NameTemplate, template.NameOrEmpty());
         }
-
-        public bool CanArmorNotBeSimilar(IArmorGetter a, IArmorGetter b)
-        {
-            return EnchantingSimilarityExclusionsArmor.Any(exclusion => CheckComplexExclusions(exclusion, a, b));
-        }
-        
-        public bool CanWeaponsNotBeSimilar(IWeaponGetter a, IWeaponGetter b)
-        {
-            return EnchantingSimilarityExclusionsWeapon.Any(exclusion => CheckComplexExclusions(exclusion, a, b));
-        }
-
-        private bool CheckComplexExclusions(ComplexExclusion ex, ITranslatedNamedGetter a, ITranslatedNamedGetter b)
-        {
-            return CheckExclusion(ex.TargetA, new[] {ex.TextA}, a) && CheckExclusion(ex.TargetB, new[] {ex.TextB}, b) ||
-                   CheckExclusion(ex.TargetB, new[] {ex.TextB}, a) && CheckExclusion(ex.TargetA, new[] {ex.TextA}, b);
-        }
-        
     }
 }

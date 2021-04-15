@@ -11,7 +11,9 @@ namespace SynthusMaximus.Data.Enums
         [EnumMember(Value = "FULL")]
         Full,
         [EnumMember(Value = "FORMID")]
-        FormID
+        FormID,
+        [EnumMember(Value = "MODNAME")]
+        ModName
         
         
     }

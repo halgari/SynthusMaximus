@@ -39,9 +39,12 @@ namespace SynthusMaximus.Data.DTOs
                 ExclusionType.EDID => m.EditorID != null && patterns.Any(p => p.IsMatch(m.EditorID!)),
                 ExclusionType.Full => throw new NotImplementedException("Should have been handled elsewhere"),
                 ExclusionType.FormID => patterns.Any(p => p.IsMatch(fis)),
+                ExclusionType.ModName => patterns.Any(p => p.IsMatch(m.FormKey.ModKey.FileName)),
                 _ => throw new ArgumentOutOfRangeException(nameof(e), e, null)
             };
         }
+        
+        
 
         
     }

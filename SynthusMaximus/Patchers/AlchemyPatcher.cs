@@ -28,7 +28,7 @@ namespace SynthusMaximus.Patchers
                 try
                 {
                     if (!Storage.UseThief) continue;
-                    if (Storage.IsAlchemyExcluded(al)) continue;
+                    if (Storage.PotionExclusions.IsExcluded(al)) continue;
                     MakePotionWorkOverTime(al);
                     DisableAssociatedMagicSchool(al.Effects);
                 }
@@ -43,7 +43,7 @@ namespace SynthusMaximus.Patchers
                 try
                 {
                     if (!Storage.UseThief) continue;
-                    if (Storage.IsIngredientExcluded(i)) continue;
+                    if (Storage.IngredientExclusions.IsExcluded(i)) continue;
                     MakeIngredientWorkOverTime(i);
                     DisableAssociatedMagicSchool(i.Effects);
                 }

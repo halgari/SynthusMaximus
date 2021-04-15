@@ -63,7 +63,7 @@ namespace SynthusMaximus.Patchers
                         ae.ObjectEffect.IsNull &&
                         AreClothingPiecesSimilar(a, ae))
                     {
-                        if (Storage.CanArmorNotBeSimilar(a, ae)) continue;
+                        if (Storage.EnchantingSimilarityExclusionsArmor.IsExcluded(a, ae)) continue;
                         yield return ae;
                     }
                 }
@@ -77,7 +77,7 @@ namespace SynthusMaximus.Patchers
                         ae.ObjectEffect.IsNull &&
                         AreJewelryPiecesSimilar(a, ae))
                     {
-                        if (Storage.CanArmorNotBeSimilar(a, ae)) continue;
+                        if (Storage.EnchantingSimilarityExclusionsArmor.IsExcluded(a, ae)) continue;
                         yield return ae;
 
                     }
@@ -93,7 +93,7 @@ namespace SynthusMaximus.Patchers
                         !ae.ObjectEffect.IsNull &&
                         AreArmorPiecesSimilar(a, ae))
                     {
-                        if (Storage.CanArmorNotBeSimilar(a, ae)) continue;
+                        if (Storage.EnchantingSimilarityExclusionsArmor.IsExcluded(a, ae)) continue;
                         yield return ae;
                     }
                 }

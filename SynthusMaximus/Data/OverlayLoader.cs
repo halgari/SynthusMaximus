@@ -114,6 +114,14 @@ namespace SynthusMaximus.Data
 
         }
         
+        public ComplexExclusionList<T> LoadComplexExclusionList<T>(RelativePath name)
+            where T : IMajorRecordGetter, ITranslatedNamedGetter
+        {
+            var data = LoadList<ComplexExclusion>(name);
+            return new ComplexExclusionList<T>(data);
+
+        }
+        
         public MajorRecordExclusionList<T> LoadMajorRecordExclusionList<T>(RelativePath name)
             where T : IMajorRecordGetter
         {
