@@ -21,115 +21,115 @@
       <None Update="appsettings.json">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-      <None Update="Resources\PerkusMaximus_Master\materials.json">
+      <None Update="Resources\PerkusMaximus_Master.esp\materials.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\materials.json">
+      <None Update="config\PerkusMaximus_Master.esp\materials.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\armor\armorModifiers.json">
+      <None Update="config\PerkusMaximus_Master.esp\armor\armorModifiers.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\armor\armorMasqueradeBindings.json">
+      <None Update="config\PerkusMaximus_Master.esp\armor\armorMasqueradeBindings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\armor\armorMaterials.json">
+      <None Update="config\PerkusMaximus_Master.esp\armor\armorMaterials.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\armor\armorSettings.json">
+      <None Update="config\PerkusMaximus_Master.esp\armor\armorSettings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\weapons\baseWeaponTypes.json">
+      <None Update="config\PerkusMaximus_Master.esp\weapons\baseWeaponTypes.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\weapons\weaponTypes.json">
+      <None Update="config\PerkusMaximus_Master.esp\weapons\weaponTypes.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\weapons\weaponSettings.json">
+      <None Update="config\PerkusMaximus_Master.esp\weapons\weaponSettings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\weapons\weaponOverrides.json">
+      <None Update="config\PerkusMaximus_Master.esp\weapons\weaponOverrides.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\weapons\weaponModifiers.json">
+      <None Update="config\PerkusMaximus_Master.esp\weapons\weaponModifiers.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\weapons\weaponMaterials.json">
+      <None Update="config\PerkusMaximus_Master.esp\weapons\weaponMaterials.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\weapons\weaponClasses.json">
+      <None Update="config\PerkusMaximus_Master.esp\weapons\weaponClasses.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\generalSettings.json">
+      <None Update="config\PerkusMaximus_Master.esp\generalSettings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\exclusions\weaponReforge.json">
+      <None Update="config\PerkusMaximus_Master.esp\exclusions\weaponReforge.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\exclusions\armorReforge.json">
+      <None Update="config\PerkusMaximus_Master.esp\exclusions\armorReforge.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\exclusions\distributionExclusionsWeaponRegular.json">
+      <None Update="config\PerkusMaximus_Master.esp\exclusions\distributionExclusionsWeaponRegular.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\exclusions\distributionExclusionsWeaponListRegular.json">
+      <None Update="config\PerkusMaximus_Master.esp\exclusions\distributionExclusionsWeaponListRegular.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\alchemy\alchemyEffects.json">
+      <None Update="config\PerkusMaximus_Master.esp\alchemy\alchemyEffects.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\alchemy\ingredientVariations.json">
+      <None Update="config\PerkusMaximus_Master.esp\alchemy\ingredientVariations.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\alchemy\potionMultipliers.json">
+      <None Update="config\PerkusMaximus_Master.esp\alchemy\potionMultipliers.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\exclusions\ingredientExclusions.json">
+      <None Update="config\PerkusMaximus_Master.esp\exclusions\ingredientExclusions.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\exclusions\potionExclusions.json">
+      <None Update="config\PerkusMaximus_Master.esp\exclusions\potionExclusions.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\ammunition\ammunitionExclusionsMultiplication.json">
+      <None Update="config\PerkusMaximus_Master.esp\ammunition\ammunitionExclusionsMultiplication.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\ammunition\ammunitionModifiers.json">
+      <None Update="config\PerkusMaximus_Master.esp\ammunition\ammunitionModifiers.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\ammunition\ammunitionTypes.json">
+      <None Update="config\PerkusMaximus_Master.esp\ammunition\ammunitionTypes.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\ammunition\ammunitionMaterials.json">
+      <None Update="config\PerkusMaximus_Master.esp\ammunition\ammunitionMaterials.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\exclusions\scrollCrafting.json">
+      <None Update="config\PerkusMaximus_Master.esp\exclusions\scrollCrafting.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\exclusions\staffCrafting.json">
+      <None Update="config\PerkusMaximus_Master.esp\exclusions\staffCrafting.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\exclusions\staffCraftingDisableCraftingExclusions.json">
+      <None Update="config\PerkusMaximus_Master.esp\exclusions\staffCraftingDisableCraftingExclusions.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\exclusions\distributionExclusionsSpell.json">
+      <None Update="config\PerkusMaximus_Master.esp\exclusions\distributionExclusionsSpell.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\exclusions\npcs.json">
+      <None Update="config\PerkusMaximus_Master.esp\exclusions\npcs.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\exclusions\race.json">
+      <None Update="config\PerkusMaximus_Master.esp\exclusions\race.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\enchanting\listEnchantmentBindings.json">
+      <None Update="config\PerkusMaximus_Master.esp\enchanting\listEnchantmentBindings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\exclusions\enchantmentArmorExclusions.json">
+      <None Update="config\PerkusMaximus_Master.esp\exclusions\enchantmentArmorExclusions.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\enchanting\directEnchantmentBindings.json">
+      <None Update="config\PerkusMaximus_Master.esp\enchanting\directEnchantmentBindings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
-      <None Update="config\PerkusMaximus_Master\enchanting\nameBindings.json">
+      <None Update="config\PerkusMaximus_Master.esp\enchanting\nameBindings.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
       <Compile Remove="Patchers\ArmorEnchantmentPatcher.cs" />

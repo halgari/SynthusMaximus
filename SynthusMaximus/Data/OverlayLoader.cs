@@ -45,7 +45,7 @@ namespace SynthusMaximus.Data
         public IEnumerable<AbsolutePath> OverlayFiles(RelativePath name)
         {
             return _state.LoadOrder
-                .SelectMany(modKey => Roots, (modKey, root) => root.Combine(modKey.Key.Name, name.ToString()))
+                .SelectMany(modKey => Roots, (modKey, root) => root.Combine(modKey.Key.FileName, name.ToString()))
                 .Where(path => path.Exists)
                 .Select(p =>
                 {
