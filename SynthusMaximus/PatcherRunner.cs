@@ -4,6 +4,7 @@ using System.Diagnostics;
 using Microsoft.Extensions.Logging;
 using SynthusMaximus.Patchers;
 using SynthusMaximus.Support.RunSorting;
+using Wabbajack.Common;
 
 namespace SynthusMaximus
 {
@@ -21,14 +22,11 @@ namespace SynthusMaximus
 
         public void RunPatchers()
         {
+            _logger.LogInformation("Writing logs to {logfolder}", AbsolutePath.EntryPoint.Combine("logs"));
+            AbsolutePath.EntryPoint.Combine("logs").CreateDirectory();
             foreach (var patcher in _patchers)
             {
-                _logger.LogInformation("Running {Patcher}", patcher.GetType().Name);
-                Stopwatch sw = Stopwatch.StartNew();
                 patcher.RunPatcher();
-                _logger.LogInformation("Finished running {Patcher} in {MS}ms", patcher.GetType().Name,
-                    sw.ElapsedMilliseconds);
-
             }
         }
     }

@@ -271,7 +271,7 @@ namespace SynthusMaximus.Data
 
         }
 
-        public float GetArmorSlotMultiplier(IArmorGetter a)
+        public float? GetArmorSlotMultiplier(IArmorGetter a)
         {
             if (a.HasKeyword(ArmorBoots))
                 return ArmorSettings.ArmorFactorFeet;
@@ -287,10 +287,8 @@ namespace SynthusMaximus.Data
             
             if (a.HasKeyword(ArmorShield))
                 return ArmorSettings.ArmorFactorShield;
-
-            _logger.LogWarning("{EditorID}: no armor slot keyword", a.EditorID);
-
-            return -1;
+            
+            return null;
         }
 
         public string GetOutputString(string sReforged)

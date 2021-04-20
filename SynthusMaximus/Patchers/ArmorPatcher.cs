@@ -39,16 +39,13 @@ namespace SynthusMaximus.Patchers
 
             var armors = State.LoadOrder.PriorityOrder.Armor().WinningOverrides().ToArray();
 
-            Logger.LogInformation("num armors: {Length}", armors.Length);
-
             foreach (var a in armors)
             {
-                Logger.LogTrace("{Name}: started patching", a.EditorID);
                 try
                 {
                     if (!ShouldPatch(a))
                     { 
-                        Logger.LogTrace("{Name}: Ingored", a.EditorID);
+                        Ignore(a, "Should not patch");
                         continue;
                     }
                     
@@ -77,12 +74,11 @@ namespace SynthusMaximus.Patchers
                         if (!Storage.IsJewelry(a))
                         {
                             _armorWithNoMaterialOrType.Add(a.FormKey);
-                            Logger.LogTrace("{Name}: no material", a.EditorID);
+                            Ignore(a, "No material");
                         }
                         continue;
                     }
                     
-                    Logger.LogTrace("{EditorID} - material Found", a.EditorID);
                     
                     // General changes
                     addRecord |= AddSpecificKeyword(a, am);
@@ -135,8 +131,11 @@ namespace SynthusMaximus.Patchers
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ex, "{Name}: error", a.EditorID);
+                    Failed(ex, a);
+                    continue;
                 }
+                
+                Success(a);
             }
 
 
@@ -150,7 +149,7 @@ namespace SynthusMaximus.Patchers
             var craftingRecipies = GetCraftingRecipes(a);
             if (!craftingRecipies.Any())
             {
-                Logger.LogInformation("{EditorID} : Leather material, but no crafting recipe. No quality leather variant created", a.EditorID);
+                Ignore(a, "Leather material, but no crafting recipe found. No quality leather variant created");
                 return false;
             }
 
@@ -318,10 +317,7 @@ namespace SynthusMaximus.Patchers
 
         private Armor CreateReforgedArmor(IArmorGetter a, ArmorMaterial am)
         {
-            if (!a.Name!.TryLookup(Language.English, out var name))
-                throw new InvalidDataException("Can't get english name");
-
-            var newname = Storage.GetOutputString(SReforged) + " " + name;
+            var newname = Storage.GetOutputString(SReforged) + " " + a.NameOrThrow();
 
             var newArmor = State.PatchMod.Armors.DuplicateInAsNewRecord(a);
             newArmor.Name = newname;
@@ -333,10 +329,7 @@ namespace SynthusMaximus.Patchers
         
         private Armor CreateWarforgedArmor(IArmorGetter a, ArmorMaterial am)
         {
-            if (!a.Name!.TryLookup(Language.English, out var name))
-                throw new InvalidDataException("Can't get english name");
-
-            var newname = Storage.GetOutputString(SWarforged) + " " + name;
+            var newname = Storage.GetOutputString(SWarforged) + " " + a.NameOrThrow();
 
             var newArmor = State.PatchMod.Armors.DuplicateInAsNewRecord(a);
             newArmor.Name = newname;
@@ -451,7 +444,7 @@ namespace SynthusMaximus.Patchers
 
             if (output == default || outputNum <= 0 || benchKW == default)
             {
-                Logger.LogInformation("{EditorID}: no meltdown recipe generated", a.EditorID);
+                Ignore(a, "No meltdown recipe generated");
                 return;
             }
             
@@ -473,7 +466,13 @@ namespace SynthusMaximus.Patchers
         private bool SetArmorValue(IArmorGetter a, ArmorMaterial am)
         {
             var original = a.ArmorRating;
-            var newArmorValue = (am.ArmorBase * Storage.GetArmorSlotMultiplier(a));
+            var slotModifier = Storage.GetArmorSlotMultiplier(a);
+            if (slotModifier == null)
+            {
+                Ignore(a, "No armor slot");
+                return false;
+            }
+            var newArmorValue = (float)(am.ArmorBase * slotModifier!);
             if (original != newArmorValue && newArmorValue > 0)
             {
                 var newRecord = State.PatchMod.Armors.GetOrAddAsOverride(a);
@@ -481,7 +480,7 @@ namespace SynthusMaximus.Patchers
             }
             else if (newArmorValue < 0)
             {
-                Logger.LogWarning("{EditorID}: Failed ot patch armor rating", a.EditorID);
+                Ignore(a, "Failed to patch armor rating");
             }
 
             return false;
@@ -591,24 +590,20 @@ namespace SynthusMaximus.Patchers
             cobj.CreatedObject.SetTo(output);
             cobj.CreatedObjectCount = outputNum;
             cobj.WorkbenchKeyword.SetTo(benchKW);
-            Logger.LogTrace("{EditorID}: Finished adding meltdown recipe", a.EditorID);
         }
 
         private bool ShouldPatch(IArmorGetter a)
         {
             if (!a.TemplateArmor.IsNull)
             {
-                Logger.LogTrace("{Name}: Has template", a.EditorID);
                 return false;
             }
             else if (Storage.IsJewelry(a))
             {
-                Logger.LogTrace("{Name}: Is Jewelery", a.EditorID);
                 return false;
             }
             else if (_armorWithNoMaterialOrType.Contains(a.FormKey))
             {
-                Logger.LogTrace("{Name}: previously excluded", a.EditorID);
                 return false;
             }
             

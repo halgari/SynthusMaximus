@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Mutagen.Bethesda;
@@ -26,6 +27,7 @@ namespace SynthusMaximus.Patchers
         protected readonly IEnumerable<IModListing<ISkyrimModGetter>> Mods;
         protected readonly IEnumerable<IModListing<ISkyrimModGetter>> UnpatchedMods;
         private Dictionary<TrackingResult, List<(IMajorRecordGetter Record, string Reason)>> _trackingData = new();
+        private Stopwatch _stopWatch;
 
         protected APatcher(ILogger<TInner> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
@@ -37,6 +39,7 @@ namespace SynthusMaximus.Patchers
             LinkCache = State.LinkCache;
             UnpatchedMods = State.LoadOrder.PriorityOrder.Skip(1);
             Logger.LogInformation("Initialized");
+            _stopWatch = new Stopwatch();
         }
 
         public ILinkCache<ISkyrimMod, ISkyrimModGetter> LinkCache { get; set; }
@@ -54,17 +57,23 @@ namespace SynthusMaximus.Patchers
                 _trackingData[TrackingResult.Success] = new List<(IMajorRecordGetter Record, string Reason)>();
             }
 
+            Logger.LogInformation("Starting {Name}", GetType().Name);
+            _stopWatch.Restart();
             RunPatcherInner();
+            _stopWatch.Stop();
 
             WriteReports();
         }
 
         private void WriteReports()
         {
-            Logger.LogInformation("Writing logs to {logfolder}", AbsolutePath.EntryPoint.Combine("logs"));
-            AbsolutePath.EntryPoint.Combine("logs").CreateDirectory();
             lock (_trackingData)
             {
+                Logger.LogInformation("Finished {Name} in {Ms}ms: {Failed} Failed, {Ignored} Ignored, {Success} Success",
+                    GetType().Name, _stopWatch.ElapsedMilliseconds,
+                    _trackingData[TrackingResult.Failed].GroupBy(r => r.Record.FormKey).Count(),
+                    _trackingData[TrackingResult.Ignored].GroupBy(r => r.Record.FormKey).Count(),
+                    _trackingData[TrackingResult.Success].GroupBy(r => r.Record.FormKey).Count());
                 foreach (var (result, values) in _trackingData)
                 {
                     var filename = AbsolutePath.EntryPoint.Combine("logs", GetType().Name + "_" + result + ".log");
