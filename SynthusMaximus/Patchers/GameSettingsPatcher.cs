@@ -12,7 +12,7 @@ namespace SynthusMaximus.Patchers
         {
         }
 
-        public override void RunPatcher()
+        protected override void RunPatcherInner()
         {
             foreach (var g in Mods.GameSetting().WinningOverrides())
             {

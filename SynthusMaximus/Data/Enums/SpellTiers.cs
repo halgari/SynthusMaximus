@@ -20,9 +20,9 @@ namespace SynthusMaximus.Data.Enums
             .Select(s => (s, (int) s))
             .ToDictionary(s => s.Item2, s => s.s);
         
-        public static SpellTier? FromLevel(int i)
+        public static SpellTier FromLevel(int i)
         {
-            return _indexed[i];
+            return _indexed.GetValueOrDefault(i, SpellTier.Invalid);
         }
     }
 }

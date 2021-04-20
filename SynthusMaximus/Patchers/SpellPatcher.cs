@@ -5,18 +5,20 @@ using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
 using SynthusMaximus.Data;
 using SynthusMaximus.Support;
+using SynthusMaximus.Support.RunSorting;
 using ActorValue = Mutagen.Bethesda.Skyrim.ActorValue;
 using ISpellGetter = Mutagen.Bethesda.Skyrim.ISpellGetter;
 
 namespace SynthusMaximus.Patchers
 {
+    [RunAfter(typeof(BookPatcher))]
     public class SpellPatcher : APatcher<SpellPatcher>
     {
         public SpellPatcher(ILogger<SpellPatcher> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state) : base(logger, storage, state)
         {
         }
 
-        public override void RunPatcher()
+        protected override void RunPatcherInner()
         {
             if (!Storage.UseMage)
                 return;

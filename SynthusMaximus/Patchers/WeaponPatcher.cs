@@ -40,8 +40,8 @@ namespace SynthusMaximus.Patchers
             (() => IndexLeveledLists<IWeaponGetter, (WeaponMaterial?, WeaponType?, FormKey)>
                 (f => (Storage.GetWeaponMaterial(f), Storage.GetWeaponType(f), f.ObjectEffect.FormKey)));
         }
-        
-        public override void RunPatcher()
+
+        protected override void RunPatcherInner()
         {
             
             foreach (var w in Mods.Weapon().WinningOverrides())

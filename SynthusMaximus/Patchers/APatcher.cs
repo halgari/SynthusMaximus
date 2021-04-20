@@ -6,17 +6,26 @@ using Mutagen.Bethesda;
 using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
 using SynthusMaximus.Data;
+using Wabbajack.Common;
 
 namespace SynthusMaximus.Patchers
 {
     public abstract class APatcher<TInner> : IPatcher
     {
+        private enum TrackingResult
+        {
+            Success = 0,
+            Ignored,
+            Failed,
+        }
+        
         protected readonly ILogger<TInner> Logger;
         protected readonly DataStorage Storage;
         protected readonly IPatcherState<ISkyrimMod, ISkyrimModGetter> State;
         protected readonly ISkyrimMod Patch;
         protected readonly IEnumerable<IModListing<ISkyrimModGetter>> Mods;
         protected readonly IEnumerable<IModListing<ISkyrimModGetter>> UnpatchedMods;
+        private Dictionary<TrackingResult, List<(IMajorRecordGetter Record, string Reason)>> _trackingData = new();
 
         protected APatcher(ILogger<TInner> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
         {
@@ -33,17 +42,57 @@ namespace SynthusMaximus.Patchers
         public ILinkCache<ISkyrimMod, ISkyrimModGetter> LinkCache { get; set; }
 
 
-        public abstract void RunPatcher();
+        protected abstract void RunPatcherInner();
 
-
-        protected void ReportFailed(Exception exception, IMajorRecordGetter r)
+        public void RunPatcher()
         {
-            Logger.LogError(exception, "Failed processing {EditorID}", r.EditorID);
+            lock (_trackingData)
+            {
+                _trackingData.Clear();
+                _trackingData[TrackingResult.Failed] = new List<(IMajorRecordGetter Record, string Reason)>();
+                _trackingData[TrackingResult.Ignored] = new List<(IMajorRecordGetter Record, string Reason)>();
+                _trackingData[TrackingResult.Success] = new List<(IMajorRecordGetter Record, string Reason)>();
+            }
+
+            RunPatcherInner();
+
+            WriteReports();
         }
 
-        protected void SkipRecord(IMajorRecordGetter r, string reason)
+        private void WriteReports()
         {
-            Logger.LogInformation("Skipping {EditorID}: {reason}", r.EditorID, reason);
+            Logger.LogInformation("Writing logs to {logfolder}", AbsolutePath.EntryPoint.Combine("logs"));
+            AbsolutePath.EntryPoint.Combine("logs").CreateDirectory();
+            lock (_trackingData)
+            {
+                foreach (var (result, values) in _trackingData)
+                {
+                    var filename = AbsolutePath.EntryPoint.Combine("logs", GetType().Name + "_" + result + ".log");
+                    var lines = values.OrderBy(v => (v.Record.FormKey.ModKey.FileName, v.Record.FormKey.ID))
+                        .Select(v => $"{v.Record.FormKey} - {v.Record.EditorID} - {v.Reason}")
+                        .ToArray();
+                    filename.WriteAllLinesAsync(lines).Wait();
+                }
+            }
+        }
+
+
+        protected void Failed(Exception exception, IMajorRecordGetter r)
+        {
+            lock(_trackingData)
+                _trackingData[TrackingResult.Failed].Add((r, exception.ToString()));
+        }
+
+        protected void Ignore(IMajorRecordGetter r, string reason)
+        {
+            lock (_trackingData)
+                _trackingData[TrackingResult.Ignored].Add((r, reason));
+        }
+        
+        protected void Success(IMajorRecordGetter r)
+        {
+            lock (_trackingData)
+                _trackingData[TrackingResult.Success].Add((r, ""));
         }
 
         public class IndexedEntry<T>

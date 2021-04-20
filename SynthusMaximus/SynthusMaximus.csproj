@@ -133,6 +133,12 @@
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
       <Compile Remove="Patchers\ArmorEnchantmentPatcher.cs" />
+      <None Update="config\Odin - Skyrim Magic Overhaul.esp\exclusions\scrollCrafting.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\Odin - Skyrim Magic Overhaul.esp\exclusions\staffCrafting.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

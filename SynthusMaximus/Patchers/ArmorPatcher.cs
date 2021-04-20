@@ -33,8 +33,7 @@ namespace SynthusMaximus.Patchers
         }
 
 
-        
-        public override void RunPatcher()
+        protected override void RunPatcherInner()
         {
             var addRecord = false;
 

@@ -44,7 +44,7 @@ namespace SynthusMaximus.Patchers
             
         }
 
-        public override void RunPatcher()
+        protected override void RunPatcherInner()
         {
             var spells = Mods.Spell().WinningOverrides().ToDictionary(s => s.FormKey);
             foreach (var b in Mods.Book().WinningOverrides())
@@ -70,16 +70,18 @@ namespace SynthusMaximus.Patchers
                     if (createScroll)
                     {
                         var scroll = GenerateScroll(sp);
-                        GenerateScrollCraftingRecipe(sp, scroll);
+                        if (scroll != null) 
+                            GenerateScrollCraftingRecipe(sp, scroll);
                     }
 
                     if (distribute)
                         DistributeBookOnLeveledLists(b, sp);
-
+                    
+                    Success(b);
                 }
                 catch (Exception ex)
                 {
-                    
+                    Failed(ex, b);
                 }
                 
             }
@@ -113,7 +115,10 @@ namespace SynthusMaximus.Patchers
         {
             var perk = GetRequiredScrollCraftingPerk(sp);
             if (perk == null)
+            {
+                Ignore(sp, "No scroll crafting Perk");
                 return null;
+            }
 
             var cobj = Patch.ConstructibleObjects.AddNew();
             cobj.SetEditorID(SPrefixPatcher + SPrefixCrafting + SPrefixScroll + sc.NameOrThrow(), sp);
@@ -140,10 +145,10 @@ namespace SynthusMaximus.Patchers
         private IFormLink<IPerkGetter>? GetRequiredScrollCraftingPerk(ISpellGetter sp)
         {
             var tier = GetSpellTier(sp);
-            return tier == null ? null : SpellTierToPerk[(SpellTier)tier!];
+            return tier == SpellTier.Invalid ? null : SpellTierToPerk[(SpellTier)tier!];
         }
 
-        private SpellTier? GetSpellTier(ISpellGetter sp)
+        private SpellTier GetSpellTier(ISpellGetter sp)
         {
             var level = sp.Effects.Select(e => e.BaseEffect.Resolve(State.LinkCache))
                 .Select(e => e.MinimumSkillLevel)
@@ -199,11 +204,22 @@ namespace SynthusMaximus.Patchers
         private IObjectEffectGetter? GenerateStaffEnchantment(ISpellGetter sp)
         {
             if (sp.CastType == CastType.ConstantEffect)
+            {
+                Ignore(sp, "Is not constant effect");
                 return null;
+            }
+
             if (sp.TargetType == TargetType.Self)
+            {
+                Ignore(sp, "Is target self");
                 return null;
+            }
+
             if (sp.EquipmentType.FormKey == BothHands.FormKey)
+            {
+                Ignore(sp, "Uses both hands");
                 return null;
+            }
 
             var newENCH = Patch.ObjectEffects.AddNew();
             newENCH.SetEditorID(SPrefixPatcher + SPrefixEnchantment + sp.NameOrEmpty(), sp);
@@ -233,14 +249,14 @@ namespace SynthusMaximus.Patchers
             var ench = GenerateStaffEnchantment(sp);
             if (ench == null)
             {
-                Logger.LogWarning("Could not create staff enchantment for {EditorID}", sp.EditorID);
+                Ignore(sp, "Could not create staff enchantment");
                 return null;
             }
 
             var av = GetSchool(sp);
             if (av == null)
             {
-                Logger.LogWarning("Could not get school for {EditorID}", sp.EditorID);
+                Ignore(sp, "Could not get school");
                 return null;
             }
 

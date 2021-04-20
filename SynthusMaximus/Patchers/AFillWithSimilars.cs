@@ -60,10 +60,10 @@ namespace SynthusMaximus.Patchers
         /// Get a exclusion list for items that shouldn't have this logic run on them.
         /// </summary>
         /// <returns></returns>
-        protected abstract ExclusionList<TItem> GetEnchantmentExclusionList(); 
-        
-        
-        public override void RunPatcher()
+        protected abstract ExclusionList<TItem> GetEnchantmentExclusionList();
+
+
+        protected override void RunPatcherInner()
         {
             var query =
                 from binding in Storage.ListEnchantmentBindings

@@ -21,7 +21,7 @@ namespace SynthusMaximus.Patchers
         {
         }
 
-        public override void RunPatcher()
+        protected override void RunPatcherInner()
         {
             PatchPlayer();
             foreach (var npc in Mods.Npc().WinningOverrides())

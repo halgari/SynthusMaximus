@@ -30,7 +30,7 @@ namespace SynthusMaximus.Patchers
         {
         }
 
-        public override void RunPatcher()
+        protected override void RunPatcherInner()
         {
             _projectiles = Mods.Projectile().WinningOverrides().ToDictionary(p => p.FormKey);
             
@@ -44,14 +44,14 @@ namespace SynthusMaximus.Patchers
                     var at = Storage.GetAmmunitionType(ammo);
                     if (at == null)
                     {
-                        SkipRecord(ammo, "no ammunition type");
+                        Ignore(ammo, "no ammunition type");
                         continue;
                     }
 
                     var am = Storage.GetAmmunitionMaterial(ammo);
                     if (am == null)
                     {
-                        SkipRecord(ammo, "no material type");
+                        Ignore(ammo, "no material type");
                         continue;
                     }
 
@@ -82,7 +82,7 @@ namespace SynthusMaximus.Patchers
                 }
                 catch (Exception ex)
                 {
-                    ReportFailed(ex, ammo);
+                    Failed(ex, ammo);
                 }
             }
             

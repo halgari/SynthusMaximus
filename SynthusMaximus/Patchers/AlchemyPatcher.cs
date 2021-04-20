@@ -20,7 +20,7 @@ namespace SynthusMaximus.Patchers
         {
         }
 
-        public override void RunPatcher()
+        protected override void RunPatcherInner()
         {
             _magicEffects = Mods.MagicEffect().WinningOverrides().ToDictionary(e => e.FormKey);
             foreach (var al in Mods.Ingestible().WinningOverrides())

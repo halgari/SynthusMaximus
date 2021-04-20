@@ -14,7 +14,7 @@ namespace SynthusMaximus.Patchers
         {
         }
 
-        public override void RunPatcher()
+        protected override void RunPatcherInner()
         {
             var isMage = (GlobalShort)Patch.Globals.GetOrAddAsOverride(xMAIsPerMaMageRunning.Resolve(State.LinkCache));
             isMage.Data = Storage.UseMage ? 1 : 0;

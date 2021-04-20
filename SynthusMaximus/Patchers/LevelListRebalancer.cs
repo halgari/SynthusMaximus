@@ -22,7 +22,8 @@ namespace SynthusMaximus.Patchers
         }
 
         private const int MAX_SIZE = 254;
-        public override void RunPatcher()
+
+        protected override void RunPatcherInner()
         {
             var lists = Mods.LeveledItem().WinningOverrides()
                 .Where(lst => (lst.Entries?.Count ?? 0) > MAX_SIZE)
