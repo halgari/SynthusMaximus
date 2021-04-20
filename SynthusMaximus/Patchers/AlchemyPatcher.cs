@@ -34,7 +34,7 @@ namespace SynthusMaximus.Patchers
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ex, "While processing {EditorID}", al.EditorID);
+                    Failed(ex, al);
                 }
             }
 
@@ -49,7 +49,7 @@ namespace SynthusMaximus.Patchers
                 }
                 catch (Exception ex)
                 {
-                    Logger.LogError(ex, "While processing {EditorID}", i.EditorID);
+                    Failed(ex, i);
                 }
             }
             
@@ -68,7 +68,7 @@ namespace SynthusMaximus.Patchers
                 var ae = Storage.GetAlchemyEffect(m);
                 if (ae == null)
                 {
-                    Logger.LogWarning("No effect for {EditorID}", m.EditorID);
+                    Ignore(m, "No Effect");
                     continue;
                 }
                 var pm = Storage.GetIngredientVariation(ig);
@@ -114,9 +114,16 @@ namespace SynthusMaximus.Patchers
                 var ae = Storage.GetAlchemyEffect(m);
                 if (ae == null)
                 {
-                    Logger.LogWarning("No effect for {EditorID}", m.EditorID);
+                    Ignore(m, "No Effect");
                     continue;
                 }
+
+                if (string.IsNullOrWhiteSpace(al.NameOrEmpty()))
+                {
+                    Ignore(al, "Empty Name");
+                    continue;
+                }
+                
                 var pm = Storage.GetPotionMultipiler(al);
                 var newDuration = ae.BaseDuration;
                 var newMagnitude = ae.BaseMagnitude;
