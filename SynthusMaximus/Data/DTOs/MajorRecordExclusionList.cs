@@ -22,7 +22,7 @@ namespace SynthusMaximus.Data.DTOs
             List = new Dictionary<ExclusionType, List<Regex>>();
         }
 
-        public virtual bool IsExcluded(T record)
+        public virtual bool Matches(T record)
         {
             return List.Any(ex => CheckExclusionMajorRecord(ex.Key, ex.Value, record));
         }

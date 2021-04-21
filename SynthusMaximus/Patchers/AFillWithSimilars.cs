@@ -30,7 +30,7 @@ namespace SynthusMaximus.Patchers
         /// </summary>
         /// <param name="i"></param>
         /// <returns></returns>
-        protected abstract IEnumerable<TItem> GetSimilars(TItem i);
+        public abstract IEnumerable<TItem> GetSimilars(TItem i);
         
         /// <summary>
         /// Given an enchanted item, return it's template, return value can be a null link
@@ -74,7 +74,7 @@ namespace SynthusMaximus.Patchers
                 where resolved != null
                 where !GetEnchantment(resolved).IsNull
                 where !GetTemplate(resolved).IsNull
-                where !GetEnchantmentExclusionList().IsExcluded(resolved)
+                where !GetEnchantmentExclusionList().Matches(resolved)
                 let parentTemplate = GetTemplate(resolved).Resolve(LinkCache)
                 where GetEnchantment(parentTemplate).IsNull
                 where binding.Replacers.Any(r => r.EdidBase.FormKey == GetEnchantment(resolved).FormKey)

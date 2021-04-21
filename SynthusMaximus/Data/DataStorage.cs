@@ -155,12 +155,16 @@ namespace SynthusMaximus.Data
             
             EnchantingSimilarityExclusionsWeapon =
                 _loader.LoadComplexExclusionList<IWeaponGetter>((RelativePath) @"enchanting\similaritesExclusionsWeapon.json");
-            
+
+            BulkArmorEnchantments =
+                _loader.LoadExclusionList<IArmorGetter>((RelativePath) @"inclusion\bulkArmorEnchantments.json");
             
             _logger.LogInformation("Loaded data files in {MS}ms", sw.ElapsedMilliseconds);
 
             
         }
+
+        public ExclusionList<IArmorGetter> BulkArmorEnchantments { get; set; }
 
         public ExclusionList<IIngredientGetter> IngredientExclusions { get; }
 
@@ -324,13 +328,16 @@ namespace SynthusMaximus.Data
         private static Dictionary<string, WeaponType?> _weaponTypeCache = new();
         public WeaponType? GetWeaponType(IWeaponGetter weaponGetter)
         {
-            var name = weaponGetter.NameOrEmpty();
-            if (_weaponTypeCache.TryGetValue(name, out var type))
-                return type;
-            
-            var found =  FindSingleBiggestSubstringMatch(_weaponTypes, name, wt => wt.NameSubStrings);
-            _weaponTypeCache.Add(name, found);
-            return found;
+            lock (_weaponTypeCache)
+            {
+                var name = weaponGetter.NameOrEmpty();
+                if (_weaponTypeCache.TryGetValue(name, out var type))
+                    return type;
+
+                var found = FindSingleBiggestSubstringMatch(_weaponTypes, name, wt => wt.NameSubStrings);
+                _weaponTypeCache.Add(name, found);
+                return found;
+            }
         }
 
         private static ConcurrentDictionary<string, WeaponMaterial?> _weaponMaterialCache = new();

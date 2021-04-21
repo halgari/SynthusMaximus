@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SynthusMaximus.Test", "Synt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xml2Json", "Xml2Json\Xml2Json.csproj", "{BB727E4A-C5CC-4CFF-8C21-06010E81AD76}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EnchantmentBindingGenerator", "EnchantmentBindingGenerator\EnchantmentBindingGenerator.csproj", "{68BAE2D7-6C10-417A-ABA8-ECE354EB3824}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{BB727E4A-C5CC-4CFF-8C21-06010E81AD76}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB727E4A-C5CC-4CFF-8C21-06010E81AD76}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB727E4A-C5CC-4CFF-8C21-06010E81AD76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{68BAE2D7-6C10-417A-ABA8-ECE354EB3824}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{68BAE2D7-6C10-417A-ABA8-ECE354EB3824}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{68BAE2D7-6C10-417A-ABA8-ECE354EB3824}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{68BAE2D7-6C10-417A-ABA8-ECE354EB3824}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

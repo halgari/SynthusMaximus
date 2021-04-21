@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Logging;
 using Mutagen.Bethesda;
@@ -6,6 +7,7 @@ using Mutagen.Bethesda.Skyrim;
 using Mutagen.Bethesda.Synthesis;
 using SynthusMaximus.Data;
 using SynthusMaximus.Support;
+using SynthusMaximus.Support.RunSorting;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.Weapon;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.MiscItem;
 using static Mutagen.Bethesda.FormKeys.SkyrimSE.Skyrim.EquipType;
@@ -14,6 +16,8 @@ using static Mutagen.Bethesda.FormKeys.SkyrimSE.Dragonborn.Keyword;
 
 namespace SynthusMaximus.Patchers
 {
+    [RunAfter(typeof(WeaponPatcher))]
+    [RunAfter(typeof(ArmorPatcher))]
     public class CraftablePatcher : APatcher<CraftablePatcher>
     {
         private Eager<List<(IConstructibleObjectGetter Cobj, IConstructibleGetter? Constructable)>> _armorWeaponRecipes;
@@ -25,7 +29,7 @@ namespace SynthusMaximus.Patchers
                 return UnpatchedMods.ConstructibleObject().WinningOverrides()
                     .AsParallel()
                     .Select(p => (p, p.CreatedObject.TryResolve(State.LinkCache)))
-                    .Where(p => p.Item2 != null)
+                    .Where(p => p.Item2 != null && (p.Item2 is IWeaponGetter || p.Item2 is IArmorGetter))
                     .ToList();
             });
         }
@@ -34,26 +38,35 @@ namespace SynthusMaximus.Patchers
         {
             foreach (var (c, resolved) in _armorWeaponRecipes.Value)
             {
-                if (Storage.UseMage && c.WorkbenchKeyword.FormKey == DLC2StaffEnchanter.FormKey 
-                                    && resolved is IWeaponGetter wg
-                                    && Storage.StaffCraftingDisableCraftingExclusions.IsExcluded(wg))
+                try
                 {
-                    DisableRecipe(c);
+                    if (Storage.UseMage && c.WorkbenchKeyword.FormKey == DLC2StaffEnchanter.FormKey
+                                        && resolved is IWeaponGetter wg
+                                        && Storage.StaffCraftingDisableCraftingExclusions.Matches(wg))
+                    {
+                        DisableRecipe(c);
+                    }
+
+                    if (Storage.UseWarrior)
+                    {
+                        if (c.WorkbenchKeyword.FormKey == CraftingSmithingSharpeningWheel.FormKey
+                            && (resolved is IWeaponGetter w))
+                        {
+                            AlterTemperingRecipe(c, w);
+                        }
+                        else if (c.WorkbenchKeyword.FormKey == CraftingSmithingSharpeningWheel.FormKey
+                                 && resolved is IArmorGetter a)
+                        {
+                            AlterTemperingRecipe(c, a);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Failed(ex, resolved!);
                 }
 
-                if (Storage.UseWarrior)
-                {
-                    if (c.WorkbenchKeyword.FormKey == CraftingSmithingSharpeningWheel.FormKey
-                        && (resolved is IWeaponGetter w))
-                    {
-                        AlterTemperingRecipe(c, w);
-                    }
-                    else if (c.WorkbenchKeyword.FormKey == CraftingSmithingSharpeningWheel.FormKey
-                             && resolved is IArmorGetter a)
-                    {
-                        AlterTemperingRecipe(c, a);
-                    }
-                }
+                Success(resolved!);
             }
             
             
@@ -63,7 +76,10 @@ namespace SynthusMaximus.Patchers
         {
             var wm = Storage.GetWeaponMaterial(w);
             if (wm == default)
+            {
+                Ignore(w, "No weapon material");
                 return;
+            }
 
             var perk = wm.Type.Data?.SmithingPerk;
             if (perk != null)

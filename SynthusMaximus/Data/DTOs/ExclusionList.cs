@@ -14,14 +14,14 @@ namespace SynthusMaximus.Data.DTOs
         {
         }
         
-        public bool IsExcluded(T record)
+        public bool Matches(T record)
         {
             return List.Any(ex => CheckExclusion(ex.Key, ex.Value, record));
         }
 
-        public override bool IsExcluded(IMajorRecordGetter r)
+        public override bool Matches(IMajorRecordGetter r)
         {
-            return IsExcluded((T) r) || base.IsExcluded(r);
+            return Matches((T) r) || base.Matches(r);
         }
 
         private bool CheckExclusion(ExclusionType ex, IReadOnlyCollection<Regex> patterns, ITranslatedNamedGetter a)

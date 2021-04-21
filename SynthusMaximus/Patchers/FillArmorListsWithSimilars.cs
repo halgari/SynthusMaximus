@@ -52,7 +52,7 @@ namespace SynthusMaximus.Patchers
             return i.TemplateArmor;
         }
 
-        protected override IEnumerable<IArmorGetter> GetSimilars(IArmorGetter a)
+        public override IEnumerable<IArmorGetter> GetSimilars(IArmorGetter a)
         {
             if (Storage.IsClothing(a))
             {
@@ -90,7 +90,7 @@ namespace SynthusMaximus.Patchers
                     if (ae.FormKey == a.FormKey) continue;
                     if (!Storage.IsClothing(ae) &&
                         !Storage.IsJewelry(ae) &&
-                        !ae.ObjectEffect.IsNull &&
+                        ae.ObjectEffect.IsNull &&
                         AreArmorPiecesSimilar(a, ae))
                     {
                         if (Storage.EnchantingSimilarityExclusionsArmor.IsExcluded(a, ae)) continue;

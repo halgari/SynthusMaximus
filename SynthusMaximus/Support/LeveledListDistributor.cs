@@ -51,7 +51,7 @@ namespace SynthusMaximus.Support
         { 
             _items = _state.LoadOrder.PriorityOrder.LeveledItem().WinningOverrides()
                 .AsParallel()
-                .Where(lst => !_listExclusions.IsExcluded(lst))
+                .Where(lst => !_listExclusions.Matches(lst))
                 .SelectMany(lst => lst.Entries!.Select(e => (lst, e, e.Data!.Reference.TryResolve(_state.LinkCache))))
                 .Where(t => t.Item3 is TItem)
                 .Select(t => (t.lst, t.e, _indexer((TItem) t.Item3!), t.Item3!))

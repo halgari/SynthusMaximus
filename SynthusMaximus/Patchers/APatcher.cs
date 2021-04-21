@@ -27,6 +27,7 @@ namespace SynthusMaximus.Patchers
         protected readonly IEnumerable<IModListing<ISkyrimModGetter>> Mods;
         protected readonly IEnumerable<IModListing<ISkyrimModGetter>> UnpatchedMods;
         private Dictionary<TrackingResult, List<(IMajorRecordGetter Record, string Reason)>> _trackingData = new();
+        private Dictionary<TrackingResult, List<(IMajorRecordGetter ARecord, IMajorRecordGetter BRecord, string Reason)>> _dualTrackingData = new();
         private Stopwatch _stopWatch;
 
         protected APatcher(ILogger<TInner> logger, DataStorage storage, IPatcherState<ISkyrimMod, ISkyrimModGetter> state)
@@ -55,6 +56,11 @@ namespace SynthusMaximus.Patchers
                 _trackingData[TrackingResult.Failed] = new List<(IMajorRecordGetter Record, string Reason)>();
                 _trackingData[TrackingResult.Ignored] = new List<(IMajorRecordGetter Record, string Reason)>();
                 _trackingData[TrackingResult.Success] = new List<(IMajorRecordGetter Record, string Reason)>();
+                
+                _dualTrackingData.Clear();
+                _dualTrackingData[TrackingResult.Failed] = new List<(IMajorRecordGetter ARecord, IMajorRecordGetter BRecord, string Reason)>();
+                _dualTrackingData[TrackingResult.Ignored] = new List<(IMajorRecordGetter ARecord, IMajorRecordGetter BRecord, string Reason)>();
+                _dualTrackingData[TrackingResult.Success] = new List<(IMajorRecordGetter ARecord, IMajorRecordGetter BRecord, string Reason)>();
             }
 
             Logger.LogInformation("Starting {Name}", GetType().Name);
@@ -76,9 +82,20 @@ namespace SynthusMaximus.Patchers
                     _trackingData[TrackingResult.Success].GroupBy(r => r.Record.FormKey).Count());
                 foreach (var (result, values) in _trackingData)
                 {
+                    if (values.Count == 0) continue;
                     var filename = AbsolutePath.EntryPoint.Combine("logs", GetType().Name + "_" + result + ".log");
                     var lines = values.OrderBy(v => (v.Record.FormKey.ModKey.FileName, v.Record.FormKey.ID))
                         .Select(v => $"{v.Record.FormKey} - {v.Record.EditorID} - {v.Reason}")
+                        .ToArray();
+                    filename.WriteAllLinesAsync(lines).Wait();
+                }
+                
+                foreach (var (result, values) in _dualTrackingData)
+                {
+                    if (values.Count == 0) continue;
+                    var filename = AbsolutePath.EntryPoint.Combine("logs", GetType().Name + "_dual_" + result + ".log");
+                    var lines = values.OrderBy(v => (v.ARecord.FormKey.ModKey.FileName, v.ARecord.FormKey.ID))
+                        .Select(v => $"{v.ARecord.FormKey} - {v.ARecord.EditorID} - {v.BRecord.FormKey} - {v.BRecord.EditorID} - {v.Reason}")
                         .ToArray();
                     filename.WriteAllLinesAsync(lines).Wait();
                 }
@@ -102,6 +119,12 @@ namespace SynthusMaximus.Patchers
         {
             lock (_trackingData)
                 _trackingData[TrackingResult.Success].Add((r, ""));
+        }
+        
+        protected void Success(IMajorRecordGetter a, IMajorRecordGetter b)
+        {
+            lock (_dualTrackingData)
+                _dualTrackingData[TrackingResult.Success].Add((a, b, ""));
         }
 
         public class IndexedEntry<T>

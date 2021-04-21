@@ -54,12 +54,12 @@ namespace SynthusMaximus.Patchers
                     if (!(b.Teaches is IBookSpellGetter spg)) continue;
                     var sp = spells[spg.Spell.FormKey];
 
-                    var createStaff = !(Storage.StaffCraftingExclusions.IsExcluded(b) ||
-                                      Storage.StaffCraftingExclusions.IsExcluded(sp));
-                    var createScroll = !(Storage.ScrollCraftingExclusions.IsExcluded(b) ||
-                                       Storage.ScrollCraftingExclusions.IsExcluded(sp));
-                    var distribute = !(Storage.SpellDistributionExclusions.IsExcluded(b) ||
-                                       Storage.SpellDistributionExclusions.IsExcluded(sp));
+                    var createStaff = !(Storage.StaffCraftingExclusions.Matches(b) ||
+                                      Storage.StaffCraftingExclusions.Matches(sp));
+                    var createScroll = !(Storage.ScrollCraftingExclusions.Matches(b) ||
+                                       Storage.ScrollCraftingExclusions.Matches(sp));
+                    var distribute = !(Storage.SpellDistributionExclusions.Matches(b) ||
+                                       Storage.SpellDistributionExclusions.Matches(sp));
 
                     if (createStaff)
                     {

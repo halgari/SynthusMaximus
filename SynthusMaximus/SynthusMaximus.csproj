@@ -139,6 +139,15 @@
       <None Update="config\Odin - Skyrim Magic Overhaul.esp\exclusions\staffCrafting.json">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </None>
+      <None Update="config\PerkusMaximus_Master.esp\inclusions\bulkArmorEnchantments.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\Summermyst - Enchantments of Skyrim.esp\inclusions\bulkArmorEnchantments.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="config\Summermyst - Enchantments of Skyrim.esp\enchanting\listEnchantmentBindings.json">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
     </ItemGroup>
 
     <ItemGroup>

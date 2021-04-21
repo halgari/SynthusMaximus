@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.Extensions.Logging;
 using Mutagen.Bethesda;
 using Mutagen.Bethesda.Skyrim;
@@ -26,36 +27,50 @@ namespace SynthusMaximus.Patchers
             PatchPlayer();
             foreach (var npc in Mods.Npc().WinningOverrides())
             {
-                if (!ShouldPatch(npc)) continue;
-                
-                var nnpc = Patch.Npcs.GetOrAddAsOverride(npc);
-
-                if (Storage.UseMage)
+                try
                 {
-                    nnpc.AddPerk(xMAMAGPassiveScalingSpells);
-                    nnpc.AddPerk(xMAMAGPassiveEffects);
-                    nnpc.AddPerk(AlchemySkillBoosts);
+                    if (!ShouldPatch(npc))
+                    {
+                        Ignore(npc, "Should not patch");
+                        continue;
+                    }
+
+                    var nnpc = Patch.Npcs.GetOrAddAsOverride(npc);
+
+                    if (Storage.UseMage)
+                    {
+                        nnpc.AddPerk(xMAMAGPassiveScalingSpells);
+                        nnpc.AddPerk(xMAMAGPassiveEffects);
+                        nnpc.AddPerk(AlchemySkillBoosts);
+                    }
+
+                    if (Storage.UseThief)
+                    {
+                        nnpc.AddSpell(xMATHICombatAbility);
+                    }
+
+                    if (Storage.UseWarrior)
+                    {
+                        nnpc.AddPerk(xMAHEWScarredPassive);
+                        nnpc.AddPerk(xMAWARPassiveScalingFistWeapon);
+                        nnpc.AddSpell(xMAWARShieldTypeDetectorAbility);
+                        nnpc.AddPerk(xMAWARPassiveScalingCriticalDamage);
+                        nnpc.AddPerk(xMAWARPassiveCrossbowEffects);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Failed(ex, npc);
+                    continue;
                 }
 
-                if (Storage.UseThief)
-                {
-                    nnpc.AddSpell(xMATHICombatAbility);
-                }
-
-                if (Storage.UseWarrior)
-                {
-                    nnpc.AddPerk(xMAHEWScarredPassive);
-                    nnpc.AddPerk(xMAWARPassiveScalingFistWeapon);
-                    nnpc.AddSpell(xMAWARShieldTypeDetectorAbility);
-                    nnpc.AddPerk(xMAWARPassiveScalingCriticalDamage);
-                    nnpc.AddPerk(xMAWARPassiveCrossbowEffects);
-                }
+                Success(npc);
             }
         }
 
         private bool ShouldPatch(INpcGetter npc)
         {
-            return !Storage.NPCExclusions.IsExcluded(npc);
+            return !Storage.NPCExclusions.Matches(npc);
         }
 
         private void PatchPlayer()
@@ -94,7 +109,7 @@ namespace SynthusMaximus.Patchers
                 player.AddPerk(xMAWARPassiveDualWieldMalus);
 
             }
-
+            Success(player);
         }
     }
 }

@@ -67,7 +67,7 @@ namespace SynthusMaximus.Patchers
                 where resolvedEntry != null
                 where !GetEnchantment(resolvedEntry).IsNull
                 where !GetTemplate(resolvedEntry).IsNull
-                where !GetEnchantmentExclusionList().IsExcluded(resolvedEntry)
+                where !GetEnchantmentExclusionList().Matches(resolvedEntry)
                 let template = GetTemplate(resolvedEntry).Resolve(LinkCache)
                 where GetEnchantment(template).IsNull
                 from replacer in binding.Replacers
@@ -102,14 +102,14 @@ namespace SynthusMaximus.Patchers
         {
             var query = from item in AllItems().AsParallel()
                 where !GetEnchantment(item).IsNull
-                where !GetEnchantmentExclusionList().IsExcluded(item)
+                where !GetEnchantmentExclusionList().Matches(item)
                 where !GetTemplate(item).IsNull
                 let template = GetTemplate(item).Resolve(LinkCache)
-                where !GetEnchantmentExclusionList().IsExcluded(template)
+                where !GetEnchantmentExclusionList().Matches(template)
                 from other in Storage.DirectEnchantmentBindings[
                     new FormLink<IObjectEffectGetter>(GetEnchantment(item).FormKey)]
                 from list in Mods.LeveledItem().WinningOverrides().AsParallel()
-                where !GetDistributionExclusionList().IsExcluded(list)
+                where !GetDistributionExclusionList().Matches(list)
                 where !list.Flags.HasFlag(LeveledItem.Flag.UseAll)
                 where list.Entries != null
                 from entry in list.Entries
@@ -139,8 +139,8 @@ namespace SynthusMaximus.Patchers
                             Count = e.entry.Data!.Count,
                             Level = e.entry.Data.Level
                         }
-                    });
-
+                    });;
+                    Success(newItem, listGroup.Key);
                 }
             }
             

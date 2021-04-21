@@ -100,7 +100,7 @@ namespace SynthusMaximus.Patchers
                             {
                                 AddMeltdownRecipe(wp, wt, wm);
 
-                                if (!Storage.WeaponReforgeExclusions.IsExcluded(w))
+                                if (!Storage.WeaponReforgeExclusions.Matches(w))
                                 {
                                     CreateRefinedSilverWeapon(wp);
 
@@ -149,7 +149,7 @@ namespace SynthusMaximus.Patchers
             _weapons = Mods.Weapon().WinningOverrides().ToDictionary(f => f.FormKey);
             Logger.LogInformation("About to distribute {Count} items into leveled lists", _weapons.Count);
             _leveledLists = Mods.LeveledItem().WinningOverrides()
-                .Where(li => !Storage.DistributionExclusionsWeaponListRegular.IsExcluded(li))
+                .Where(li => !Storage.DistributionExclusionsWeaponListRegular.Matches(li))
                 .ToList();
 
 
@@ -347,7 +347,7 @@ namespace SynthusMaximus.Patchers
                 Object = xMAWeapMaterialSilverRefined
             });
 
-            if (!Storage.WeaponReforgeExclusions.IsExcluded(w))
+            if (!Storage.WeaponReforgeExclusions.Matches(w))
             {
                 var reforged = CreateReforgedWeapon(nw, wt, wm);
                 ApplyModifiers(reforged);
@@ -378,7 +378,7 @@ namespace SynthusMaximus.Patchers
             if (w.Data!.Flags.HasFlag(WeaponData.Flag.CantDrop) || w.Data!.Flags.HasFlag(WeaponData.Flag.BoundWeapon))
                 return;
 
-            if (Storage.DistributionExclusionsWeaponRegular.IsExcluded(w))
+            if (Storage.DistributionExclusionsWeaponRegular.Matches(w))
                 return;
 
             var flink = new FormLink<IItemGetter>(w.FormKey);

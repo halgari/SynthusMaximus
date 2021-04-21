@@ -39,19 +39,22 @@ namespace SynthusMaximus.Patchers
                 try
                 {
                     if (!ShouldPatch(ammo))
+                    {
+                        Ignore(ammo, "Should not patch");
                         continue;
+                    }
 
                     var at = Storage.GetAmmunitionType(ammo);
                     if (at == null)
                     {
-                        Ignore(ammo, "no ammunition type");
+                        Ignore(ammo, "No ammunition type");
                         continue;
                     }
 
                     var am = Storage.GetAmmunitionMaterial(ammo);
                     if (am == null)
                     {
-                        Ignore(ammo, "no material type");
+                        Ignore(ammo, "No material type");
                         continue;
                     }
 
@@ -84,6 +87,7 @@ namespace SynthusMaximus.Patchers
                 {
                     Failed(ex, ammo);
                 }
+                Success(ammo);
             }
             
         }

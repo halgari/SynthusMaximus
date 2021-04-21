@@ -17,7 +17,7 @@ namespace SynthusMaximus.Patchers
         {
             foreach (var race in Mods.Race().WinningOverrides())
             {
-                if (Storage.RaceExclusions.IsExcluded(race))
+                if (Storage.RaceExclusions.Matches(race))
                     continue;
 
                 var ro = Patch.Races.GetOrAddAsOverride(race);

@@ -18,7 +18,7 @@ namespace SynthusMaximus.Patchers
         {
         }
 
-        protected override IEnumerable<IWeaponGetter> GetSimilars(IWeaponGetter w1)
+        public override IEnumerable<IWeaponGetter> GetSimilars(IWeaponGetter w1)
         {
             var mat1 = Storage.GetWeaponMaterial(w1);
             var type1 = Storage.GetWeaponType(w1);
